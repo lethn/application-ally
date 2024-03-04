@@ -15,17 +15,17 @@ export default function Navbar() {
 					</Link>
 				</li>
 				<li>
-					<Link href="/dashboard" className="navLinks">
+					<Link href="dashboard" className="navLinks">
 						Dashboard
 					</Link>
 				</li>
 				<li>
-					<Link href="/explore" className="navLinks">
+					<Link href="explore" className="navLinks">
 						Explore
 					</Link>
 				</li>
 				<li>
-					<Link href="/login" className="navLinks" id="signIn">
+					<Link href="sign-in" className="navLinks" id="signIn">
 						Sign In
 					</Link>
 				</li>
