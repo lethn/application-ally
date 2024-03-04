@@ -6,7 +6,7 @@ export default function Page() {
 	return (
 		<>
 			<Navbar />
-			<div className="ml-10rem">
+			<div className="flex justify-center p-10">
 				<SignIn />
 			</div>
 		</>

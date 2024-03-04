@@ -15,7 +15,7 @@ Colors
  */
 
 body {
-	background-color: #fbeaeb;
+	background-color: #190f0f;
 }
 
 main {
@@ -30,19 +30,8 @@ main {
 	padding: 0;
 	position: sticky;
 	width: 100%;
-	height: 8vh;
-	background-color: #162159;
-}
-#signIn {
-	background-color: #e84405;
-	border-radius: 10px;
-}
-
-#signIn:hover {
-	background-color: #162159;
-	color: #fff;
-	padding: 10px;
-	border-radius: 10px;
+	height: 10vh;
+	background-color: rgba(254, 254, 254, 0.947);
 }
 
 .navbar {
@@ -52,21 +41,31 @@ main {
 	flex-wrap: wrap;
 	justify-content: flex-end;
 	align-items: center;
-	font-weight: 700;
-	font-size: large;
+	font-weight: 500;
+	font-size: medium;
 	list-style: none;
-	gap: 1%;
 }
 
 .navLinks {
 	text-decoration: none;
-	color: #ffffff;
-	padding: 10px;
+	color: #000000;
+	padding: 5px;
 }
 
 .navLinks:hover {
-	background-color: #ffffff;
-	color: #000;
-	padding: 10px;
-	border-radius: 10px;
+	color: #e84405;
+}
+
+.gradient-text {
+	background: linear-gradient(
+		to right,
+		#a855f7,
+		#ec4899,
+		#eab308,
+		#ec4899,
+		#a855f7,
+		#eab308
+	);
+	background-size: 333% 333%;
+	background-clip: text;
 }

@@ -1,13 +1,14 @@
 /** @format */
 import "@/app/globals.css";
-import Image from "next/image";
 import Navbar from "./ui/navbar";
+import Header from "./ui/header";
 
 export default function Home() {
 	return (
 		<main>
 			<Navbar />
-			<div>Main Page</div>
+			<Header/>
+			
 		</main>
 	);
 }
