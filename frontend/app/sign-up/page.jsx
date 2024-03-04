@@ -1,5 +1,7 @@
-import "@/app/globals.css"; 
-import { SignIn } from "@clerk/nextjs";
+/** @format */
+
+import "@/app/globals.css";
+import { SignUp } from "@clerk/nextjs";
 import Navbar from "../ui/navbar";
 
 export default function Page() {
@@ -7,7 +9,7 @@ export default function Page() {
 		<>
 			<Navbar />
 			<div className="ml-10rem">
-				<SignIn />
+				<SignUp />
 			</div>
 		</>
 	);

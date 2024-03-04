@@ -2,11 +2,11 @@
 
 import Navbar from "../ui/navbar";
 
-export default function page() {
+export default function Page() {
 	return (
 		<div>
 			<Navbar />
-			<h1>Hello, Dashboard Page!</h1>
+			<h1>Hello, Explore Page!</h1>
 		</div>
 	);
 }
