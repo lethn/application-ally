@@ -10,7 +10,7 @@ function Header() {
 					Application Ally
 				</p>
 			</div>
-			<p className="text-white text-center mx-[5rem]">
+			<p className="dark:text-white text-center mx-[5rem]">
 				Lorem ipsum dolor, sit amet consectetur adipisicing elit. At voluptatem
 				recusandae explicabo similique! Aspernatur, dolores ducimus neque
 				labore, nesciunt illo architecto, modi fugit quidem esse deserunt
