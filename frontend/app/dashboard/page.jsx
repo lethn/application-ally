@@ -3,6 +3,8 @@
 import "@/app/globals.css";
 import Navbar from "../ui/navbar";
 import { useState } from "react";
+
+
 export default function Page() {
 	const [darkMode, setDarkMode] = useState(true);
 	const toggleDarkMode = () => {
@@ -11,8 +13,7 @@ export default function Page() {
 	return (
 		<main className={`${darkMode && "dark"}`}>
 			<div className="min-h-screen dark:bg-neutral-900">
-				<Navbar />
-				
+				<Navbar />s
 				<button
 					className="absolute w-16 h-16 bottom-16 right-16 bg-neutral-900 dark:bg-white rounded-full text-white dark:text-black font-semibold"
 					onClick={toggleDarkMode}>
@@ -23,7 +24,6 @@ export default function Page() {
 				</p>
 			</div>
 			</div>
-			
 		</main>
 	);
 }
