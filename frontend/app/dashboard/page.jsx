@@ -13,7 +13,7 @@ export default function Page() {
 	return (
 		<main className={`${darkMode && "dark"}`}>
 			<div className="min-h-screen dark:bg-neutral-900">
-				<Navbar />s
+				<Navbar />
 				<button
 					className="absolute w-16 h-16 bottom-16 right-16 bg-neutral-900 dark:bg-white rounded-full text-white dark:text-black font-semibold"
 					onClick={toggleDarkMode}>
