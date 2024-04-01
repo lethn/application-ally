@@ -102,11 +102,12 @@ export default function Applications() {
 							</p>
 						</div>
 						<div className="">
-							<button className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white px-4 py-2 rounded-md">
-								Add Jobs Manually
+							<button className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white rounded-md">
+								Add Job Manually
 							</button>
-							<button className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white px-4 py-2 rounded-md">
-								Looking For Jobs
+							<button className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white rounded-md">
+								<a href="search-jobs">Look For Jobs</a>
+								
 							</button>
 						</div>
 					</div>
