@@ -93,9 +93,9 @@ export default function Page() {
 				</div>
 			</div>
 
-			<div className=" bg-blue-900 p-5 mt-10 mx-8 rounded-lg ">
+			<div className=" bg-blue-800 p-4 mt-10 mx-8 rounded-lg flex flex-col gap-3">
 				{currentJobs.map((job, index) => (
-					<div key={index} className="bg-slate-400 p-5 font-semibold">
+					<div key={index} className="bg-neutral-400 p-5 rounded-xl font-semibold">
 						<p className="">{job.title}</p>
 						<ul className="">
 							<li>{job.company}</li>
@@ -103,14 +103,14 @@ export default function Page() {
 							<li>{job.salary}</li>
 							<li>{job.website}</li>
 						</ul>
-						<button className="">Add</button>
+						<button className="px-2 py-1 rounded-lg bg-red-700 hover:bg-red-500">Add</button>
 					</div>
 				))}
-				<div className="">
+				<div className="text-center font-medium text-xl text-white">
 					{Array.from(
 						{ length: Math.ceil(jobs.length / jobsPerPage) },
 						(_, i) => (
-							<button className="" key={i} onClick={() => pages(i + 1)}>
+							<button className="mr-3" key={i} onClick={() => pages(i + 1)}>
 								{i + 1}
 							</button>
 						)
