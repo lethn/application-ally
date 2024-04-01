@@ -4,33 +4,14 @@ import React from "react";
 
 const SignInForm = () => {
 	return (
-		<div
-			className="container"
-			style={{
-				width: "300px",
-				height: "400px",
-				padding: "40px",
-				backgroundColor: "rgb(218, 215, 215)",
-				borderRadius: "8px",
-				display: "flex",
-				flexDirection: "column",
-				justifyContent: "space-between"
-			}}>
+		<div className="container w-[400px] h-[400px] p-[40px] bg-neutral-400 rounded-md flex flex-col justify-start gap-5">
 			<form action="/register" method="POST">
 				<input
 					type="text"
 					id="username"
 					name="username"
 					placeholder="Username"
-					style={{
-						width: "100%",
-						padding: "10px",
-						marginBottom: "20px",
-						border: "none",
-						borderRadius: "4px",
-						backgroundColor: "white",
-						color: "#fff"
-					}}
+					className="w-[100%] p-3 mb-2 rounded-md bg-white text-black"
 				/>
 				<br />
 				<input
@@ -38,29 +19,21 @@ const SignInForm = () => {
 					id="password"
 					name="password"
 					placeholder="Password"
-					style={{
-						width: "100%",
-						padding: "10px",
-						marginBottom: "20px",
-						border: "none",
-						borderRadius: "4px",
-						backgroundColor: "white",
-						color: "#fff"
-					}}
+					className="w-[100%] p-3 mb-2 rounded-md bg-white text-black"
 				/>
-				<br />
-				<input
-					className="transition px-2 py-2 mx-1 font-semibold text-sm bg-blue-500 text-white rounded-md shadow-sm hover:-translate-y-1 hover:scale-100 hover:bg-indigo-500 ease-in-out delay-150 duration-300"
+				<button
+					className="bg-blue-500 p-2 text-white rounded-lg hover:bg-blue-800 font-semibold block mx-auto"
 					type="submit"
-					value="Log In"
-					style={{ display: "block", margin: "0 auto", width: "auto" }}
-				/>
+     value="Log In"
+    >
+					Log In
+				</button>
 			</form>
-			<p>
+			<p className="text-lg font-medium ">
 				Not a user?{" "}
 				<a
-					className="transition text-blue-500 hover:underline decoration-sky-500 hover:text-blue-500  p-[3px]"
-					href="/js2-template/userLogin.html">
+					className="transition text-blue-600 decoration-sky-500 hover:text-blue-900  p-[3px] text-lg font-medium"
+					href="/">
 					Sign Up here
 				</a>
 			</p>

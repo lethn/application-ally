@@ -2,6 +2,7 @@
 "use client";
 import "@/app/globals.css";
 import Navbar from "../components/navbar";
+import SignUpForm from "../components/signUpForm";
 
 export default function Page() {
 	return (
@@ -13,7 +14,8 @@ export default function Page() {
 						Sign Up
 					</p>
 				</div>
-				<div className="flex justify-center p-10"></div>
+				<div className="flex justify-center">
+				<SignUpForm/></div>
 			</div>
 		</main>
 	);

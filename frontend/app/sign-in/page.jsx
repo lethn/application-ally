@@ -3,6 +3,7 @@
 import "@/app/globals.css";
 
 import Navbar from "../components/navbar";
+import SignInForm from "../components/signInForm";
 
 export default function Page() {
 	return (
@@ -14,7 +15,8 @@ export default function Page() {
 						Sign In
 					</p>
 				</div>
-				<div className="flex justify-center p-10"></div>
+				<div className="flex justify-center">
+				<SignInForm/></div>
 			</div>
 		</main>
 	);
