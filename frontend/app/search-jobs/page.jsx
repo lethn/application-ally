@@ -1,8 +1,7 @@
 /** @format */
 "use client";
 import "@/app/globals.css";
-
-import Navbar from "../components/navbar";
+import Navbar from "@/app/components/navbar";
 
 export default function Page() {
 	return (
@@ -11,10 +10,9 @@ export default function Page() {
 				<Navbar />
 				<div className="flex justify-center h-[20vh]">
 					<p className="gradient-text text-transparent text-5xl font-bold animate-gradient mt-[4rem]">
-						Sign In
+						Explore New Jobs
 					</p>
 				</div>
-				<div className="flex justify-center p-10"></div>
 			</div>
 		</main>
 	);

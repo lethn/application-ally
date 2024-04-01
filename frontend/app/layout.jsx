@@ -1,7 +1,7 @@
 /** @format */
 
 import "@/app/globals.css";
-import { montserrat } from "@/app/ui/fonts";
+import { montserrat } from "@/app/components/fonts";
 
 export const metadata = {
 	title: "Application Ally",

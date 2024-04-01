@@ -22,22 +22,22 @@ export default function Navbar() {
 				<li>
 					<Link
 						href="/"
-						className="transition dark:text-white hover:underline decoration-sky-500 hover:text-blue-500  p-[5px]  ">
+						className="transition text-white hover:underline decoration-sky-500 hover:text-blue-500  p-[5px]  ">
 						Home
 					</Link>
 				</li>
 				<li>
 					<Link
-						href="dashboard"
-						className="transition dark:text-white hover:underline decoration-sky-500 hover:text-blue-500  p-[5px]  ">
-						Dashboard
+						href="applications"
+						className="transition text-white hover:underline decoration-sky-500 hover:text-blue-500  p-[5px]  ">
+						Applications
 					</Link>
 				</li>
 				<li>
 					<Link
-						href="explore"
-						className="transition dark:text-white hover:underline decoration-sky-500 hover:text-blue-500  p-[5px]">
-						Explore
+						href="search-jobs"
+						className="transition text-white hover:underline decoration-sky-500 hover:text-blue-500  p-[5px]">
+						Search Jobs
 					</Link>
 				</li>
 				<li className="transition px-2 py-2 mx-1 font-semibold text-sm bg-blue-500 text-white rounded-md shadow-sm hover:-translate-y-1 hover:scale-100 hover:bg-indigo-500 ease-in-out delay-150 duration-300">
