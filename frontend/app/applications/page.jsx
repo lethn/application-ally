@@ -17,17 +17,16 @@ const JobCard = ({ title, company, location, salaryRange }) => {
 	};
 
 	return (
-		<div className="border border-gray-300 p-4 rounded-md mb-4 grid grid-cols-3 gap-2">
-			<div>
+		<div className="border border-gray-300 p-4 rounded-md mb-4 text-white bg-slate-800">
 				<div>
-					<h3 className="font-bold text-blue-800">{title}</h3>
-					<p className="text-gray-700">{company}</p>
-					<p className="text-gray-700">{location}</p>
-					<p className="text-gray-700">{salaryRange}</p>
+					<h3 className="font-semibold text-blue-500">{title}</h3>
+					<p className="text-white">{company}</p>
+					<p className="text-white">{location}</p>
+					<p className="text-white">{salaryRange}</p>
 				</div>
 				<div>
 					<select
-						className="border border-gray-300 px-3 py-2 rounded-md mr-2"
+						className="border border-gray-300 p-1 rounded-md mr-4 text-black font-bold"
 						value={status}
 						onChange={handleStatusChange}
 					>
@@ -37,11 +36,10 @@ const JobCard = ({ title, company, location, salaryRange }) => {
 						<option value="Not Applied">Not Applied</option>
 						<option value="Offered">Offered</option>
 					</select>
-					<button className="border p-2 rounded-md" onClick={handleDelete}>
+					<button className="bg-slate-700 hover:bg-red-500 border p-2 rounded-md text-white" onClick={handleDelete}>
 						Delete
 					</button>
 				</div>
-			</div>
 		</div>
 	);
 };
@@ -49,36 +47,48 @@ const JobCard = ({ title, company, location, salaryRange }) => {
 
 export default function Applications() {
 	return (
-		<div>
+		<div className="bg-neutral-900">
 			<Navbar />
 
-			<div className=" grid grid-cols-4 gap-2 p-4">
+			<div className=" grid grid-cols-4 ">
 				{/* Column 1 */}
-				<div className="col-span-1 p-6 m-6">
-					<div className="border rounded-md p-4 border-gray-400 mb-4">
-						<h2 className="text-lg font-bold">Statistics</h2>
+				<div className="mt-[7rem]  flex flex-col gap-[1rem] col-span-1 p-1">
+					<div className="border rounded-lg p-3 border-gray-400  text-white">
+						<h2 className="text-lg font-bold text-white">Statistics</h2>
 						<p>Total Applications: 4</p>
 					</div>
-					<div className="border rounded-md p-4 border-gray-400 mb-4">
-						<h2 className="text-lg font-bold mb-2">Search Bar</h2>
-						<div className="flex">
+					<div className="border rounded-md p-3 border-gray-400">
+						<h2 className="text-lg font-bold mb-2 text-white">Search Bar</h2>
+						<div className="flex flex-col gap-[1rem]">
 							<input
-								className="border border-gray-300 px-3 py-2 rounded-md mr-2"
+								className="border border-gray-300 p-1 rounded-md mr-1"
 								type="text"
 								placeholder="Enter here"
 							/>
-							<button className="bg-blue-500 text-white px-4 py-2 rounded-md">Find</button>
+							<button className="bg-blue-500 hover:bg-blue-800 text-white px-4 py-2 rounded-md max-w-[50%]">
+								Find
+							</button>
 						</div>
 					</div>
 
 					<div className="border rounded-md p-4 border-gray-400 mb-4">
-						<h2 className="text-lg font-bold">Status</h2>
-						<div>
-							<button className="border p-2 m-2 rounded-md">Applied</button>
-							<button className="border p-2 m-2 rounded-md">Interview</button>
-							<button className="border p-2 m-2 rounded-md">Rejected</button>
-							<button className="border p-2 m-2 rounded-md">Not Applied</button>
-							<button className="border p-2 m-2 rounded-md">Offered</button>
+						<h2 className="text-lg font-bold text-white">Status</h2>
+						<div className="text-white">
+							<button className="border p-2 m-2 rounded-md bg-green-500">
+								Applied
+							</button>
+							<button className="border p-2 m-2 rounded-md bg-yellow-600">
+								Interview
+							</button>
+							<button className="border p-2 m-2 rounded-md bg-red-400">
+								Rejected
+							</button>
+							<button className="border p-2 m-2 rounded-md bg-neutral-600">
+								Not Applied
+							</button>
+							<button className="border p-2 m-2 rounded-md bg-sky-600">
+								Offered
+							</button>
 						</div>
 					</div>
 				</div>
@@ -91,11 +101,11 @@ export default function Applications() {
 								Applications
 							</p>
 						</div>
-						<div>
-							<button className="border rounded-md p-2 m-2 mb-4 bg-blue-500 text-white px-4 py-2 rounded-md">
+						<div className="">
+							<button className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white px-4 py-2 rounded-md">
 								Add Jobs Manually
 							</button>
-							<button className="border rounded-md p-2 m-2 mb-4 bg-blue-500 text-white px-4 py-2 rounded-md">
+							<button className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white px-4 py-2 rounded-md">
 								Looking For Jobs
 							</button>
 						</div>
