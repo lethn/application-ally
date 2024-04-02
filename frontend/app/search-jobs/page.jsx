@@ -60,7 +60,7 @@ export default function Page() {
 	const pages = pageNumber => setCurrentPage(pageNumber);
 
 	return (
-		<div className="min-h-screen w-inherit bg-neutral-900">
+		<div className="min-h-screen bg-neutral-900">
 			<Navbar />
 			<p className="gradient-text text-center text-transparent text-5xl font-bold animate-gradient mt-[4rem]">
 				Explore New Jobs
@@ -82,7 +82,7 @@ export default function Page() {
 							Location:
 						</h1>
 						<input
-							className="border border-gray-300 p-2 font-semibold rounded-md mr-1 w-[20rem] mr-3"
+							className="border border-gray-300 p-2 font-semibold rounded-md w-[20rem] mr-3"
 							type="text"
 							placeholder="Athens, GA"
 						/>
@@ -93,17 +93,21 @@ export default function Page() {
 				</div>
 			</div>
 
-			<div className=" bg-blue-800 p-4 mt-10 mx-8 rounded-lg flex flex-col gap-3">
+			<div className=" bg-blue-700 p-4 mt-10 mx-[2.5rem] sm:mx-[5rem] md:mx-[7.5rem] lg:mx-[10rem] xl:mx[15rem] rounded-lg flex flex-col gap-3">
 				{currentJobs.map((job, index) => (
-					<div key={index} className="bg-neutral-400 p-5 rounded-xl font-semibold">
+					<div
+						key={index}
+						className="bg-neutral-800 text-white p-5 rounded-xl font-semibold ">
 						<p className="">{job.title}</p>
 						<ul className="">
 							<li>{job.company}</li>
 							<li>{job.location}</li>
 							<li>{job.salary}</li>
-							<li>{job.website}</li>
+							<li><a href={job.website}>{job.website}</a></li>
 						</ul>
-						<button className="px-2 py-1 rounded-lg bg-red-700 hover:bg-red-500">Add</button>
+						<button className="px-2 py-1 rounded-lg bg-red-400 hover:bg-red-600 mt-2">
+							Add
+						</button>
 					</div>
 				))}
 				<div className="text-center font-medium text-xl text-white">
@@ -117,6 +121,7 @@ export default function Page() {
 					)}
 				</div>
 			</div>
+			<div className="h-10" id="forSpacing"></div>
 		</div>
 	);
 }

@@ -4,55 +4,58 @@
 import "@/app/globals.css";
 import Navbar from "../components/navbar";
 import { useState } from "react";
+import Modal from "../components/modal";
+import DropDown from "../components/dropDown";
 
 const JobCard = ({ title, company, location, salaryRange }) => {
-	const [status, setStatus] = useState('1');
+	const [status, setStatus] = useState("1");
 
-	const handleStatusChange = (e) => {
+	const handleStatusChange = e => {
 		setStatus(e.target.value);
 	};
 
 	const handleDelete = () => {
-		console.log('Delete job:', title);
+		console.log("Delete job:", title);
 	};
 
 	return (
 		<div className="border border-gray-300 p-4 rounded-md mb-4 text-white bg-slate-800">
-				<div>
-					<h3 className="font-semibold text-blue-500">{title}</h3>
-					<p className="text-white">{company}</p>
-					<p className="text-white">{location}</p>
-					<p className="text-white">{salaryRange}</p>
-				</div>
-				<div>
-					<select
-						className="border border-gray-300 p-1 rounded-md mr-4 text-black font-bold"
-						value={status}
-						onChange={handleStatusChange}
-					>
-						<option value="Applied">Applied</option>
-						<option value="Interview">Interview</option>
-						<option value="Rejected">Rejected</option>
-						<option value="Not Applied">Not Applied</option>
-						<option value="Offered">Offered</option>
-					</select>
-					<button className="bg-slate-700 hover:bg-red-500 border p-2 rounded-md text-white" onClick={handleDelete}>
-						Delete
-					</button>
-				</div>
+			<div>
+				<h3 className="font-semibold text-blue-500">{title}</h3>
+				<p className="text-white">{company}</p>
+				<p className="text-white">{location}</p>
+				<p className="text-white">{salaryRange}</p>
+			</div>
+			<div>
+				<select
+					className="border border-gray-300 p-1 rounded-md mr-4 text-black font-bold"
+					value={status}
+					onChange={handleStatusChange}>
+					<option value="Applied">Applied</option>
+					<option value="Interview">Interview</option>
+					<option value="Rejected">Rejected</option>
+					<option value="Not Applied">Not Applied</option>
+					<option value="Offered">Offered</option>
+				</select>
+				<button
+					className="bg-slate-700 hover:bg-red-500 border p-2 rounded-md text-white"
+					onClick={handleDelete}>
+					Delete
+				</button>
+			</div>
 		</div>
 	);
 };
 
-
 export default function Applications() {
+	const [showModal, setShowModal] = useState(false);
 	return (
 		<div className="bg-neutral-900">
 			<Navbar />
 
 			<div className=" grid grid-cols-4 ">
 				{/* Column 1 */}
-				<div className="mt-[7rem]  flex flex-col gap-[1rem] col-span-1 p-1">
+				<div className="mt-[7rem] ml-3 flex flex-col gap-[1rem] col-span-1 p-1">
 					<div className="border rounded-lg p-3 border-gray-400  text-white">
 						<h2 className="text-lg font-bold text-white">Statistics</h2>
 						<p>Total Applications: 4</p>
@@ -102,12 +105,13 @@ export default function Applications() {
 							</p>
 						</div>
 						<div className="">
-							<button className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white rounded-md">
+							<button
+								className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white rounded-md"
+								onClick={() => setShowModal(true)}>
 								Add Job Manually
 							</button>
 							<button className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white rounded-md">
 								<a href="search-jobs">Look For Jobs</a>
-								
 							</button>
 						</div>
 					</div>
@@ -140,6 +144,40 @@ export default function Applications() {
 					</div>
 				</div>
 			</div>
+			<Modal
+				isVisible={showModal}
+				onClose={() => {
+					setShowModal(false);
+				}}>
+				<form className="p-4 text-2xl flex flex-col gap-2 font-semibold">
+					<label for="fname">Job Title:</label>
+					<input
+						type="text"
+						id="title"
+						className="rounded-lg border-2 p-2 border-blue-500 font-medium"
+						name="title"></input>
+					<label for="lname">Company:</label>
+					<input
+						type="text"
+						id="company"
+						name="company"
+						className="rounded-lg border-2 p-2 border-blue-500 font-medium"></input>
+					<label for="lname">Location:</label>
+					<input
+						type="text"
+						id="location"
+						name="location"
+						className="rounded-lg border-2 p-2 border-blue-500 font-medium"></input>
+					<label for="lname">Salary:</label>
+					<input
+						type="text"
+						id="salary"
+						name="salary"
+						className="rounded-lg border-2 p-2 border-blue-500 font-medium"></input>
+					<label for="lname">Status:</label>
+					<DropDown />
+				</form>
+			</Modal>
 		</div>
 	);
 }
