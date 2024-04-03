@@ -14,6 +14,7 @@ function DropDown() {
 	const handleAdd = () => {
 		console.log("Added New Application:", title);
 	};
+	
 	return (
 		<div>
 			<select

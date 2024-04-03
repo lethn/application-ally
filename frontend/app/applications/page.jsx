@@ -7,11 +7,15 @@ import { useState } from "react";
 import Modal from "../components/Modal";
 import DropDown from "../components/DropDown";
 
-const JobCard = ({ title, company, location, salaryRange }) => {
+const JobCard = ({ title, company, location, salaryRange, website }) => {
 	const [status, setStatus] = useState("1");
 
 	const handleStatusChange = e => {
 		setStatus(e.target.value);
+	};
+
+	const handleEdit = () => {
+		console.log("Edit job:", title);
 	};
 
 	const handleDelete = () => {
@@ -19,16 +23,19 @@ const JobCard = ({ title, company, location, salaryRange }) => {
 	};
 
 	return (
-		<div className="border border-gray-300 p-4 rounded-md mb-4 text-white bg-slate-800">
+		<div className="flex border border-gray-300 p-4 rounded-md mb-4 text-white bg-slate-800 justify-between">
 			<div>
-				<h3 className="font-semibold text-blue-500">{title}</h3>
-				<p className="text-white">{company}</p>
-				<p className="text-white">{location}</p>
-				<p className="text-white">{salaryRange}</p>
+				<h3 className="font-semibold text-blue-500 text-2xl px-2 py-1">{title}</h3>
+				<p className="text-white px-2 py-1 text-lg">{company}</p>
+				<p className="text-white px-2 py-1 text-lg">{location}</p>
+				<p className="text-white px-2 py-1 text-lg pb-6">{salaryRange}</p>
+				<a className="underline text-white px-2 py-1 text-lg" href={website} target="_blank" rel="noopener noreferrer">
+					{website}
+				</a>
 			</div>
-			<div>
+			<div className="flex flex-col">
 				<select
-					className="border border-gray-300 p-1 rounded-md mr-4 text-black font-bold"
+					className="border border-gray-300 p-2 m-2 rounded-md mr-4 text-black font-bold"
 					value={status}
 					onChange={handleStatusChange}>
 					<option value="Applied">Applied</option>
@@ -38,7 +45,12 @@ const JobCard = ({ title, company, location, salaryRange }) => {
 					<option value="Offered">Offered</option>
 				</select>
 				<button
-					className="bg-slate-700 hover:bg-red-500 border p-2 rounded-md text-white"
+					className="bg-slate-700 hover:bg-orange-500 border p-2 m-2 rounded-md text-white"
+					onClick={handleEdit}>
+					Edit
+				</button>
+				<button
+					className="bg-slate-700 hover:bg-red-500 border p-2 m-2 rounded-md text-white"
 					onClick={handleDelete}>
 					Delete
 				</button>
@@ -53,10 +65,10 @@ export default function Applications() {
 		<div className="bg-neutral-900">
 			<Navbar />
 
-			<div className=" grid grid-cols-4 ">
+			<div className="grid grid-cols-4 pb-36 pr-36 pl-36">
 				{/* Column 1 */}
 				<div className="mt-[7rem] ml-3 flex flex-col gap-[1rem] col-span-1 p-1">
-					<div className="border rounded-lg p-3 border-gray-400  text-white">
+					<div className="border rounded-lg p-3 border-gray-400 text-white">
 						<h2 className="text-lg font-bold text-white">Statistics</h2>
 						<p>Total Applications: 4</p>
 					</div>
@@ -122,24 +134,28 @@ export default function Applications() {
 							company="TechCo"
 							location="San Francisco, CA"
 							salaryRange="$80,000 - $120,000"
+							website="https://example.com/"
 						/>
 						<JobCard
 							title="Product Manager"
 							company="StartupX"
 							location="New York, NY"
 							salaryRange="$90,000 - $130,000"
+							website="https://example.com/"
 						/>
 						<JobCard
 							title="Data Scientist"
 							company="Data Corp"
 							location="Seattle, WA"
 							salaryRange="$100,000 - $140,000"
+							website="https://example.com/"
 						/>
 						<JobCard
 							title="UX Designer"
 							company="Design Studio"
 							location="Austin, TX"
 							salaryRange="$70,000 - $110,000"
+							website="https://example.com/"
 						/>
 					</div>
 				</div>
@@ -149,31 +165,42 @@ export default function Applications() {
 				onClose={() => {
 					setShowModal(false);
 				}}>
-				<form className="p-4 text-2xl flex flex-col gap-2 font-semibold">
+				<form className="p-4 text-xl flex flex-col gap-2 font-semibold">
 					<label for="fname">Job Title:</label>
 					<input
 						type="text"
 						id="title"
 						className="rounded-lg border-2 p-2 border-blue-500 font-medium"
-						name="title"></input>
+						name="title">
+					</input>
 					<label for="lname">Company:</label>
 					<input
 						type="text"
 						id="company"
 						name="company"
-						className="rounded-lg border-2 p-2 border-blue-500 font-medium"></input>
+						className="rounded-lg border-2 p-2 border-blue-500 font-medium">
+					</input>
 					<label for="lname">Location:</label>
-					<input
-						type="text"
-						id="location"
-						name="location"
-						className="rounded-lg border-2 p-2 border-blue-500 font-medium"></input>
-					<label for="lname">Salary:</label>
 					<input
 						type="text"
 						id="salary"
 						name="salary"
-						className="rounded-lg border-2 p-2 border-blue-500 font-medium"></input>
+						className="rounded-lg border-2 p-2 border-blue-500 font-medium">
+					</input>
+					<label for="lname">Salary:</label>
+					<input
+						type="text"
+						id="website"
+						name="website"
+						className="rounded-lg border-2 p-2 border-blue-500 font-medium">
+					</input>
+					<label for="lname">Website:</label>
+					<input
+						type="text"
+						id="salary"
+						name="salary"
+						className="rounded-lg border-2 p-2 border-blue-500 font-medium">
+					</input>
 					<label for="lname">Status:</label>
 					<DropDown />
 				</form>

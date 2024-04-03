@@ -12,13 +12,13 @@ function Modal(props) {
 			className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center"
 			id="wrapper"
 			onClick={handleClose}>
-			<div className="w-[600px] flex felx-col">
+			<div className="w-[600px] flex flex-col">
 				<button
-					className="text-white text-xl place-self-end m-5 font-bold bg-red-500 p-2 rounded"
+					className="text-white text-2xl place-self-end my-4  bg-red-500 px-3.5 py-2.5 rounded"
 					onClick={() => props.onClose()}>
 					X
 				</button>
-				<div className="bg-white p-2 rounded ">{props.children}</div>
+				<div className="bg-white p-2 rounded w-full">{props.children}</div>
 			</div>
 		</div>
 	);
