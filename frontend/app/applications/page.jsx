@@ -2,10 +2,10 @@
 
 "use client";
 import "@/app/globals.css";
-import Navbar from "../components/navbar";
+import Navbar from "../components/Navbar";
 import { useState } from "react";
-import Modal from "../components/modal";
-import DropDown from "../components/dropDown";
+import Modal from "../components/Modal";
+import DropDown from "../components/DropDown";
 
 const JobCard = ({ title, company, location, salaryRange }) => {
 	const [status, setStatus] = useState("1");

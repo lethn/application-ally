@@ -1,7 +1,7 @@
 /** @format */
 "use client";
 import "@/app/globals.css";
-import Navbar from "@/app/components/navbar";
+import Navbar from "@/app/components/Navbar";
 import { useState } from "react";
 
 export default function Page() {

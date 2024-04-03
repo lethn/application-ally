@@ -1,8 +1,8 @@
 /** @format */
 "use client";
 import "@/app/globals.css";
-import Navbar from "../components/navbar";
-import SignUpForm from "../components/signUpForm";
+import Navbar from "../components/Navbar";
+import SignUpForm from "../components/SignUpForm";
 
 export default function Page() {
 	return (

@@ -1,8 +1,8 @@
 /** @format */
 "use client";
 import "@/app/globals.css";
-import Navbar from "./components/navbar";
-import Header from "./components/header";
+import Navbar from "./components/Navbar";
+import Header from "./components/Header";
 
 export default function Home() {
 	return (

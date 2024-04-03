@@ -2,8 +2,8 @@
 "use client";
 import "@/app/globals.css";
 
-import Navbar from "../components/navbar";
-import SignInForm from "../components/signInForm";
+import Navbar from "../components/Navbar";
+import SignInForm from "../components/SignInForm";
 
 export default function Page() {
 	return (
