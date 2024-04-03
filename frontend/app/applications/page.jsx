@@ -4,6 +4,7 @@
 import "@/app/globals.css";
 import Navbar from "../components/navbar";
 import { useState } from "react";
+import Link from "next/link";
 import Modal from "../components/modal";
 import JobsCardList from "../components/jobsCardList";
 import AddJobs from "../components/addJobs";
@@ -73,6 +74,14 @@ export default function Applications() {
 		setJobs((prevJobs) => {
 			return [job, ...prevJobs];
 		});
+		setShowModal(false);
+		console.log(job);
+	};
+
+	const deleteJobsHandler = (id) => {
+		setJobs((prevJobs) => {
+			return prevJobs.filter(job => job.id !== id);
+		});
 	};
 
 	return (
@@ -134,15 +143,15 @@ export default function Applications() {
 							<button
 								className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white rounded-md"
 								onClick={() => setShowModal(true)}>
-								Add Job Manually
+								Add Job
 							</button>
 							<button className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white rounded-md">
-								<a href="search-jobs">Look For Jobs</a>
+								<Link href="search-jobs">Explore New Jobs</Link>
 							</button>
 						</div>
 					</div>
 
-					<JobsCardList items={jobs} />
+					<JobsCardList items={jobs} onDeleteJobs={deleteJobsHandler} />
 				</div>
 			</div>
 

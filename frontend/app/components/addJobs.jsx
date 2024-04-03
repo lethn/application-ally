@@ -6,7 +6,7 @@ const AddJobs = (props) => {
     const [inputLocation, setInputLocation] = useState('');
     const [inputSalary, setInputSalary] = useState('');
     const [inputWebsite, setInputWebsite] = useState('');
-    const [inputStatus, setInputStatus] = useState('');
+    const [inputStatus, setInputStatus] = useState('Applied');
 
     const titleChangeHandler = (event) => {
         setInputTitle(event.target.value);
@@ -33,7 +33,7 @@ const AddJobs = (props) => {
     };
 
     const onAddHandler = () => {
-        console.log("Added New Application:", title);
+        console.log("Added New Application:", props.title);
     };
 
     const onSubmitHandler = (event) => {
@@ -56,19 +56,19 @@ const AddJobs = (props) => {
         setInputLocation('');
         setInputSalary('');
         setInputWebsite('');
-        setInputStatus('');
+        setInputStatus('Applied');
     };
 
     return (
         <form
-            className="p-4 text-xl flex flex-col gap-2 font-semibold"
+            className="p-4 text-xl flex flex-col gap-2 font-semibold items-start"
             onSubmit={onSubmitHandler}
         >
             <label>Job Title:</label>
             <input
                 id="title"
                 type="text"
-                className="rounded-lg border-2 p-2 border-blue-500 font-medium"
+                className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputTitle}
                 onChange={titleChangeHandler}
             />
@@ -77,7 +77,7 @@ const AddJobs = (props) => {
             <input
                 id="company"
                 type="text"
-                className="rounded-lg border-2 p-2 border-blue-500 font-medium"
+                className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputCompany}
                 onChange={companyChangeHandler}
             />
@@ -86,7 +86,7 @@ const AddJobs = (props) => {
             <input
                 id="location"
                 type="text"
-                className="rounded-lg border-2 p-2 border-blue-500 font-medium"
+                className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputLocation}
                 onChange={locationChangeHandler}
             />
@@ -94,7 +94,7 @@ const AddJobs = (props) => {
             <input
                 id="salary"
                 type="text"
-                className="rounded-lg border-2 p-2 border-blue-500 font-medium"
+                className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputSalary}
                 onChange={salaryChangeHandler}
             />
@@ -103,15 +103,16 @@ const AddJobs = (props) => {
             <input
                 id="website"
                 type="text"
-                className="rounded-lg border-2 p-2 border-blue-500 font-medium"
+                className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputWebsite}
                 onChange={websiteChangeHandler}
             />
 
             {/* Dropdown */}
-            <div>
+            <div className="py-2">
+                <label>Status:</label>
                 <select
-                    className="border border-gray-300 p-1 text-xl rounded-md mr-4 text-black"
+                    className="border border-gray-300 p-2 ml-2 m-auto text-xl rounded-md text-black"
                     value={inputStatus}
                     onChange={statusChangeHandler}>
                     <option value="Applied">Applied</option>
@@ -120,14 +121,14 @@ const AddJobs = (props) => {
                     <option value="Not Applied">Not Applied</option>
                     <option value="Offered">Offered</option>
                 </select>
-                <button
-                    className="bg-slate-700 hover:bg-green-500 text-xl border px-3 py-1 rounded-md text-white"
-                    onClick={onAddHandler}
-                >
-                    Add
-                </button>
             </div>
 
+            <button
+                className="bg-slate-700 hover:bg-green-500 text-xl border p-2 my-auto self-end rounded-md text-white"
+                onClick={onAddHandler}
+            >
+                Add Job
+            </button>
         </form>
     );
 };
