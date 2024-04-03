@@ -18,7 +18,7 @@ function Footer() {
 				Copyright {new Date().getFullYear()} Application Ally
 			</p>
 			<span className="text-xs pb-5">
-				Created by: Jay Patel, Thuann Luu, Yang Chen, London Ho
+				Created by: Jay Patel, Thuan Luu, Yang Chen, London Ho
 			</span>
 		</div>
 	);

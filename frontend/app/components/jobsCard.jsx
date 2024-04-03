@@ -1,0 +1,56 @@
+import React, { useState } from 'react';
+
+const JobsCard = ({ title, company, location, salary, website, status}) => {
+    const [inputStatus, setStatus] = useState(status);
+
+    const statusChangeHandler = (event) => {
+        setStatus(event.target.value);
+    };
+
+    const handleEdit = () => {
+        console.log("Edit job:", title);
+    };
+
+    const handleDelete = () => {
+        console.log("Delete job:", title);
+    };
+    
+    return (
+        <div className="flex border border-gray-300 p-4 rounded-md mb-4 text-white bg-slate-800 justify-between">
+            <div>
+                <h3 className="font-semibold text-blue-500 text-2xl px-2 py-1">{title}</h3>
+                <p className="text-white px-2 py-1 text-lg">{company}</p>
+                <p className="text-white px-2 py-1 text-lg">{location}</p>
+                <p className="text-white px-2 py-1 text-lg pb-6">{salary}</p>
+                <a className="underline text-white px-2 py-1 text-lg" href={website} target="_blank" rel="noopener noreferrer">
+                    {website}
+                </a>
+            </div>
+            <div className="flex flex-col">
+                <select
+                    className="border border-gray-300 p-2 m-2 rounded-md mr-4 text-black font-bold"
+                    value={inputStatus}
+                    onChange={statusChangeHandler}>
+                    <option value="Applied">Applied</option>
+                    <option value="Interview">Interview</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Not Applied">Not Applied</option>
+                    <option value="Offered">Offered</option>
+                </select>
+                <button
+                    className="bg-slate-700 hover:bg-orange-500 border p-2 m-2 rounded-md text-white"
+                    onClick={handleEdit}>
+                    Edit
+                </button>
+                <button
+                    className="bg-slate-700 hover:bg-red-500 border p-2 m-2 rounded-md text-white"
+                    onClick={handleDelete}>
+                    Delete
+                </button>
+            </div>
+        </div>
+    );
+
+}
+
+export default JobsCard;

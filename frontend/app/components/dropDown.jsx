@@ -5,10 +5,10 @@ import React from "react";
 import { useState } from "react";
 
 function DropDown() {
-	const [status, setStatus] = useState("1");
+	const [inputStatus, setInputStatus] = useState('');
 
-	const handleStatusChange = e => {
-		setStatus(e.target.value);
+	const statusChangeHandler = (event) => {
+		setInputStatus(event.target.value);
 	};
 
 	const handleAdd = () => {
@@ -19,8 +19,8 @@ function DropDown() {
 		<div>
 			<select
 				className="border border-gray-300 p-1 text-xl rounded-md mr-4 text-black"
-				value={status}
-				onChange={handleStatusChange}>
+				value={inputStatus}
+				onChange={statusChangeHandler}>
 				<option value="Applied">Applied</option>
 				<option value="Interview">Interview</option>
 				<option value="Rejected">Rejected</option>

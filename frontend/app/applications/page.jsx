@@ -5,62 +5,76 @@ import "@/app/globals.css";
 import Navbar from "../components/navbar";
 import { useState } from "react";
 import Modal from "../components/modal";
-import DropDown from "../components/dropDown";
-
-const JobCard = ({ title, company, location, salaryRange, website }) => {
-	const [status, setStatus] = useState("1");
-
-	const handleStatusChange = e => {
-		setStatus(e.target.value);
-	};
-
-	const handleEdit = () => {
-		console.log("Edit job:", title);
-	};
-
-	const handleDelete = () => {
-		console.log("Delete job:", title);
-	};
-
-	return (
-		<div className="flex border border-gray-300 p-4 rounded-md mb-4 text-white bg-slate-800 justify-between">
-			<div>
-				<h3 className="font-semibold text-blue-500 text-2xl px-2 py-1">{title}</h3>
-				<p className="text-white px-2 py-1 text-lg">{company}</p>
-				<p className="text-white px-2 py-1 text-lg">{location}</p>
-				<p className="text-white px-2 py-1 text-lg pb-6">{salaryRange}</p>
-				<a className="underline text-white px-2 py-1 text-lg" href={website} target="_blank" rel="noopener noreferrer">
-					{website}
-				</a>
-			</div>
-			<div className="flex flex-col">
-				<select
-					className="border border-gray-300 p-2 m-2 rounded-md mr-4 text-black font-bold"
-					value={status}
-					onChange={handleStatusChange}>
-					<option value="Applied">Applied</option>
-					<option value="Interview">Interview</option>
-					<option value="Rejected">Rejected</option>
-					<option value="Not Applied">Not Applied</option>
-					<option value="Offered">Offered</option>
-				</select>
-				<button
-					className="bg-slate-700 hover:bg-orange-500 border p-2 m-2 rounded-md text-white"
-					onClick={handleEdit}>
-					Edit
-				</button>
-				<button
-					className="bg-slate-700 hover:bg-red-500 border p-2 m-2 rounded-md text-white"
-					onClick={handleDelete}>
-					Delete
-				</button>
-			</div>
-		</div>
-	);
-};
+import JobsCardList from "../components/jobsCardList";
+import AddJobs from "../components/addJobs";
 
 export default function Applications() {
+	const jobs_array = [
+		{
+			id: "j1",
+			title: "Software Engineer",
+			company: "TechCo",
+			location: "San Francisco, CA",
+			salary: "$80,000 - $120,000",
+			website: "https://example.com/",
+			status: "Applied"
+		},
+		{
+			id: "j2",
+			title: "Product Manager",
+			company: "StartupX",
+			location: "New York, NY",
+			salary: "$90,000 - $130,000",
+			website: "https://example.com/",
+			status: "Offered"
+		},
+		{
+			id: "j3",
+			title: "Data Scientist",
+			company: "Data Corp",
+			location: "Seattle, WA",
+			salary: "$100,000 - $140,000",
+			website: "https://example.com/",
+			status: "Interview"
+		},
+		{
+			id: "j4",
+			title: "UX Designer",
+			company: "Design Studio",
+			location: "Austin, TX",
+			salary: "$70,000 - $110,000",
+			website: "https://example.com/",
+			status: "Rejected"
+		},
+		{
+			id: "j5",
+			title: "Frontend Developer",
+			company: "Meta",
+			location: "San Francisco, CA",
+			salaryRange: "$90,000 - $120,000",
+			website: "https://example.com/",
+			status: "Not Applied"
+		},
+		{
+			id: "j6",
+			title: "Marketing Manager",
+			company: "Marketing Agency",
+			location: "Los Angeles, CA",
+			salaryRange: "$60,000 - $100,000",
+			website: "https://example.com/",
+			status: "Applied"
+		}
+	];
+
+	const [jobs, setJobs] = useState(jobs_array);
 	const [showModal, setShowModal] = useState(false);
+
+	const addJobsHandler = (job) => {
+		setJobs((prevJobs) => {
+			return [job, ...prevJobs];
+		});
+	};
+
 	return (
 		<div className="bg-neutral-900">
 			<Navbar />
@@ -128,83 +142,18 @@ export default function Applications() {
 						</div>
 					</div>
 
-					<div className="grid gap-4 border border-gray-400 rounded-md p-6 m-5 mt-1">
-						<JobCard
-							title="Software Engineer"
-							company="TechCo"
-							location="San Francisco, CA"
-							salaryRange="$80,000 - $120,000"
-							website="https://example.com/"
-						/>
-						<JobCard
-							title="Product Manager"
-							company="StartupX"
-							location="New York, NY"
-							salaryRange="$90,000 - $130,000"
-							website="https://example.com/"
-						/>
-						<JobCard
-							title="Data Scientist"
-							company="Data Corp"
-							location="Seattle, WA"
-							salaryRange="$100,000 - $140,000"
-							website="https://example.com/"
-						/>
-						<JobCard
-							title="UX Designer"
-							company="Design Studio"
-							location="Austin, TX"
-							salaryRange="$70,000 - $110,000"
-							website="https://example.com/"
-						/>
-					</div>
+					<JobsCardList items={jobs} />
 				</div>
 			</div>
+
 			<Modal
 				isVisible={showModal}
 				onClose={() => {
 					setShowModal(false);
 				}}>
-				<form className="p-4 text-xl flex flex-col gap-2 font-semibold">
-					<label for="fname">Job Title:</label>
-					<input
-						type="text"
-						id="title"
-						className="rounded-lg border-2 p-2 border-blue-500 font-medium"
-						name="title">
-					</input>
-					<label for="lname">Company:</label>
-					<input
-						type="text"
-						id="company"
-						name="company"
-						className="rounded-lg border-2 p-2 border-blue-500 font-medium">
-					</input>
-					<label for="lname">Location:</label>
-					<input
-						type="text"
-						id="salary"
-						name="salary"
-						className="rounded-lg border-2 p-2 border-blue-500 font-medium">
-					</input>
-					<label for="lname">Salary:</label>
-					<input
-						type="text"
-						id="website"
-						name="website"
-						className="rounded-lg border-2 p-2 border-blue-500 font-medium">
-					</input>
-					<label for="lname">Website:</label>
-					<input
-						type="text"
-						id="salary"
-						name="salary"
-						className="rounded-lg border-2 p-2 border-blue-500 font-medium">
-					</input>
-					<label for="lname">Status:</label>
-					<DropDown />
-				</form>
+				<AddJobs onAddJobs={addJobsHandler} />
 			</Modal>
+
 		</div>
 	);
 }
