@@ -1,7 +1,7 @@
 /** @format */
 
 import React from "react";
-import Home from "./Home";
+import Home from "./home";
 
 function Header() {
 	return (

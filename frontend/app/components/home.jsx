@@ -1,10 +1,10 @@
 /** @format */
 import Iframe from "react-iframe";
 import React from "react";
-import Footer from "./Footer";
-import Brief from "./Brief";
-import Goal from "./Goal";
-import Header from "./Header";
+import Footer from "./footer";
+import Brief from "./brief";
+import Goal from "./goal";
+import Header from "./header";
 
 function Home() {
 	return (
