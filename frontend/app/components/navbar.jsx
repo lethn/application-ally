@@ -4,7 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import clogo from "@/app/assets/logo.png";
 
-export default function Navbar() {
+export default function Navbar()
+{
+	
 	return (
 		<div id="navbarDiv">
 			<ul className="navbar">

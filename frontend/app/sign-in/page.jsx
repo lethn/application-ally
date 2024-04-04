@@ -4,8 +4,10 @@ import "@/app/globals.css";
 
 import Navbar from "../components/navbar";
 import SignInForm from "../components/signInForm";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+	const router = useRouter();
 	return (
 		<main>
 			<div className="min-h-screen bg-neutral-900">
@@ -16,7 +18,9 @@ export default function Page() {
 					</p>
 				</div>
 				<div className="flex justify-center">
-				<SignInForm/></div>
+					<SignInForm
+					/>
+				</div>
 			</div>
 		</main>
 	);

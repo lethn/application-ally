@@ -11,7 +11,9 @@ function DropDown() {
 		setStatus(e.target.value);
 	};
 
-	const handleAdd = () => {
+	const handleAdd = () =>
+	{
+		
 		console.log("Added New Application:", title);
 	};
 	return (
