@@ -30,7 +30,7 @@ function Brief(props) {
 				width={500}
 				height={500}
 				alt="picture"
-				className="rounded-lg w-[9rem] sm:w-[12rem] md:w-[18rem]"
+				className="rounded-lg w-full aspect-square"
 			/>
 			<div className="content-center text-center mx-[0.5rem] sm:mx-[1rem] md:mx-[2rem] lg:mx-[4rem] xl:mx-[5rem]">
 				<span className=" text-white">{props.info}</span>

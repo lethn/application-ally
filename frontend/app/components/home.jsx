@@ -58,9 +58,8 @@ function Home() {
 			<Iframe
 				url="https://www.youtube.com/embed/9rW6cROYBzY?si=d5uO7U0Nh_MEJFsr"
 				width=""
-				height=""
 				id=""
-				className="mb-20 w-[20rem] sm:w-[40rem] lg:w-[60rem] h-[40vh]"
+				className="mb-20 mx-[8rem] aspect-video w-[75%]"
 				display="block"
 				position=""
 				allow="accelerometer autoplay clipboard-write encrypted-media gyroscope picture-in-picture web-share"
@@ -90,7 +89,6 @@ function Home() {
 					}
 				/>
 			</div>
-
 			<Footer />
 		</div>
 	);

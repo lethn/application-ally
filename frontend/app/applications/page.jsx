@@ -136,18 +136,18 @@ export default function Applications() {
 			<div className="bg-neutral-900">
 				<Navbar />
 
-				<div className="grid grid-cols-4 pb-36 pr-36 pl-36">
+				<div className="grid grid-cols-4 mx-[2rem]">
 					{/* Column 1 */}
 					<div className="mt-[7rem] ml-3 flex flex-col gap-[1rem] col-span-1 p-1">
-						<div className="border rounded-lg p-3 border-gray-400 text-white">
+						<div className="border rounded-lg p-3 border-gray-400 text-white bg-slate-600">
 							<h2 className="text-lg font-bold text-white">Statistics</h2>
 							<p>Total Applications: 4</p>
 						</div>
-						<div className="border rounded-md p-3 border-gray-400">
+						<div className="border rounded-md p-3 border-gray-400 bg-slate-600">
 							<h2 className="text-lg font-bold mb-2 text-white">Search Bar</h2>
 							<div className="flex flex-col gap-[1rem]">
 								<input
-									className="border border-gray-300 p-1 rounded-md mr-1"
+									className="border border-gray-300 p-1 rounded-md mr-1 p-2"
 									type="text"
 									placeholder="Enter here"
 								/>
@@ -157,7 +157,7 @@ export default function Applications() {
 							</div>
 						</div>
 
-						<div className="border rounded-md p-4 border-gray-400 mb-4">
+						<div className="border rounded-md p-4 border-gray-400 mb-4 bg-slate-600">
 							<h2 className="text-lg font-bold text-white">Status</h2>
 							<div className="text-white">
 								<button className="border p-2 m-2 rounded-md bg-green-500">
@@ -199,20 +199,29 @@ export default function Applications() {
 							</div>
 						</div>
 
-					<JobsCardList items={jobs} onDeleteJobs={deleteJobsHandler} onIsEditJobs={isEditJobs} onStatusChange={updateJobStatus}/>
+						<JobsCardList
+							items={jobs}
+							onDeleteJobs={deleteJobsHandler}
+							onIsEditJobs={isEditJobs}
+							onStatusChange={updateJobStatus}
+						/>
+					</div>
 				</div>
-			</div>
 
-			<Modal
-				isVisible={showModal}
-				onClose={resetModalState}>
-				{editJobs ? (
-					<EditJobs job={editJobsData} onEditJobs={editJobsHandler} onClose={() => setShowModal(false)} />
-				) : (
-					<AddJobs onAddJobs={addJobsHandler} onClose={() => setShowModal(false)} />
-				)}
-			</Modal>
-
+				<Modal isVisible={showModal} onClose={resetModalState}>
+					{editJobs ? (
+						<EditJobs
+							job={editJobsData}
+							onEditJobs={editJobsHandler}
+							onClose={() => setShowModal(false)}
+						/>
+					) : (
+						<AddJobs
+							onAddJobs={addJobsHandler}
+							onClose={() => setShowModal(false)}
+						/>
+					)}
+				</Modal>
 				<Footer />
 			</div>
 		);
