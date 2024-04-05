@@ -4,6 +4,13 @@ import React, { createContext, useState } from "react";
 
 const AuthContext = createContext();
 
+const authenicatedUsers = [
+	{
+		user: "exampleUser",
+		passname: "examplePassword"
+	}
+];
+
 const AuthProvider = ({ children }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -14,4 +21,4 @@ const AuthProvider = ({ children }) => {
 	);
 };
 
-export { AuthContext, AuthProvider };
+export { AuthContext, AuthProvider, authenicatedUsers };

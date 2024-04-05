@@ -8,6 +8,7 @@ import Link from "next/link";
 import Modal from "../components/modal";
 import JobsCardList from "../components/jobsCardList";
 import AddJobs from "../components/addJobs";
+import Footer from "@/app/components/footer";
 
 export default function Applications() {
 	const jobs_array = [
@@ -70,16 +71,16 @@ export default function Applications() {
 	const [jobs, setJobs] = useState(jobs_array);
 	const [showModal, setShowModal] = useState(false);
 
-	const addJobsHandler = (job) => {
-		setJobs((prevJobs) => {
+	const addJobsHandler = job => {
+		setJobs(prevJobs => {
 			return [job, ...prevJobs];
 		});
 		setShowModal(false);
 		console.log(job);
 	};
 
-	const deleteJobsHandler = (id) => {
-		setJobs((prevJobs) => {
+	const deleteJobsHandler = id => {
+		setJobs(prevJobs => {
 			return prevJobs.filter(job => job.id !== id);
 		});
 	};
@@ -139,7 +140,7 @@ export default function Applications() {
 								Applications
 							</p>
 						</div>
-						<div className="">
+						<div>
 							<button
 								className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white rounded-md"
 								onClick={() => setShowModal(true)}>
@@ -163,6 +164,7 @@ export default function Applications() {
 				<AddJobs onAddJobs={addJobsHandler} />
 			</Modal>
 
+			<Footer />
 		</div>
 	);
 }

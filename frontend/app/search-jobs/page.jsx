@@ -3,6 +3,7 @@
 import "@/app/globals.css";
 import Navbar from "@/app/components/navbar";
 import { useState } from "react";
+import Footer from "@/app/components/footer"
 
 export default function Page() {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -93,7 +94,7 @@ export default function Page() {
 				</div>
 			</div>
 
-			<div className=" bg-blue-700 p-4 mt-10 mx-[2.5rem] sm:mx-[5rem] md:mx-[7.5rem] lg:mx-[10rem] xl:mx[15rem] rounded-lg flex flex-col gap-3">
+			<div className=" bg-sky-900 p-4 mt-10 mx-[2.5rem] sm:mx-[5rem] md:mx-[7.5rem] lg:mx-[10rem] xl:mx[15rem] rounded-lg flex flex-col gap-3">
 				{currentJobs.map((job, index) => (
 					<div
 						key={index}
@@ -121,7 +122,8 @@ export default function Page() {
 					)}
 				</div>
 			</div>
-			<div className="h-10" id="forSpacing"></div>
+			<Footer/>
+
 		</div>
 	);
 }

@@ -1,13 +1,12 @@
 /** @format */
-"use client"
 import "@/app/globals.css";
 import { montserrat } from "@/app/components/fonts";
 import { AuthProvider } from "./contexts/user";
 
-// export const metadata = {
-// 	title: "Application Ally",
-// 	description: "Your personalized job and internship applications tracker"
-// };
+export const metadata = {
+	title: "Application Ally",
+	description: "Your personalized job and internship applications tracker"
+};
 
 export default function RootLayout({ children }) {
 	return (

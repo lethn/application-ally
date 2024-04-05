@@ -17,7 +17,7 @@ function Header() {
 						width={500}
 						height={500}
 						alt="Company Logo"
-						className="mx-auto mt-14 w-[10rem] sm:w-[15rem] rounded-lg "
+						className="mx-auto mt-14 w-[10rem] sm:w-[15rem] md:w-[18rem] lg:w-[20rem] rounded-lg "
 					/>
 				</div>
 				<h1 className="gradient-text text-transparent text-5xl font-bold animate-gradient mt-[3rem] mb-[3rem] text-center">
