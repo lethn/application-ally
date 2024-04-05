@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
-const AddJobs = (props) => {
-    const [inputTitle, setInputTitle] = useState('');
-    const [inputCompany, setInputCompany] = useState('');
-    const [inputLocation, setInputLocation] = useState('');
-    const [inputSalary, setInputSalary] = useState('');
-    const [inputWebsite, setInputWebsite] = useState('');
-    const [inputStatus, setInputStatus] = useState('Applied');
+const EditJobs = (props) => {
+    const [inputId, setInputId] = useState(props.job.id);
+    const [inputTitle, setInputTitle] = useState(props.job.title);
+    const [inputCompany, setInputCompany] = useState(props.job.company);
+    const [inputLocation, setInputLocation] = useState(props.job.location);
+    const [inputSalary, setInputSalary] = useState(props.job.salary);
+    const [inputWebsite, setInputWebsite] = useState(props.job.website);
+    const [inputStatus, setInputStatus] = useState(props.job.status);
 
     const titleChangeHandler = (event) => {
         setInputTitle(event.target.value);
@@ -34,14 +35,9 @@ const AddJobs = (props) => {
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
-        
-        if (!inputTitle && !inputCompany && !inputLocation && !inputSalary && !inputWebsite) {
-            props.onClose();
-            return;
-        }
-        
+
         const jobData = {
-            id: Math.random().toString(),
+            id: inputId,
             title: inputTitle,
             company: inputCompany,
             location: inputLocation,
@@ -50,9 +46,9 @@ const AddJobs = (props) => {
             status: inputStatus
         };
 
-        console.log("Added New Application");
-        props.onAddJobs(jobData);
-        
+        console.log("Updated Application");
+        props.onEditJobs(jobData);
+
         setInputTitle('');
         setInputCompany('');
         setInputLocation('');
@@ -73,6 +69,7 @@ const AddJobs = (props) => {
                 className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputTitle}
                 onChange={titleChangeHandler}
+                required
             />
 
             <label>Company:</label>
@@ -129,10 +126,10 @@ const AddJobs = (props) => {
                 className="bg-slate-700 hover:bg-green-500 text-xl border p-2 my-auto self-end rounded-md text-white"
                 type="submit"
             >
-                Add Job
+                Update Job
             </button>
         </form>
     );
 };
 
-export default AddJobs;
+export default EditJobs;

@@ -4,11 +4,14 @@ const JobsCard = (props) => {
     const [inputStatus, setStatus] = useState(props.status);
 
     const statusChangeHandler = (event) => {
-        setStatus(event.target.value);
-        console.log(event.target.value);
+        const newStatus = event.target.value;
+        setStatus(newStatus);
+        props.onStatusChange(props.id, newStatus);
+        console.log(newStatus);
     };
 
     const handleEdit = () => {
+        props.onIsEditJobs(props);
         console.log("Edit job:", props.title);
     };
 

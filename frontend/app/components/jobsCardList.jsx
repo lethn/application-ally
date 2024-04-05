@@ -8,13 +8,15 @@ const JobsCardList = (props) => {
                 <JobsCard
                     key={job.id}
                     id={job.id}
-                    title = {job.title}
-                    company = {job.company}
-                    location = {job.location}
-                    salary = {job.salary}
-                    website = {job.website}
-                    status = {job.status}
-                    onDeleteJobs = {props.onDeleteJobs}
+                    title={job.title}
+                    company={job.company}
+                    location={job.location}
+                    salary={job.salary}
+                    website={job.website}
+                    status={job.status}
+                    onDeleteJobs={props.onDeleteJobs}
+                    onIsEditJobs={props.onIsEditJobs}
+                    onStatusChange={props.onStatusChange}
                 />
             ))}
         </div>

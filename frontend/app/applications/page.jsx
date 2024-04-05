@@ -8,6 +8,7 @@ import Link from "next/link";
 import Modal from "../components/modal";
 import JobsCardList from "../components/jobsCardList";
 import AddJobs from "../components/addJobs";
+import EditJobs from "../components/editJobs";
 
 export default function Applications() {
 	const jobs_array = [
@@ -69,6 +70,8 @@ export default function Applications() {
 
 	const [jobs, setJobs] = useState(jobs_array);
 	const [showModal, setShowModal] = useState(false);
+	const [editJobs, setEditJobs] = useState(false);
+	const [editJobsData, setEditJobsData] = useState('');
 
 	const addJobsHandler = (job) => {
 		setJobs((prevJobs) => {
@@ -78,10 +81,50 @@ export default function Applications() {
 		console.log(job);
 	};
 
+	const isEditJobs = (job) => {
+		setEditJobs(true);
+		setEditJobsData(job);
+		console.log(job);
+		setShowModal(true);
+	};
+
+	const editJobsHandler = (editedJob) => {
+		setJobs(prevJobs => {
+			return prevJobs.map(job => {
+				if (job.id === editedJob.id) {
+					return editedJob;
+				} else {
+					return job;
+				}
+			});
+		});
+
+		resetModalState();
+		console.log(editedJob);
+	};
+
 	const deleteJobsHandler = (id) => {
 		setJobs((prevJobs) => {
 			return prevJobs.filter(job => job.id !== id);
 		});
+	};
+
+	const updateJobStatus = (id, newStatus) => {
+		setJobs(prevJobs => {
+			return prevJobs.map(job => {
+				if (job.id === id) {
+					return { ...job, status: newStatus };
+				} else {
+					return job;
+				}
+			});
+		});
+	};
+
+	const resetModalState = () => {
+		setEditJobs(false);
+		setEditJobsData(null);
+		setShowModal(false);
 	};
 
 	return (
@@ -151,16 +194,18 @@ export default function Applications() {
 						</div>
 					</div>
 
-					<JobsCardList items={jobs} onDeleteJobs={deleteJobsHandler} />
+					<JobsCardList items={jobs} onDeleteJobs={deleteJobsHandler} onIsEditJobs={isEditJobs} onStatusChange={updateJobStatus}/>
 				</div>
 			</div>
 
 			<Modal
 				isVisible={showModal}
-				onClose={() => {
-					setShowModal(false);
-				}}>
-				<AddJobs onAddJobs={addJobsHandler} />
+				onClose={resetModalState}>
+				{editJobs ? (
+					<EditJobs job={editJobsData} onEditJobs={editJobsHandler} onClose={() => setShowModal(false)} />
+				) : (
+					<AddJobs onAddJobs={addJobsHandler} onClose={() => setShowModal(false)} />
+				)}
 			</Modal>
 
 		</div>
