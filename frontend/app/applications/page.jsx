@@ -8,9 +8,14 @@ import Link from "next/link";
 import Modal from "../components/modal";
 import JobsCardList from "../components/jobsCardList";
 import AddJobs from "../components/addJobs";
+import Footer from "@/app/components/footer";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/user";
 import EditJobs from "../components/editJobs";
 
 export default function Applications() {
+	const { isLoggedIn } = useContext(AuthContext);
+
 	const jobs_array = [
 		{
 			id: "j1",
@@ -73,8 +78,8 @@ export default function Applications() {
 	const [editJobs, setEditJobs] = useState(false);
 	const [editJobsData, setEditJobsData] = useState('');
 
-	const addJobsHandler = (job) => {
-		setJobs((prevJobs) => {
+	const addJobsHandler = job => {
+		setJobs(prevJobs => {
 			return [job, ...prevJobs];
 		});
 		setShowModal(false);
@@ -103,8 +108,8 @@ export default function Applications() {
 		console.log(editedJob);
 	};
 
-	const deleteJobsHandler = (id) => {
-		setJobs((prevJobs) => {
+	const deleteJobsHandler = id => {
+		setJobs(prevJobs => {
 			return prevJobs.filter(job => job.id !== id);
 		});
 	};
@@ -126,73 +131,73 @@ export default function Applications() {
 		setEditJobsData(null);
 		setShowModal(false);
 	};
+	if (isLoggedIn) {
+		return (
+			<div className="bg-neutral-900">
+				<Navbar />
 
-	return (
-		<div className="bg-neutral-900">
-			<Navbar />
+				<div className="grid grid-cols-4 pb-36 pr-36 pl-36">
+					{/* Column 1 */}
+					<div className="mt-[7rem] ml-3 flex flex-col gap-[1rem] col-span-1 p-1">
+						<div className="border rounded-lg p-3 border-gray-400 text-white">
+							<h2 className="text-lg font-bold text-white">Statistics</h2>
+							<p>Total Applications: 4</p>
+						</div>
+						<div className="border rounded-md p-3 border-gray-400">
+							<h2 className="text-lg font-bold mb-2 text-white">Search Bar</h2>
+							<div className="flex flex-col gap-[1rem]">
+								<input
+									className="border border-gray-300 p-1 rounded-md mr-1"
+									type="text"
+									placeholder="Enter here"
+								/>
+								<button className="bg-blue-500 hover:bg-blue-800 text-white px-4 py-2 rounded-md max-w-[50%]">
+									Find
+								</button>
+							</div>
+						</div>
 
-			<div className="grid grid-cols-4 pb-36 pr-36 pl-36">
-				{/* Column 1 */}
-				<div className="mt-[7rem] ml-3 flex flex-col gap-[1rem] col-span-1 p-1">
-					<div className="border rounded-lg p-3 border-gray-400 text-white">
-						<h2 className="text-lg font-bold text-white">Statistics</h2>
-						<p>Total Applications: 4</p>
-					</div>
-					<div className="border rounded-md p-3 border-gray-400">
-						<h2 className="text-lg font-bold mb-2 text-white">Search Bar</h2>
-						<div className="flex flex-col gap-[1rem]">
-							<input
-								className="border border-gray-300 p-1 rounded-md mr-1"
-								type="text"
-								placeholder="Enter here"
-							/>
-							<button className="bg-blue-500 hover:bg-blue-800 text-white px-4 py-2 rounded-md max-w-[50%]">
-								Find
-							</button>
+						<div className="border rounded-md p-4 border-gray-400 mb-4">
+							<h2 className="text-lg font-bold text-white">Status</h2>
+							<div className="text-white">
+								<button className="border p-2 m-2 rounded-md bg-green-500">
+									Applied
+								</button>
+								<button className="border p-2 m-2 rounded-md bg-yellow-600">
+									Interview
+								</button>
+								<button className="border p-2 m-2 rounded-md bg-red-400">
+									Rejected
+								</button>
+								<button className="border p-2 m-2 rounded-md bg-neutral-600">
+									Not Applied
+								</button>
+								<button className="border p-2 m-2 rounded-md bg-sky-600">
+									Offered
+								</button>
+							</div>
 						</div>
 					</div>
 
-					<div className="border rounded-md p-4 border-gray-400 mb-4">
-						<h2 className="text-lg font-bold text-white">Status</h2>
-						<div className="text-white">
-							<button className="border p-2 m-2 rounded-md bg-green-500">
-								Applied
-							</button>
-							<button className="border p-2 m-2 rounded-md bg-yellow-600">
-								Interview
-							</button>
-							<button className="border p-2 m-2 rounded-md bg-red-400">
-								Rejected
-							</button>
-							<button className="border p-2 m-2 rounded-md bg-neutral-600">
-								Not Applied
-							</button>
-							<button className="border p-2 m-2 rounded-md bg-sky-600">
-								Offered
-							</button>
+					{/* Column 2 */}
+					<div className="col-span-3 border-gray-400 p-4">
+						<div className="flex justify-between items-center rounded-md p-2">
+							<div>
+								<p className="gradient-text text-transparent text-5xl font-bold animate-gradient m-4">
+									Applications
+								</p>
+							</div>
+							<div>
+								<button
+									className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white rounded-md"
+									onClick={() => setShowModal(true)}>
+									Add Job
+								</button>
+								<button className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white rounded-md">
+									<Link href="search-jobs">Explore New Jobs</Link>
+								</button>
+							</div>
 						</div>
-					</div>
-				</div>
-
-				{/* Column 2 */}
-				<div className="col-span-3 border-gray-400 p-4">
-					<div className="flex justify-between items-center rounded-md p-2">
-						<div>
-							<p className="gradient-text text-transparent text-5xl font-bold animate-gradient m-4">
-								Applications
-							</p>
-						</div>
-						<div className="">
-							<button
-								className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white rounded-md"
-								onClick={() => setShowModal(true)}>
-								Add Job
-							</button>
-							<button className="border hover:bg-blue-800 p-2 m-2 mb-4 bg-blue-500 text-white rounded-md">
-								<Link href="search-jobs">Explore New Jobs</Link>
-							</button>
-						</div>
-					</div>
 
 					<JobsCardList items={jobs} onDeleteJobs={deleteJobsHandler} onIsEditJobs={isEditJobs} onStatusChange={updateJobStatus}/>
 				</div>
@@ -208,6 +213,20 @@ export default function Applications() {
 				)}
 			</Modal>
 
+				<Footer />
+			</div>
+		);
+	}
+
+	return (
+		<div className="bg-neutral-900 flex flex-col items-center justify-between">
+			<Navbar />
+			<div className="my-[16rem]">
+				<h1 className="text-center text-4xl font-semibold text-white mx-[2rem]">
+					You Must be logged in to view this page
+				</h1>
+			</div>
+			<Footer />
 		</div>
 	);
 }

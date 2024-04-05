@@ -21,7 +21,7 @@ const JobsCard = (props) => {
     };
     
     return (
-        <div className="flex border border-gray-300 p-4 rounded-md mb-4 text-white bg-slate-800 justify-between">
+        <div className="flex p-5 rounded-lg mb-4 text-white bg-neutral-800 justify-between">
             <div>
                 <h3 className="font-semibold text-blue-500 text-2xl px-2 py-1">{props.title}</h3>
                 <p className="text-white px-2 py-1 text-lg">{props.company}</p>

@@ -6,7 +6,7 @@ import Image from "next/image";
 
 function Footer() {
 	return (
-		<div className="flex flex-col items-center w-full h-[5rem] mt-20 p-8 bg-white">
+		<div className="flex flex-col items-center w-full mt-[16rem] p-8 bg-white">
 			<Image
 				src={clogo}
 				width={48}
@@ -15,9 +15,9 @@ function Footer() {
 				alt="Company Logo"
 			/>
 			<p className="font-medium text-lg ">
-				Copyright {new Date().getFullYear()} Application Ally
+				Application Ally © {new Date().getFullYear()} 
 			</p>
-			<span className="text-xs pb-5">
+			<span className="text-xs pb-5 ">
 				Created by: Jay Patel, Thuan Luu, Yang Chen, London Ho
 			</span>
 		</div>
