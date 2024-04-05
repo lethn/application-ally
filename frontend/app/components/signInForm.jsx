@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../contexts/user";
 import { useRouter } from "next/navigation";
-import Applications from "../applications/page";
 
 const SignInForm = () => {
 	const [username, setUsername] = useState("");
