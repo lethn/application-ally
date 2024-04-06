@@ -78,8 +78,7 @@ export default function Page() {
 							</span>
 							<input
 	
-								className="bo
-		der border-gray-300 font-semibold p-2 rounded-md mr-1 w-[20rem]"
+								className="border border-gray-300 font-semibold p-2 rounded-md mr-1 w-[20rem]"
 								type="text"
 								placeholder="React Developer"
 							/>
@@ -87,7 +86,6 @@ export default function Page() {
 						<div className="mt-2">
 							<h1 className="text-white font-semibold text-2xl inline mr-2">
 								Location:
-	
 							</h1>
 		
 							<input

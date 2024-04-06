@@ -12,10 +12,9 @@ import Footer from "@/app/components/footer";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/user";
 import EditJobs from "../components/editJobs";
+import Pagination from "../components/pagination";
 
 export default function Applications() {
-	const { isLoggedIn } = useContext(AuthContext);
-
 	const jobs_array = [
 		{
 			id: "j1",
@@ -58,7 +57,7 @@ export default function Applications() {
 			title: "Frontend Developer",
 			company: "Meta",
 			location: "San Francisco, CA",
-			salaryRange: "$90,000 - $120,000",
+			salary: "$90,000 - $120,000",
 			website: "https://example.com/",
 			status: "Not Applied"
 		},
@@ -67,16 +66,29 @@ export default function Applications() {
 			title: "Marketing Manager",
 			company: "Marketing Agency",
 			location: "Los Angeles, CA",
-			salaryRange: "$60,000 - $100,000",
+			salary: "$60,000 - $100,000",
 			website: "https://example.com/",
 			status: "Applied"
 		}
 	];
 
+	const { isLoggedIn } = useContext(AuthContext);
+
 	const [jobs, setJobs] = useState(jobs_array);
 	const [showModal, setShowModal] = useState(false);
 	const [editJobs, setEditJobs] = useState(false);
 	const [editJobsData, setEditJobsData] = useState('');
+
+	// Jobs Page Display
+	const [currentPage, setCurrentPage] = useState(1);
+	const jobsPerPage = 4;
+	const indexOfLastJob = currentPage * jobsPerPage;
+	const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+	const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+
+	const changePageHandler = (pageNumber) => {
+		setCurrentPage(pageNumber);
+	};
 
 	const addJobsHandler = job => {
 		setJobs(prevJobs => {
@@ -131,6 +143,7 @@ export default function Applications() {
 		setEditJobsData(null);
 		setShowModal(false);
 	};
+
 	if (isLoggedIn) {
 		return (
 			<div className="bg-neutral-900">
@@ -141,17 +154,18 @@ export default function Applications() {
 					<div className="mt-[7rem] ml-3 flex flex-col gap-[1rem] col-span-1 p-1">
 						<div className="border rounded-lg p-3 border-gray-400 text-white bg-slate-600">
 							<h2 className="text-lg font-bold text-white">Statistics</h2>
-							<p>Total Applications: 4</p>
+							<p>Total Applications: {jobs.length}</p>
 						</div>
 						<div className="border rounded-md p-3 border-gray-400 bg-slate-600">
 							<h2 className="text-lg font-bold mb-2 text-white">Search Bar</h2>
 							<div className="flex flex-col gap-[1rem]">
 								<input
+									id="searchBar"
 									className="border border-gray-300 p-1 rounded-md mr-1 p-2"
 									type="text"
 									placeholder="Enter here"
 								/>
-								<button className="bg-blue-500 hover:bg-blue-800 text-white px-4 py-2 rounded-md max-w-[50%]">
+								<button className="bg-blue-500 hover:bg-blue-800 text-white px-4 py-2 rounded-md max-w-[5rem]">
 									Find
 								</button>
 							</div>
@@ -200,13 +214,21 @@ export default function Applications() {
 						</div>
 
 						<JobsCardList
-							items={jobs}
+							items={currentJobs}
 							onDeleteJobs={deleteJobsHandler}
 							onIsEditJobs={isEditJobs}
 							onStatusChange={updateJobStatus}
 						/>
+
+						<Pagination
+							currentPage={currentPage}
+							totalPages={Math.ceil(jobs.length / jobsPerPage)}
+							onChangePage={changePageHandler}
+						/>
 					</div>
 				</div>
+
+
 
 				<Modal isVisible={showModal} onClose={resetModalState}>
 					{editJobs ? (
