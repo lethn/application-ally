@@ -4,7 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const UserModel = require("../models/user");
-const JobApplication = require("../models/user");
+const JobApplication = require("../models/jobApplication");
 
 dotenv.config();
 
@@ -16,7 +16,7 @@ const MONGO_STR = process.env.MONGO_STR;
 
 app.use(express.json());
 
-app.use("/api/application-ally/", router);
+app.use("/", router);
 
 // START OF USER ROUTES
 
