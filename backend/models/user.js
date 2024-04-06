@@ -23,11 +23,11 @@ const Schema = mongoose.Schema;
 // Mongoose will automatically create an _id field of type ObjectId for each document
 
 const UserSchema = new Schema({
-	username: { type: String, required: true, unique: true },
-	password: { type: String, required: true }
+	username: { type: String },
+	password: { type: String }
 });
 
 // Creating model from schema
 const User = mongoose.model("User", UserSchema);
 
-module.exports = User; // Exporting the model
+module.exports = User;

@@ -12,11 +12,13 @@ const app = express();
 const router = express.Router();
 
 const PORT = process.env.PORT;
-const MONGO_STR = process.env.MONGO_URL;
+const MONGO_STR = process.env.MONGO_STR;
 
 app.use(express.json());
 
-app.use("/api/application-ally", router);
+app.use("/api/application-ally/", router);
+
+// START OF USER ROUTES
 
 // get all users
 router.get("/users", async (req, res) => {
@@ -75,9 +77,7 @@ router.put("/update-user/:id", async (req, res) => {
 //delete a specific user
 router.delete("/delete-user/:id", async (req, res) => {
 	try {
-		const deletedUser = await UserModel.findByIdAndDelete(
-			req.params.id
-		);
+		const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
 		if (!deletedUser) {
 			return res.status(404).json({ error: "User not found" });
 		}
@@ -88,8 +88,80 @@ router.delete("/delete-user/:id", async (req, res) => {
 	}
 });
 
+// START OF JOB APPLICATION ROUTES
+
+// get all job applications
+router.get("/job-applications", async (req, res) => {
+	try {
+		const applications = await JobApplication.find(); // Corrected typo in variable name
+		res.json(applications);
+	} catch (error) {
+		console.error("Error fetching applications:", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+// get specific job application
+router.get("/job-applications/:id", async (req, res) => {
+	try {
+		const application = await JobApplication.findById(req.params.id);
+		if (!application) {
+			return res.status(404).json({ error: "application not found" });
+		}
+		res.json(application);
+	} catch (error) {
+		console.error("Error fetching application:", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+// add a new application
+router.post("/add-job-application", async (req, res) => {
+	try {
+		const application = await JobApplication.create(req.body);
+		res.status(201).json(application);
+	} catch (error) {
+		console.error("Error adding application:", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+// update specific application
+router.put("/update-job-application/:id", async (req, res) => {
+	try {
+		const updatedApplication = await JobApplication.findByIdAndUpdate(
+			req.params.id,
+			req.body,
+			{ new: true }
+		);
+		if (!updatedApplication) {
+			return res.status(404).json({ error: "application not found" });
+		}
+		res.json(updatedApplication);
+	} catch (error) {
+		console.error("Error updating application:", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+//delete a specific application
+router.delete("/delete-job-application/:id", async (req, res) => {
+	try {
+		const deletedApplication = await JobApplication.findByIdAndDelete(
+			req.params.id
+		);
+		if (!deletedApplication) {
+			return res.status(404).json({ error: "User not found" });
+		}
+		res.json({ message: "application deleted successfully" });
+	} catch (error) {
+		console.error("Error deleting application:", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
 mongoose
-	.connect(MONGO_URL)
+	.connect(MONGO_STR)
 	.then(() => {
 		console.log("Database is connected successfully");
 		app.listen(PORT, () => {
