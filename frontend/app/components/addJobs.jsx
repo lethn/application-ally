@@ -73,44 +73,49 @@ const AddJobs = props => {
 		<form
 			className="p-4 text-xl flex flex-col gap-2 font-semibold items-start"
 			onSubmit={onSubmitHandler}>
-			<label>Job Title:</label>
+			<label htmlFor="title">Job Title:</label>
 			<input
 				id="title"
+				name="title"
 				type="text"
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputTitle}
 				onChange={titleChangeHandler}
 			/>
 
-			<label>Company:</label>
+			<label htmlFor="company">Company:</label>
 			<input
 				id="company"
+				name="company"
 				type="text"
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputCompany}
 				onChange={companyChangeHandler}
 			/>
 
-			<label>Location:</label>
+			<label htmlFor="location">Location:</label>
 			<input
 				id="location"
+				name="location"
 				type="text"
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputLocation}
 				onChange={locationChangeHandler}
 			/>
-			<label>Salary:</label>
+			<label htmlFor="salary">Salary:</label>
 			<input
 				id="salary"
+				name="salary"
 				type="text"
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputSalary}
 				onChange={salaryChangeHandler}
 			/>
 
-			<label>Website:</label>
+			<label htmlFor="website">Website:</label>
 			<input
 				id="website"
+				name="website"
 				type="text"
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputWebsite}
@@ -118,8 +123,10 @@ const AddJobs = props => {
 			/>
 			{/* Dropdown */}
 			<div className="pt-3 pb-0">
-				<label>Status:</label>
+				<label htmlFor="status">Status:</label>
 				<select
+					id="status"
+					name="status"
 					className="border border-gray-300 p-2 ml-2 m-auto text-xl rounded-md text-black"
 					value={inputStatus}
 					onChange={statusChangeHandler}>

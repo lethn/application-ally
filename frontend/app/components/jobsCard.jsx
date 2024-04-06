@@ -33,6 +33,7 @@ const JobsCard = (props) => {
             </div>
             <div className="flex flex-col">
                 <select
+                    id={`status-${props.id}`}
                     className="border border-gray-300 p-2 m-2 rounded-md text-black font-bold"
                     value={inputStatus}
                     onChange={statusChangeHandler}>
