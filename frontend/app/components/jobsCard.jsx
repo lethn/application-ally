@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const JobsCard = (props) => {
-    const [inputStatus, setStatus] = useState(props.status);
 
     const statusChangeHandler = (event) => {
         const newStatus = event.target.value;
-        setStatus(newStatus);
         props.onStatusChange(props.id, newStatus);
         console.log(newStatus);
     };
@@ -35,7 +33,7 @@ const JobsCard = (props) => {
                 <select
                     id={`status-${props.id}`}
                     className="border border-gray-300 p-2 m-2 rounded-md text-black font-bold"
-                    value={inputStatus}
+                    value={props.status}
                     onChange={statusChangeHandler}>
                     <option value="Applied">Applied</option>
                     <option value="Interview">Interview</option>
