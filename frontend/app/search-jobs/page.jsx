@@ -98,24 +98,6 @@ export default function Page() {
 				</div>
 
 				<div className=" bg-sky-900 p-4 mt-10 mx-[2.5rem] sm:mx-[5rem] md:mx-[7.5rem] lg:mx-[10rem] xl:mx[15rem] rounded-lg flex flex-col gap-3 border">
-					{currentJobs.map((job, index) => (
-						<div
-							key={index}
-							className="bg-neutral-800 text-white p-5 rounded-xl font-semibold ">
-							<p className="">{job.title}</p>
-							<ul className="">
-								<li>{job.company}</li>
-								<li>{job.location}</li>
-								<li>{job.salary}</li>
-								<li>
-									<a href={job.website}>{job.website}</a>
-								</li>
-							</ul>
-							<button className="px-2 py-1 rounded-lg bg-red-400 hover:bg-red-600 mt-2">
-								Add
-							</button>
-						</div>
-					))}
 					{currentJobs.length > 0 ? (
                         <div className=" bg-sky-900 p-4 mt-10 mx-[2.5rem] sm:mx-[5rem] md:mx-[7.5rem] lg:mx-[10rem] xl:mx[15rem] rounded-lg flex flex-col gap-3 border">
                             {currentJobs.map((job, index) => (
