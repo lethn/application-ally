@@ -64,7 +64,7 @@ export default function Page() {
 					Explore New Jobs
 				</p>
 				<div>
-					<div className="flex flex-col items-center gap-[1rem] mx-10">
+					<form className="flex flex-col items-center gap-[1rem] mx-10" onSubmit={handleSubmit}>
 						<div className="mt-10">
 							<span className="text-white font-semibold text-2xl mr-3 inline">
 								Title:
@@ -90,11 +90,11 @@ export default function Page() {
                             	onChange={handleInputChange}
 							/>
 	
-							<button className="bg-blue-500 hover:bg-blue-800 text-white px-4 py-2 rounded-md max-w-[5rem]" onClick={handleSubmit}>
+							<button className="bg-blue-500 hover:bg-blue-800 text-white px-4 py-2 rounded-md max-w-[5rem]">
 								Find
 							</button>
 						</div>
-					</div>
+					</form>
 				</div>
 
 				<div className=" bg-sky-900 p-4 mt-10 mx-[2.5rem] sm:mx-[5rem] md:mx-[7.5rem] lg:mx-[10rem] xl:mx[15rem] rounded-lg flex flex-col gap-3 border">
