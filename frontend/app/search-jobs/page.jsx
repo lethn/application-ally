@@ -70,11 +70,10 @@ export default function Page() {
 								Title:
 							</span>
 							<input
-	
 								className="border border-gray-300 font-semibold p-2 rounded-md mr-1 w-[20rem]"
-								type="input"
+								type="text"
 								placeholder="React Developer"
-								value={searchParams.name}
+								defaultValue={searchParams.name}
                             	onChange={handleInputChange}
 							/>
 						</div>
@@ -85,9 +84,9 @@ export default function Page() {
 		
 							<input
 								className="border border-gray-300 p-2 font-semibold rounded-md w-[20rem] mr-3"
-								type="input"
+								type="text"
 								placeholder="Athens, GA"
-								value={searchParams.location}
+								defaultValue={searchParams.location}
                             	onChange={handleInputChange}
 							/>
 	
