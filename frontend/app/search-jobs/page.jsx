@@ -22,7 +22,7 @@ export default function Page() {
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
-                    'X-RapidAPI-Key': '82f28f4150msh03585cead1cf509p1508dajsn994b7306ff4a',
+                    'X-RapidAPI-Key': '90ff9350d0msh633bbb48131857dp155a34jsnb483e260a2d6',
                     'X-RapidAPI-Host': 'job-salary-data.p.rapidapi.com'
                 }
             });
@@ -90,7 +90,7 @@ export default function Page() {
                             	onChange={handleInputChange}
 							/>
 	
-							<button className="bg-blue-500 hover:bg-blue-800 text-white px-4 py-2 rounded-md max-w-[5rem]" onSubmit={handleSubmit}>
+							<button className="bg-blue-500 hover:bg-blue-800 text-white px-4 py-2 rounded-md max-w-[5rem]" onClick={handleSubmit}>
 								Find
 							</button>
 						</div>
