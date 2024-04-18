@@ -1,29 +1,30 @@
 /** @format */
 
 const express = require("express");
-const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const UserModel = require("../models/user");
+const User = require("../models/user");
 const JobApplication = require("../models/jobApplication");
+const bodyParser = require("body-parser");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken"); // For creating and verifying tokens
 
 dotenv.config();
 
 const app = express();
 const router = express.Router();
 
-const PORT = process.env.PORT;
-const MONGO_STR = process.env.MONGO_STR;
-
-app.use(express.json());
-
+app.use(bodyParser.json());
+// app.use(express.json());
 app.use("/", router);
+
+const saltRounds = 10;
 
 // START OF USER ROUTES
 
 // get all users
 router.get("/users", async (req, res) => {
 	try {
-		const users = await UserModel.find();
+		const users = await User.find();
 		res.json(users);
 	} catch (error) {
 		console.error("Error fetching users:", error);
@@ -34,7 +35,7 @@ router.get("/users", async (req, res) => {
 // get specific user
 router.get("/user/:id", async (req, res) => {
 	try {
-		const user = await UserModel.findById(req.params.id);
+		const user = await User.findById(req.params.id);
 		if (!user) {
 			return res.status(404).json({ error: "User not found" });
 		}
@@ -46,24 +47,79 @@ router.get("/user/:id", async (req, res) => {
 });
 
 // add a new user
-router.post("/add-user", async (req, res) => {
+router.post("/signup", async (req, res) => {
+	const { email, password } = req.body;
 	try {
-		const newUser = await UserModel.create(req.body);
-		res.status(201).json(newUser);
-	} catch (error) {
-		console.error("Error adding user:", error);
-		res.status(500).json({ error: "Internal server error" });
+		// Check if user already exists
+		let user = await User.findOne({ email });
+
+		if (user) {
+			return res.status(400).json({ msg: "User already exists" });
+		}
+
+		// Hash the password
+		const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+		// Create a new user
+		user = new User({
+			email: email,
+			password: hashedPassword
+		});
+
+		// Save the user to the database
+		await user.save();
+		res.status(201).json({ msg: "User created successfully" });
+	} catch (e) {
+		console.error(e.message);
+		res.status(500).send("Server Error");
+	}
+});
+
+router.post("/signin", async (req, res) => {
+	const { email, password } = req.body;
+	try {
+		// Find the user by email
+		const user = await User.findOne({ email });
+
+		if (!user) {
+			return res.status(400).json({ msg: "Invalid credentials" });
+		}
+
+		// Compare the provided password with the hashed password stored in the database
+		const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+		if (!isPasswordMatch) {
+			return res.status(400).json({ msg: "Invalid credentials" });
+		}
+
+		// If passwords match, create a JSON Web Token (JWT)
+		const payload = {
+			user: {
+				id: user.id
+			}
+		};
+
+		jwt.sign(
+			payload,
+			process.env.JWT, // Your JWT secret key
+			{ expiresIn: "1h" }, // Token expires in 1 hour
+			(err, token) => {
+				if (err) throw err;
+				res.json({ token });
+			}
+		);
+	} catch (err) {
+		console.error(err.message);
+		res.status(500).json({ error: "Server Error" });
 	}
 });
 
 // update specific user
 router.put("/update-user/:id", async (req, res) => {
 	try {
-		const updatedUser = await UserModel.findByIdAndUpdate(
-			req.params.id,
-			req.body,
-			{ new: true }
-		);
+		const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+			new: true
+		});
 		if (!updatedUser) {
 			return res.status(404).json({ error: "User not found" });
 		}
@@ -77,7 +133,7 @@ router.put("/update-user/:id", async (req, res) => {
 //delete a specific user
 router.delete("/delete-user/:id", async (req, res) => {
 	try {
-		const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
+		const deletedUser = await User.findByIdAndDelete(req.params.id);
 		if (!deletedUser) {
 			return res.status(404).json({ error: "User not found" });
 		}
@@ -160,14 +216,4 @@ router.delete("/delete-job-application/:id", async (req, res) => {
 	}
 });
 
-mongoose
-	.connect(MONGO_STR)
-	.then(() => {
-		console.log("Database is connected successfully");
-		app.listen(PORT, () => {
-			console.log(`Server is running on port http://localhost:${PORT}`);
-		});
-	})
-	.catch(e => {
-		console.log(e);
-	});
+module.exports = router;
