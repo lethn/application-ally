@@ -2,15 +2,14 @@
 "use client";
 import "@/app/globals.css";
 import Navbar from "@/app/components/navbar";
-import { useState } from "react";
+import { useState, useContext } from "react"; // Update import
 import Footer from "@/app/components/footer";
-import { useContext } from "react";
 import { AuthContext } from "../contexts/user";
 
 export default function Page() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [jobsPerPage] = useState(4);
-	const { isLoggedIn } = useContext(AuthContext);
+	const { isLoggedIn } = useContext(AuthContext); // Update to use useContext
 	const [jobs, setJobs] = useState([]);
 	const [searchParams, setSearchParams] = useState({ name: "", location: "" });
 
@@ -22,8 +21,7 @@ export default function Page() {
 			const response = await fetch(url, {
 				method: "GET",
 				headers: {
-					"X-RapidAPI-Key":
-						"90ff9350d0msh633bbb48131857dp155a34jsnb483e260a2d6",
+					"X-RapidAPI-Key": process.env.RAPID_API_KEY,
 					"X-RapidAPI-Host": "job-salary-data.p.rapidapi.com"
 				}
 			});

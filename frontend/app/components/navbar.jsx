@@ -4,14 +4,16 @@ import Image from "next/image";
 import clogo from "@/app/assets/logo.png";
 import { AuthContext } from "../contexts/user";
 import { useContext } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; // Correct import
 
 export default function Navbar() {
-	const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+	const { isLoggedIn, signOut } = useContext(AuthContext); // Update to use useContext
 	const router = useRouter();
+
 	const handleLogout = () => {
+		
 		// Perform logout actions
-		setIsLoggedIn(false);
+		signOut(); // Call signOut function from context
 		// Redirect to the sign-in page after logout
 		router.push("/");
 	};

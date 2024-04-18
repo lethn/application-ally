@@ -1,4 +1,5 @@
 /** @format */
+
 import "@/app/globals.css";
 import { montserrat } from "@/app/components/fonts";
 import { AuthProvider } from "./contexts/user";

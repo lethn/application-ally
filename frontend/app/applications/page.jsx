@@ -3,14 +3,13 @@
 "use client";
 import "@/app/globals.css";
 import Navbar from "../components/navbar";
-import { useState } from "react";
+import { useState, useContext } from "react"; // Updated import
 import Link from "next/link";
 import Modal from "../components/modal";
 import JobsCardList from "../components/jobsCardList";
 import AddJobs from "../components/addJobs";
 import Footer from "@/app/components/footer";
-import { useContext } from "react";
-import { AuthContext } from "../contexts/user";
+import { AuthContext } from "../contexts/user"; // Import AuthContext
 import EditJobs from "../components/editJobs";
 import Pagination from "../components/pagination";
 
@@ -77,7 +76,7 @@ export default function Applications() {
 	const [jobs, setJobs] = useState(jobs_array);
 	const [showModal, setShowModal] = useState(false);
 	const [editJobs, setEditJobs] = useState(false);
-	const [editJobsData, setEditJobsData] = useState('');
+	const [editJobsData, setEditJobsData] = useState("");
 
 	// Jobs Page Display
 	const [currentPage, setCurrentPage] = useState(1);
@@ -86,7 +85,7 @@ export default function Applications() {
 	const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 	const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
 
-	const changePageHandler = (pageNumber) => {
+	const changePageHandler = pageNumber => {
 		setCurrentPage(pageNumber);
 	};
 
@@ -98,14 +97,14 @@ export default function Applications() {
 		console.log(job);
 	};
 
-	const isEditJobs = (job) => {
+	const isEditJobs = job => {
 		setEditJobs(true);
 		setEditJobsData(job);
 		console.log(job);
 		setShowModal(true);
 	};
 
-	const editJobsHandler = (editedJob) => {
+	const editJobsHandler = editedJob => {
 		setJobs(prevJobs => {
 			return prevJobs.map(job => {
 				if (job.id === editedJob.id) {
@@ -227,8 +226,6 @@ export default function Applications() {
 						/>
 					</div>
 				</div>
-
-
 
 				<Modal isVisible={showModal} onClose={resetModalState}>
 					{editJobs ? (
