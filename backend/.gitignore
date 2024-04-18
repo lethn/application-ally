@@ -60,3 +60,4 @@ dist
 
 node_modules
 
+.vercel
