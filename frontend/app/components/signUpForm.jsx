@@ -21,7 +21,7 @@ const SignUpForm = () => {
 
 		try {
 			const response = await axios.post(
-				`http://localhost:8000/api/signup`,
+				`https://application-ally.onrender.com/api/signup`,
 				{
 					email,
 					password

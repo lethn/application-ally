@@ -17,18 +17,20 @@ const AuthProvider = ({ children }) => {
 	// Function to handle sign in
 	const signIn = async (email, password) => {
 		try {
-			const response = await axios.post("http://localhost:8000/api/signin", {
-				email,
-				password
-			});
+			const response = await axios.post(
+				"https://application-ally.onrender.com/api/signin",
+				{
+					email,
+					password
+				}
+			);
 			const authToken = response.data.token;
 			localStorage.setItem("token", authToken); // Store the token in localStorage
 			setToken(authToken);
 			setIsLoggedIn(true);
 			router.push("/applications"); // Redirect after successful sign-in
-		} catch (error)
-		{
-			alert("Wrong Email or Password")
+		} catch (error) {
+			alert("Wrong Email or Password");
 			console.error("Error signing in:", error);
 			// Handle error, e.g., display an error message to the user
 		}
