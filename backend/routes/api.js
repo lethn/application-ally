@@ -19,9 +19,9 @@ app.use("/", router);
 
 const saltRounds = 10;
 
-// START OF USER ROUTES
+// ***** START OF USER ROUTES *****
 
-// get all users
+// Get all users
 router.get("/users", async (req, res) => {
 	try {
 		const users = await User.find();
@@ -32,7 +32,7 @@ router.get("/users", async (req, res) => {
 	}
 });
 
-// get specific user
+// Get specific user
 router.get("/user/:id", async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id);
@@ -46,7 +46,7 @@ router.get("/user/:id", async (req, res) => {
 	}
 });
 
-// add a new user
+// Add a new user
 router.post("/signup", async (req, res) => {
 	const { email, password } = req.body;
 	try {
@@ -114,7 +114,7 @@ router.post("/signin", async (req, res) => {
 	}
 });
 
-// update specific user
+// Update specific user
 router.put("/update-user/:id", async (req, res) => {
 	try {
 		const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
@@ -130,7 +130,7 @@ router.put("/update-user/:id", async (req, res) => {
 	}
 });
 
-//delete a specific user
+// Delete a specific user
 router.delete("/delete-user/:id", async (req, res) => {
 	try {
 		const deletedUser = await User.findByIdAndDelete(req.params.id);
@@ -144,9 +144,10 @@ router.delete("/delete-user/:id", async (req, res) => {
 	}
 });
 
-// START OF JOB APPLICATION ROUTES
 
-// get all job applications
+// ***** START OF JOB APPLICATION ROUTES *****
+
+// Get all job applications
 router.get("/job-applications", async (req, res) => {
 	try {
 		const applications = await JobApplication.find(); // Corrected typo in variable name
@@ -157,12 +158,12 @@ router.get("/job-applications", async (req, res) => {
 	}
 });
 
-// get specific job application
+// Get specific job application
 router.get("/job-applications/:id", async (req, res) => {
 	try {
 		const application = await JobApplication.findById(req.params.id);
 		if (!application) {
-			return res.status(404).json({ error: "application not found" });
+			return res.status(404).json({ error: "Application not found" });
 		}
 		res.json(application);
 	} catch (error) {
@@ -171,7 +172,7 @@ router.get("/job-applications/:id", async (req, res) => {
 	}
 });
 
-// add a new application
+// Add a new application
 router.post("/add-job-application", async (req, res) => {
 	try {
 		const application = await JobApplication.create(req.body);
@@ -182,7 +183,7 @@ router.post("/add-job-application", async (req, res) => {
 	}
 });
 
-// update specific application
+// Update specific application
 router.put("/update-job-application/:id", async (req, res) => {
 	try {
 		const updatedApplication = await JobApplication.findByIdAndUpdate(
@@ -191,7 +192,7 @@ router.put("/update-job-application/:id", async (req, res) => {
 			{ new: true }
 		);
 		if (!updatedApplication) {
-			return res.status(404).json({ error: "application not found" });
+			return res.status(404).json({ error: "Application not found" });
 		}
 		res.json(updatedApplication);
 	} catch (error) {
@@ -200,7 +201,7 @@ router.put("/update-job-application/:id", async (req, res) => {
 	}
 });
 
-//delete a specific application
+// Delete a specific application
 router.delete("/delete-job-application/:id", async (req, res) => {
 	try {
 		const deletedApplication = await JobApplication.findByIdAndDelete(
@@ -209,7 +210,7 @@ router.delete("/delete-job-application/:id", async (req, res) => {
 		if (!deletedApplication) {
 			return res.status(404).json({ error: "User not found" });
 		}
-		res.json({ message: "application deleted successfully" });
+		res.json({ message: "Application deleted successfully" });
 	} catch (error) {
 		console.error("Error deleting application:", error);
 		res.status(500).json({ error: "Internal server error" });

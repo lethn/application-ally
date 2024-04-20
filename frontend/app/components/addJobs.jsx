@@ -81,6 +81,7 @@ const AddJobs = props => {
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputTitle}
 				onChange={titleChangeHandler}
+				required
 			/>
 
 			<label htmlFor="company">Company:</label>
@@ -91,6 +92,7 @@ const AddJobs = props => {
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputCompany}
 				onChange={companyChangeHandler}
+				required
 			/>
 
 			<label htmlFor="location">Location:</label>
@@ -120,6 +122,7 @@ const AddJobs = props => {
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputWebsite}
 				onChange={websiteChangeHandler}
+				required
 			/>
 			{/* Dropdown */}
 			<div className="pt-3 pb-0">

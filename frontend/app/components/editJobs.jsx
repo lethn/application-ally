@@ -81,6 +81,7 @@ const EditJobs = (props) => {
                 className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputCompany}
                 onChange={companyChangeHandler}
+                required
             />
 
             <label htmlFor="location">Location:</label>
@@ -110,6 +111,7 @@ const EditJobs = (props) => {
                 className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputWebsite}
                 onChange={websiteChangeHandler}
+                required
             />
 
             {/* Dropdown */}
