@@ -1,9 +1,10 @@
 /** @format */
 
 "use client";
+import { useState, useContext, useEffect } from "react"; // Updated import
+import axios from "axios";
 import "@/app/globals.css";
 import Navbar from "../components/navbar";
-import { useState, useContext } from "react"; // Updated import
 import Link from "next/link";
 import Modal from "../components/modal";
 import JobsCardList from "../components/jobsCardList";
@@ -14,66 +15,66 @@ import EditJobs from "../components/editJobs";
 import Pagination from "../components/pagination";
 
 export default function Applications() {
-	const jobs_array = [
-		{
-			id: "j1",
-			title: "Software Engineer",
-			company: "TechCo",
-			location: "San Francisco, CA",
-			salary: "$80,000 - $120,000",
-			website: "https://example.com/",
-			status: "Applied"
-		},
-		{
-			id: "j2",
-			title: "Product Manager",
-			company: "StartupX",
-			location: "New York, NY",
-			salary: "$90,000 - $130,000",
-			website: "https://example.com/",
-			status: "Offered"
-		},
-		{
-			id: "j3",
-			title: "Data Scientist",
-			company: "Data Corp",
-			location: "Seattle, WA",
-			salary: "$100,000 - $140,000",
-			website: "https://example.com/",
-			status: "Interview"
-		},
-		{
-			id: "j4",
-			title: "UX Designer",
-			company: "Design Studio",
-			location: "Austin, TX",
-			salary: "$70,000 - $110,000",
-			website: "https://example.com/",
-			status: "Rejected"
-		},
-		{
-			id: "j5",
-			title: "Frontend Developer",
-			company: "Meta",
-			location: "San Francisco, CA",
-			salary: "$90,000 - $120,000",
-			website: "https://example.com/",
-			status: "Not Applied"
-		},
-		{
-			id: "j6",
-			title: "Marketing Manager",
-			company: "Marketing Agency",
-			location: "Los Angeles, CA",
-			salary: "$60,000 - $100,000",
-			website: "https://example.com/",
-			status: "Applied"
-		}
-	];
+	// const jobs_array = [
+	// 	{
+	// 		id: "j1",
+	// 		title: "Software Engineer",
+	// 		company: "TechCo",
+	// 		location: "San Francisco, CA",
+	// 		salary: "$80,000 - $120,000",
+	// 		website: "https://example.com/",
+	// 		status: "Applied"
+	// 	},
+	// 	{
+	// 		id: "j2",
+	// 		title: "Product Manager",
+	// 		company: "StartupX",
+	// 		location: "New York, NY",
+	// 		salary: "$90,000 - $130,000",
+	// 		website: "https://example.com/",
+	// 		status: "Offered"
+	// 	},
+	// 	{
+	// 		id: "j3",
+	// 		title: "Data Scientist",
+	// 		company: "Data Corp",
+	// 		location: "Seattle, WA",
+	// 		salary: "$100,000 - $140,000",
+	// 		website: "https://example.com/",
+	// 		status: "Interview"
+	// 	},
+	// 	{
+	// 		id: "j4",
+	// 		title: "UX Designer",
+	// 		company: "Design Studio",
+	// 		location: "Austin, TX",
+	// 		salary: "$70,000 - $110,000",
+	// 		website: "https://example.com/",
+	// 		status: "Rejected"
+	// 	},
+	// 	{
+	// 		id: "j5",
+	// 		title: "Frontend Developer",
+	// 		company: "Meta",
+	// 		location: "San Francisco, CA",
+	// 		salary: "$90,000 - $120,000",
+	// 		website: "https://example.com/",
+	// 		status: "Not Applied"
+	// 	},
+	// 	{
+	// 		id: "j6",
+	// 		title: "Marketing Manager",
+	// 		company: "Marketing Agency",
+	// 		location: "Los Angeles, CA",
+	// 		salary: "$60,000 - $100,000",
+	// 		website: "https://example.com/",
+	// 		status: "Applied"
+	// 	}
+	// ];
 
-	const { isLoggedIn } = useContext(AuthContext);
+	const { isLoggedIn, userId } = useContext(AuthContext);
 
-	const [jobs, setJobs] = useState(jobs_array);
+	const [jobs, setJobs] = useState([]);
 	const [showModal, setShowModal] = useState(false);
 	const [editJobs, setEditJobs] = useState(false);
 	const [editJobsData, setEditJobsData] = useState("");
@@ -85,29 +86,44 @@ export default function Applications() {
 	const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 	const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
 
-	const changePageHandler = pageNumber => {
+	useEffect(() => {
+		console.log(userId);
+		axios
+			.get('https://application-ally.onrender.com/api/job-applications')
+			.then(res => {
+				console.log(res.data);
+				const reversedJobs = res.data.reverse();
+				setJobs(reversedJobs);
+			})
+			.catch(err => {
+				console.error('Error fetching job applications data:', error);
+			});
+	}, []);
+
+	const changePageHandler = (pageNumber) => {
 		setCurrentPage(pageNumber);
 	};
 
-	const addJobsHandler = job => {
+	const addJobsHandler = (job) => {
 		setJobs(prevJobs => {
 			return [job, ...prevJobs];
 		});
+
 		setShowModal(false);
 		console.log(job);
 	};
 
-	const isEditJobs = job => {
+	const isEditJobs = (job) => {
 		setEditJobs(true);
 		setEditJobsData(job);
 		console.log(job);
 		setShowModal(true);
 	};
 
-	const editJobsHandler = editedJob => {
+	const editJobsHandler = (editedJob) => {
 		setJobs(prevJobs => {
 			return prevJobs.map(job => {
-				if (job.id === editedJob.id) {
+				if (job._id === editedJob.id) {
 					return editedJob;
 				} else {
 					return job;
@@ -119,16 +135,16 @@ export default function Applications() {
 		console.log(editedJob);
 	};
 
-	const deleteJobsHandler = id => {
+	const deleteJobsHandler = (id) => {
 		setJobs(prevJobs => {
-			return prevJobs.filter(job => job.id !== id);
+			return prevJobs.filter(job => job._id !== id);
 		});
 	};
 
 	const updateJobStatus = (id, newStatus) => {
 		setJobs(prevJobs => {
 			return prevJobs.map(job => {
-				if (job.id === id) {
+				if (job._id === id) {
 					return { ...job, status: newStatus };
 				} else {
 					return job;

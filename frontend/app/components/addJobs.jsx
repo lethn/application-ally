@@ -1,8 +1,12 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import axios from "axios";
+import { AuthContext } from "../contexts/user"; //
 
-const AddJobs = props => {
+const AddJobs = (props) => {
+	const { userId } = useContext(AuthContext);
+
 	const [inputTitle, setInputTitle] = useState("");
 	const [inputCompany, setInputCompany] = useState("");
 	const [inputLocation, setInputLocation] = useState("");
@@ -10,31 +14,31 @@ const AddJobs = props => {
 	const [inputWebsite, setInputWebsite] = useState("");
 	const [inputStatus, setInputStatus] = useState("Applied");
 
-	const titleChangeHandler = event => {
+	const titleChangeHandler = (event) => {
 		setInputTitle(event.target.value);
 	};
 
-	const companyChangeHandler = event => {
+	const companyChangeHandler = (event) => {
 		setInputCompany(event.target.value);
 	};
 
-	const locationChangeHandler = event => {
+	const locationChangeHandler = (event) => {
 		setInputLocation(event.target.value);
 	};
 
-	const salaryChangeHandler = event => {
+	const salaryChangeHandler = (event) => {
 		setInputSalary(event.target.value);
 	};
 
-	const websiteChangeHandler = event => {
+	const websiteChangeHandler = (event) => {
 		setInputWebsite(event.target.value);
 	};
 
-	const statusChangeHandler = event => {
+	const statusChangeHandler = (event) => {
 		setInputStatus(event.target.value);
 	};
 
-	const onSubmitHandler = event => {
+	const onSubmitHandler = async (event) => {
 		event.preventDefault();
 
 		if (
@@ -49,7 +53,7 @@ const AddJobs = props => {
 		}
 
 		const jobData = {
-			id: Math.random().toString(),
+			userId: "662321fdb0269a3423765fae",
 			title: inputTitle,
 			company: inputCompany,
 			location: inputLocation,
@@ -58,8 +62,16 @@ const AddJobs = props => {
 			status: inputStatus
 		};
 
-		console.log("Added New Application");
-		props.onAddJobs(jobData);
+		axios
+			.post('https://application-ally.onrender.com/api/add-job-application', jobData)
+			.then((res) => {
+				props.onAddJobs(res.data);
+				console.log("Added New Application");
+				console.log(res.data);
+			})
+			.catch((error) => {
+				console.error("Error adding job application:", error);
+			});
 
 		setInputTitle("");
 		setInputCompany("");

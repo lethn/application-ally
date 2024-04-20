@@ -1,23 +1,48 @@
-import React from 'react';
+import React from "react";
+import axios from "axios";
 
 const JobsCard = (props) => {
 
     const statusChangeHandler = (event) => {
         const newStatus = event.target.value;
-        props.onStatusChange(props.id, newStatus);
-        console.log(newStatus);
+        axios
+            .put(`https://application-ally.onrender.com/api/update-job-application/${props.job_id}`, { status: newStatus })
+            .then(res => {
+                console.log("Status updated:", newStatus);
+                props.onStatusChange(props.job_id, newStatus);
+            })
+            .catch(err => {
+                console.error('Error updating job status:', err);
+            });
     };
 
     const handleEdit = () => {
-        props.onIsEditJobs(props);
-        console.log("Edit job:", props.title);
+        const editedJob = {
+            id: props.job_id,
+            title: props.title,
+            company: props.company,
+            location: props.location,
+            salary: props.salary,
+            website: props.website,
+            status: props.status
+        };
+
+        props.onIsEditJobs(editedJob);
+        console.log("Edit job:", editedJob);
     };
 
     const handleDelete = () => {
-        props.onDeleteJobs(props.id);
-        console.log("Delete job:", props.title);
+        axios
+            .delete(`https://application-ally.onrender.com/api/delete-job-application/${props.job_id}`)
+            .then(res => {
+                console.log("Delete job:", props.title);
+                props.onDeleteJobs(props.job_id);
+            })
+            .catch(err => {
+                console.error('Error deleting job:', err);
+            });
     };
-    
+
     return (
         <div className="flex p-5 rounded-lg mb-4 text-white bg-neutral-800 justify-between">
             <div>
@@ -31,7 +56,7 @@ const JobsCard = (props) => {
             </div>
             <div className="flex flex-col">
                 <select
-                    id={`status-${props.id}`}
+                    id={`status-${props.job_id}`}
                     className="border border-gray-300 p-2 m-2 rounded-md text-black font-bold"
                     value={props.status}
                     onChange={statusChangeHandler}>

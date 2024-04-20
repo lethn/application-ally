@@ -6,8 +6,9 @@ const JobsCardList = (props) => {
         <div className="grid gap-4 border border-gray-400 rounded-md p-6 bg-sky-900 m-5 mt-1">
             {props.items.map((job) => (
                 <JobsCard
-                    key={job.id}
-                    id={job.id}
+                    key={job._id}
+                    job_id={job._id}
+                    user_id={job.userId}
                     title={job.title}
                     company={job.company}
                     location={job.location}

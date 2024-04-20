@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import axios from "axios";
 
 const EditJobs = (props) => {
-    const [inputId, setInputId] = useState(props.job.id);
     const [inputTitle, setInputTitle] = useState(props.job.title);
     const [inputCompany, setInputCompany] = useState(props.job.company);
     const [inputLocation, setInputLocation] = useState(props.job.location);
@@ -37,7 +37,6 @@ const EditJobs = (props) => {
         event.preventDefault();
 
         const jobData = {
-            id: inputId,
             title: inputTitle,
             company: inputCompany,
             location: inputLocation,
@@ -46,8 +45,16 @@ const EditJobs = (props) => {
             status: inputStatus
         };
 
-        console.log("Updated Application");
-        props.onEditJobs(jobData);
+        axios
+            .put(`https://application-ally.onrender.com/api/update-job-application/${props.job.id}`, jobData)
+            .then(res => {
+                jobData.id = props.job.id;
+                props.onEditJobs(jobData);
+                console.log("Edit job successfully:", props.title);
+            })
+            .catch(err => {
+                console.error('Error editing job:', err);
+            });
 
         setInputTitle('');
         setInputCompany('');
