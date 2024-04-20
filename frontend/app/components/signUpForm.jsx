@@ -6,7 +6,7 @@ import { AuthContext } from "../contexts/user";
 import Link from "next/link";
 
 const SignUpForm = () => {
-	const { signIn } = useContext(AuthContext);
+	const { signIn, userID } = useContext(AuthContext);
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -20,20 +20,20 @@ const SignUpForm = () => {
 		}
 
 		try {
-			const response = await axios.post(
-				`https://application-ally.onrender.com/api/signup`,
-				{
-					email,
-					password
-				}
-			);
+			const response = await axios.post(`http://localhost:8000/api/signup`, {
+				email,
+				password
+			});
 
 			// If sign up successful, automatically sign in the user
 			if (response.status === 201) {
 				await signIn(email, password);
+				console.log(userID);
 			}
 		} catch (error) {
 			console.error("Error signing up:", error);
+			console.log(userID);
+
 			// Handle error, e.g., display an error message to the user
 		}
 	};

@@ -12,22 +12,21 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [token, setToken] = useState(null);
+	const [userID, setUserID] = useState(null);
 	const router = useRouter();
 
 	// Function to handle sign in
 	const signIn = async (email, password) => {
 		try {
-			const response = await axios.post(
-				"https://application-ally.onrender.com/api/signin",
-				{
-					email,
-					password
-				}
-			);
+			const response = await axios.post("http://localhost:8000/api/signin", {
+				email,
+				password
+			});
 			const authToken = response.data.token;
 			localStorage.setItem("token", authToken); // Store the token in localStorage
 			setToken(authToken);
 			setIsLoggedIn(true);
+			setUserID(response.data.userId);
 			router.push("/applications"); // Redirect after successful sign-in
 		} catch (error) {
 			alert("Wrong Email or Password");
@@ -41,6 +40,7 @@ const AuthProvider = ({ children }) => {
 		localStorage.removeItem("token"); // Remove the token from localStorage
 		setToken(null);
 		setIsLoggedIn(false);
+		setUserID(null);
 		router.push("/"); // Redirect after successful sign-out
 	};
 
@@ -61,32 +61,3 @@ const AuthProvider = ({ children }) => {
 };
 
 export { AuthContext, AuthProvider };
-
-/**
- * Old Client side authentication
- */
-
-// /** @format */
-// "use client";
-// import React, { createContext, useState } from "react";
-
-// const AuthContext = createContext();
-
-// const authenicatedUsers = [
-// 	{
-// 		user: "exampleUser",
-// 		passname: "examplePassword"
-// 	}
-// ];
-
-// const AuthProvider = ({ children }) => {
-// 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-// 	return (
-// 		<AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-// 			{children}
-// 		</AuthContext.Provider>
-// 	);
-// };
-
-// export { AuthContext, AuthProvider, authenicatedUsers };

@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const jobApplicationSchema = new mongoose.Schema({
 	// There is an attibute _id auto generated stands for job_id
-	
+
 	userId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "User",
@@ -29,17 +29,12 @@ const jobApplicationSchema = new mongoose.Schema({
 	},
 	status: {
 		type: String,
-		enum: [
-			'Applied',
-			'Interview',
-			'Rejected',
-			'Not Applied',
-			'Offered',
-		],
+		enum: ["Applied", "Interview", "Rejected", "Not Applied", "Offered"],
 		required: true
 	}
 });
 
-const JobApplication = mongoose.model("jobapplication", jobApplicationSchema);
-
-module.exports = JobApplication;
+module.exports = JobApplication = mongoose.model(
+	"jobapplication",
+	jobApplicationSchema
+);

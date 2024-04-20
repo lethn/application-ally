@@ -68,7 +68,11 @@ router.post("/signup", async (req, res) => {
 
 		// Save the user to the database
 		await user.save();
-		res.status(201).json({ msg: "User created successfully" });
+
+		// Send response with user's ObjectId
+		res
+			.status(201)
+			.json({ msg: "User created successfully", userId: user._id });
 	} catch (e) {
 		console.error(e.message);
 		res.status(500).send("Server Error");
@@ -101,15 +105,19 @@ router.post("/signin", async (req, res) => {
 
 		jwt.sign(
 			payload,
-			process.env.JWT, // Your JWT secret key
+			process.env.JWT_SECRET, // Your JWT secret key
 			{ expiresIn: "1h" }, // Token expires in 1 hour
 			(err, token) => {
 				if (err) throw err;
-				res.json({ token });
+				res.json({
+					token,
+					userId: user._id,
+					msg: "User signed in successfully"
+				});
 			}
 		);
-	} catch (err) {
-		console.error(err.message);
+	} catch (error) {
+		console.error(error.message);
 		res.status(500).json({ error: "Server Error" });
 	}
 });
@@ -143,7 +151,6 @@ router.delete("/delete-user/:id", async (req, res) => {
 		res.status(500).json({ error: "Internal server error" });
 	}
 });
-
 
 // ***** START OF JOB APPLICATION ROUTES *****
 
