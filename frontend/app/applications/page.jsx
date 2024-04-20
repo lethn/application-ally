@@ -160,6 +160,7 @@ export default function Applications() {
 	};
 
 	if (isLoggedIn) {
+		const currUserID = localStorage.getItem("userID")
 		return (
 			<div className="bg-neutral-900">
 				<Navbar />
@@ -213,7 +214,7 @@ export default function Applications() {
 						<div className="flex justify-between items-center rounded-md p-2">
 							<div>
 								<p className="gradient-text text-transparent text-5xl font-bold animate-gradient m-4">
-									Applications
+									Applications, welcome user {currUserID}
 								</p>
 							</div>
 							<div>

@@ -20,13 +20,10 @@ const SignUpForm = () => {
 		}
 
 		try {
-			const response = await axios.post(
-				`https://application-ally.onrender.com/api/signup`,
-				{
-					email,
-					password
-				}
-			);
+			const response = await axios.post(`http://localhost:8000/api/signup`, {
+				email,
+				password
+			});
 
 			// If sign up successful, automatically sign in the user
 			if (response.status === 201) {
@@ -34,6 +31,7 @@ const SignUpForm = () => {
 			}
 		} catch (error) {
 			console.error("Error signing up:", error);
+
 			// Handle error, e.g., display an error message to the user
 		}
 	};

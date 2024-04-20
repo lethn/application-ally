@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState, useContext } from "react";
 import { AuthContext } from "../contexts/user";
-// import { useRouter } from "next/navigation";
 
 const SignInForm = () => {
 	const [email, setEmail] = useState("");
@@ -15,8 +14,10 @@ const SignInForm = () => {
 
 		try {
 			await signIn(email, password);
+			
 		} catch (error) {
 			console.error("Error signing in:", error);
+		
 		}
 	};
 

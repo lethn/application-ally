@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 
 function Brief(props) {
-	const place = props.position;
 	if (props.position == "right") {
 		return (
 			<div className="w-[80%] sm:w-[70%] lg:w-[60%] flex mx-auto justify-center mt-[10rem]">
@@ -13,8 +12,8 @@ function Brief(props) {
 				</div>
 				<Image
 					src={props.image}
-					width={1000}
-					height={1000}
+					width={500}
+					height={500}
 					alt="information picture"
 					className="rounded-lg w-[9rem] sm:w-[12rem] md:w-[18rem]"
 				/>
@@ -30,7 +29,7 @@ function Brief(props) {
 				width={500}
 				height={500}
 				alt="picture"
-				className="rounded-lg w-full aspect-square"
+				className="rounded-xl w-[9rem] sm:w-[12rem] md:w-[18rem]"
 			/>
 			<div className="content-center text-center mx-[0.5rem] sm:mx-[1rem] md:mx-[2rem] lg:mx-[4rem] xl:mx-[5rem]">
 				<span className=" text-white">{props.info}</span>
