@@ -3,24 +3,21 @@
 import Link from "next/link";
 import { useState, useContext } from "react";
 import { AuthContext } from "../contexts/user";
-// import { useRouter } from "next/navigation";
 
 const SignInForm = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const { signIn, isLoggedIn, userID } = useContext(AuthContext);
+	const { signIn, isLoggedIn } = useContext(AuthContext);
 
 	const handleLogin = async e => {
 		e.preventDefault();
 
 		try {
 			await signIn(email, password);
-			console.log(userID);
-			console.log(isLoggedIn);
+			
 		} catch (error) {
 			console.error("Error signing in:", error);
-			console.log(userID);
-			console.log(isLoggedIn);
+		
 		}
 	};
 

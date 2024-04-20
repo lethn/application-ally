@@ -12,7 +12,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [token, setToken] = useState(null);
-	const [userID, setUserID] = useState(null);
+	// const [userID, setUserID] = useState(null);
 	const router = useRouter();
 
 	// Function to handle sign in
@@ -26,7 +26,9 @@ const AuthProvider = ({ children }) => {
 			localStorage.setItem("token", authToken); // Store the token in localStorage
 			setToken(authToken);
 			setIsLoggedIn(true);
-			setUserID(response.data.userId);
+			// console.log(response.data.userId)
+			// setUserID(response.data.userId);
+			localStorage.setItem("userID", response.data.userId);
 			router.push("/applications"); // Redirect after successful sign-in
 		} catch (error) {
 			alert("Wrong Email or Password");
@@ -38,9 +40,9 @@ const AuthProvider = ({ children }) => {
 	// Function to handle sign out
 	const signOut = () => {
 		localStorage.removeItem("token"); // Remove the token from localStorage
+		localStorage.removeItem("userID");
 		setToken(null);
 		setIsLoggedIn(false);
-		setUserID(null);
 		router.push("/"); // Redirect after successful sign-out
 	};
 

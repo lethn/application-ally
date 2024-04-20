@@ -6,7 +6,7 @@ import { AuthContext } from "../contexts/user";
 import Link from "next/link";
 
 const SignUpForm = () => {
-	const { signIn, userID } = useContext(AuthContext);
+	const { signIn } = useContext(AuthContext);
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -28,11 +28,9 @@ const SignUpForm = () => {
 			// If sign up successful, automatically sign in the user
 			if (response.status === 201) {
 				await signIn(email, password);
-				console.log(userID);
 			}
 		} catch (error) {
 			console.error("Error signing up:", error);
-			console.log(userID);
 
 			// Handle error, e.g., display an error message to the user
 		}
