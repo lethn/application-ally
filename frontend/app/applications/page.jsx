@@ -129,7 +129,7 @@ export default function Applications() {
 									type="text"
 									placeholder="Enter here"
 								/>
-								<button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md max-w-[5rem] font-semibold">
+								<button className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md max-w-[5rem] font-semibold">
 									Find
 								</button>
 							</div>
@@ -167,11 +167,11 @@ export default function Applications() {
 							</div>
 							<div>
 								<button
-									className=" hover:bg-blue-800 p-3 m-2 mb-4 bg-blue-500 text-white rounded-md font-semibold"
+									className="hover:bg-blue-800 p-3 m-2 mb-4 bg-blue-500 text-white rounded-md font-semibold"
 									onClick={() => setShowModal(true)}>
 									Add Job
 								</button>
-								<button className=" hover:bg-blue-800 p-3 m-2 mb-4 bg-blue-500 text-white rounded-md font-semibold">
+								<button className="hover:bg-blue-800 p-3 m-2 mb-4 bg-blue-500 text-white rounded-md font-semibold">
 									<Link href="search-jobs">Explore New Jobs</Link>
 								</button>
 							</div>

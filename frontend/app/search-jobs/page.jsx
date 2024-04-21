@@ -7,6 +7,7 @@ import Footer from "@/app/components/footer";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/user";
 import Pagination from "../components/pagination";
+import axios from "axios";
 
 
 export default function Page() {
@@ -15,6 +16,7 @@ export default function Page() {
 	const { isLoggedIn } = useContext(AuthContext);
 	const [jobs, setJobs] = useState([]);
 	const [searchParams, setSearchParams] = useState({ name: "", location: "" });
+	const userId = typeof window !== 'undefined' ? localStorage.getItem("userID") : null;
 
 	const fetchJobs = async () => {
 		const { name, location } = searchParams;
@@ -58,8 +60,20 @@ export default function Page() {
 	const indexOfLastJob = currentPage * jobsPerPage;
 	const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 	const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
-		const changePageHandler = pageNumber => {
+	const changePageHandler = pageNumber => {
 		setCurrentPage(pageNumber);
+	};
+
+	const addJobHandler = (job) => {
+		axios
+			.post('http://localhost:8000/api/add-job-application', job)
+			.then((res) => {
+				console.log("Added New Application");
+				console.log(res.data);
+			})
+			.catch((error) => {
+				console.error("Error adding job application:", error);
+			});
 	};
 
 
@@ -105,38 +119,59 @@ export default function Page() {
 								onChange={handleInputChange}
 							/>
 
-							<button className="block bg-blue-500 hover:bg-blue-800 font-semibold text-white px-4 py-2 rounded-md max-w-[5rem] mx-auto">
+							<button className="block bg-blue-500 hover:bg-blue-700 font-semibold text-white px-4 py-2 rounded-md max-w-[5rem] mx-auto">
 								Find
 							</button>
 						</div>
 					</form>
 				</div>
 
-				<div className="flex flex-col">
+				<div className="">
 					{currentJobs.length > 0 ? (
-						<div className=" bg-slate-500 mx-[2rem] md:mx-auto sm:mx-[4rem] p-4 mt-10 rounded-lg flex flex-col gap-3 ">
+						<div className="grid gap-4 rounded-md p-6 bg-slate-600 mx-20 my-5">
 							{currentJobs.map((job, index) => (
 								<div
 									key={index}
-									className="bg-neutral-800 text-white p-5 rounded-xl font-semibold ">
-									<ul className="text-xl text-blue-500">{job.job_title}</ul>
-									<li className="">{job.publisher_name}</li>
-									<li className="">{job.location}</li>
-									<li className="">
-										${job.min_salary} - ${job.max_salary}
-									</li>
-									<li className="">
-										Website:{" "}
-										<a
-											href={job.publisher_link}
-											target="_blank"
-											rel="noopener noreferrer">
-											{job.publisher_link}
-										</a>
-									</li>
-									<button className="p-2 rounded-lg bg-blue-500 hover:bg-blue-600 mt-2">
-										Add Job
-									</button>
+									className="flex p-5 rounded-lg mb-4 text-white bg-neutral-800 justify-between">
+										
+									<div>
+										<h3 className="font-bold text-blue-500 text-2xl px-2 py-1">
+											{job.job_title}
+										</h3>
+										<p className="text-white px-2 py-1 text-xl font-semibold">
+											{job.publisher_name}
+										</p>
+										<p className="text-white px-2 py-1 text-lg">{job.location}</p>
+										<p className="text-white px-2 py-1 text-lg pb-6">
+											${job.min_salary.toLocaleString()} - ${job.max_salary.toLocaleString()}
+										</p>
+										<div className="px-2 py-1">
+											<a
+												className="underline hover:text-blue-500 text-white text-lg"
+												href={job.publisher_link}
+												target="_blank"
+												rel="noopener noreferrer">
+												{job.publisher_link}
+											</a>
+										</div>
+									</div>
+									
+									<div className="flex flex-col">
+										<button
+											className="p-2 rounded-lg bg-slate-500 hover:bg-green-500 mt-2 text-white font-semibold"
+											onClick={() => addJobHandler({
+												userId: userId,
+												title: job.job_title,
+												company: job.publisher_name,
+												location: job.location,
+												salary: `$${job.min_salary.toLocaleString()} - $${job.max_salary.toLocaleString()}`,
+												website: job.publisher_link,
+												status: "Applied"
+											})}>
+											Add Job
+										</button>
+									</div>
+									
 								</div>
 							))}
 						</div>
@@ -144,10 +179,10 @@ export default function Page() {
 						<p>No results found</p>
 					)}
 					<Pagination
-							currentPage={currentPage}
-							totalPages={Math.ceil(currentJobs.length / jobsPerPage)}
-							onChangePage={changePageHandler}
-						/>
+						currentPage={currentPage}
+						totalPages={Math.ceil(currentJobs.length / jobsPerPage)}
+						onChangePage={changePageHandler}
+					/>
 					{/* <div className="text-center font-medium text-xl text-white">
 						{Array.from(
 							{ length: Math.ceil(jobs.length / jobsPerPage) },

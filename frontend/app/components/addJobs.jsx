@@ -5,7 +5,7 @@ import axios from "axios";
 import { AuthContext } from "../contexts/user"; //
 
 const AddJobs = (props) => {
-	const userId = localStorage.getItem("userID");
+	const userId = typeof window !== 'undefined' ? localStorage.getItem("userID") : null;
 
 	const [inputTitle, setInputTitle] = useState("");
 	const [inputCompany, setInputCompany] = useState("");

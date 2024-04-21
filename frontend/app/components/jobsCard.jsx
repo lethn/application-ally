@@ -50,13 +50,16 @@ const JobsCard = (props) => {
 				</p>
 				<p className="text-white px-2 py-1 text-lg">{props.location}</p>
 				<p className="text-white px-2 py-1 text-lg pb-6">{props.salary}</p>
-				<a
-					className="underline hover:text-blue-500 text-white px-2 py-1 text-lg"
-					href={props.website}
-					target="_blank"
-					rel="noopener noreferrer">
-					{props.website}
-				</a>
+				<div className="px-2 py-1">
+					<a
+						className="underline hover:text-blue-500 text-white text-lg"
+						href={props.website}
+						target="_blank"
+						rel="noopener noreferrer">
+						{props.website}
+					</a>
+				</div>
+
 			</div>
 			<div className="flex flex-col">
 				<select
@@ -71,12 +74,12 @@ const JobsCard = (props) => {
 					<option value="Offered">Offered</option>
 				</select>
 				<button
-					className="bg-slate-600 font-semibold hover:bg-orange-400 p-2 m-2 rounded-md text-white"
+					className="bg-slate-500 font-semibold hover:bg-orange-400 p-2 m-2 rounded-md text-white"
 					onClick={handleEdit}>
 					Edit
 				</button>
 				<button
-					className="bg-slate-600 hover:bg-red-500 font-semibold p-2 m-2 rounded-md text-white"
+					className="bg-slate-500 hover:bg-red-500 font-semibold p-2 m-2 rounded-md text-white"
 					onClick={handleDelete}>
 					Delete
 				</button>
