@@ -43,7 +43,7 @@ function Home() {
 			</h1>
 
 			<Iframe
-				url="https://www.youtube.com/embed/9rW6cROYBzY?si=d5uO7U0Nh_MEJFsr"
+				url="https://www.youtube.com/embed/izUV4I8fUzI?si=4KkvYYQEWMt_H5LY"
 				width=""
 				id=""
 				className="mb-20 mx-[8rem] aspect-video w-[75%]"

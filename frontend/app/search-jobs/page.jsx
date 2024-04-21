@@ -6,6 +6,8 @@ import { useState } from "react";
 import Footer from "@/app/components/footer";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/user";
+import Pagination from "../components/pagination";
+
 
 export default function Page() {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -56,8 +58,12 @@ export default function Page() {
 	const indexOfLastJob = currentPage * jobsPerPage;
 	const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 	const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+		const changePageHandler = pageNumber => {
+		setCurrentPage(pageNumber);
+	};
 
-	const pages = pageNumber => setCurrentPage(pageNumber);
+
+	// const pages = pageNumber => setCurrentPage(pageNumber);
 
 	if (isLoggedIn) {
 		return (
@@ -66,56 +72,58 @@ export default function Page() {
 				<p className="gradient-text text-center text-transparent text-5xl font-bold animate-gradient mt-[4rem]">
 					Explore New Jobs
 				</p>
-				<div>
+				<div className="mt-[3rem]">
 					<form
-						className="flex flex-col items-center gap-[1rem] mx-10"
+						className="flex flex-col items-center gap-4 justify-stretch"
 						onSubmit={handleSubmit}>
-						<div className="mt-10">
-							<span className="text-white font-semibold text-2xl mr-3 inline">
+						<div className="">
+							<h1 className="text-white text-center font-semibold text-2xl mr-3">
 								Title:
-							</span>
+							</h1>
 							<input
-								className="border border-gray-300 font-semibold p-2 rounded-md mr-1 w-[20rem]"
+								className="rounded-lg px-4 py-2 mt-3 font-semibold"
 								type="text"
 								id="name"
+								placeholder="Software Developer"
 								name="name"
 								value={searchParams.name}
 								onChange={handleInputChange}
 							/>
 						</div>
 						<div className="mt-2">
-							<h1 className="text-white font-semibold text-2xl inline mr-2">
+							<h1 className="text-white text-center font-semibold text-2xl mr-3">
 								Location:
 							</h1>
 
 							<input
-								className="border border-gray-300 p-2 font-semibold rounded-md w-[20rem] mr-3"
+								className="rounded-lg px-4 py-2 my-3 font-semibold"
 								type="text"
+								placeholder="Athens, GA"
 								id="location"
 								name="location"
 								value={searchParams.location}
 								onChange={handleInputChange}
 							/>
 
-							<button className="bg-blue-500 hover:bg-blue-800 text-white px-4 py-2 rounded-md max-w-[5rem]">
+							<button className="block bg-blue-500 hover:bg-blue-800 font-semibold text-white px-4 py-2 rounded-md max-w-[5rem] mx-auto">
 								Find
 							</button>
 						</div>
 					</form>
 				</div>
 
-				<div className=" bg-sky-900 p-4 mt-10 mx-[2.5rem] sm:mx-[5rem] md:mx-[7.5rem] lg:mx-[10rem] xl:mx[15rem] rounded-lg flex flex-col gap-3 border">
+				<div className="flex flex-col">
 					{currentJobs.length > 0 ? (
-						<div className=" bg-sky-900 p-4 mt-10 mx-[2.5rem] sm:mx-[5rem] md:mx-[7.5rem] lg:mx-[10rem] xl:mx[15rem] rounded-lg flex flex-col gap-3 border">
+						<div className=" bg-slate-500 mx-[2rem] md:mx-auto sm:mx-[4rem] p-4 mt-10 rounded-lg flex flex-col gap-3 ">
 							{currentJobs.map((job, index) => (
 								<div
 									key={index}
 									className="bg-neutral-800 text-white p-5 rounded-xl font-semibold ">
-									<ul className="">Title: {job.job_title}</ul>
-									<li className="">Company: {job.publisher_name}</li>
-									<li className="">Location: {job.location}</li>
+									<ul className="text-xl text-blue-500">{job.job_title}</ul>
+									<li className="">{job.publisher_name}</li>
+									<li className="">{job.location}</li>
 									<li className="">
-										Salary: ${job.min_salary} - ${job.max_salary}
+										${job.min_salary} - ${job.max_salary}
 									</li>
 									<li className="">
 										Website:{" "}
@@ -126,8 +134,8 @@ export default function Page() {
 											{job.publisher_link}
 										</a>
 									</li>
-									<button className="px-2 py-1 rounded-lg bg-red-400 hover:bg-red-600 mt-2">
-										Add
+									<button className="p-2 rounded-lg bg-blue-500 hover:bg-blue-600 mt-2">
+										Add Job
 									</button>
 								</div>
 							))}
@@ -135,16 +143,21 @@ export default function Page() {
 					) : (
 						<p>No results found</p>
 					)}
-					<div className="text-center font-medium text-xl text-white">
+					<Pagination
+							currentPage={currentPage}
+							totalPages={Math.ceil(currentJobs.length / jobsPerPage)}
+							onChangePage={changePageHandler}
+						/>
+					{/* <div className="text-center font-medium text-xl text-white">
 						{Array.from(
 							{ length: Math.ceil(jobs.length / jobsPerPage) },
 							(_, i) => (
-								<button className="mr-3" key={i} onClick={() => pages(i + 1)}>
+								<button className="mx-2 px-4 py-2 rounded-md" key={i} onClick={() => pages(i + 1)}>
 									{i + 1}
 								</button>
 							)
 						)}
-					</div>
+					</div> */}
 				</div>
 				<Footer />
 			</div>
