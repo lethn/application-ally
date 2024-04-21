@@ -165,6 +165,18 @@ router.get("/job-applications", async (req, res) => {
 	}
 });
 
+// Get all job applications for each user
+router.get("/job-applications/user/:userId", async (req, res) => {
+	try {
+		const userId = req.params.userId;
+		const applications = await JobApplication.find({ userId }); // Filter applications by userId
+		res.json(applications);
+	} catch (error) {
+		console.error("Error fetching applications:", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
 // Get specific job application
 router.get("/job-applications/:id", async (req, res) => {
 	try {

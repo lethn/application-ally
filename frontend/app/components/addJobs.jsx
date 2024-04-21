@@ -5,7 +5,7 @@ import axios from "axios";
 import { AuthContext } from "../contexts/user"; //
 
 const AddJobs = (props) => {
-	const { userId } = useContext(AuthContext);
+	const userId = localStorage.getItem("userID");
 
 	const [inputTitle, setInputTitle] = useState("");
 	const [inputCompany, setInputCompany] = useState("");
@@ -53,7 +53,7 @@ const AddJobs = (props) => {
 		}
 
 		const jobData = {
-			userId: "662321fdb0269a3423765fae",
+			userId: userId,
 			title: inputTitle,
 			company: inputCompany,
 			location: inputLocation,
@@ -63,7 +63,7 @@ const AddJobs = (props) => {
 		};
 
 		axios
-			.post('https://application-ally.onrender.com/api/add-job-application', jobData)
+			.post('http://localhost:8000/api/add-job-application', jobData)
 			.then((res) => {
 				props.onAddJobs(res.data);
 				console.log("Added New Application");

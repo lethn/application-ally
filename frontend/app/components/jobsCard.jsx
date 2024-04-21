@@ -3,12 +3,12 @@
 import React from "react";
 import axios from "axios";
 
-const JobsCard = props => {
-	const statusChangeHandler = event => {
+const JobsCard = (props) => {
+	const statusChangeHandler = (event) => {
 		const newStatus = event.target.value;
 		axios
 			.put(
-				`https://application-ally.onrender.com/api/update-job-application/${props.job_id}`,
+				`http://localhost:8000/api/update-job-application/${props.job_id}`,
 				{ status: newStatus }
 			)
 			.then(res => {
@@ -21,24 +21,14 @@ const JobsCard = props => {
 	};
 
 	const handleEdit = () => {
-		const editedJob = {
-			id: props.job_id,
-			title: props.title,
-			company: props.company,
-			location: props.location,
-			salary: props.salary,
-			website: props.website,
-			status: props.status
-		};
-
-		props.onIsEditJobs(editedJob);
-		console.log("Edit job:", editedJob);
+		props.onIsEditJobs(props);
+		console.log("Edit job:");
 	};
 
 	const handleDelete = () => {
 		axios
 			.delete(
-				`https://application-ally.onrender.com/api/delete-job-application/${props.job_id}`
+				`http://localhost:8000/api/delete-job-application/${props.job_id}`
 			)
 			.then(res => {
 				console.log("Delete job:", props.title);

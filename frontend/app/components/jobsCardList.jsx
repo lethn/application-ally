@@ -19,7 +19,7 @@ const JobsCardList = (props) => {
                     onIsEditJobs={props.onIsEditJobs}
                     onStatusChange={props.onStatusChange}
                 />
-            ))}
+            ))} 
         </div>
     );
 };

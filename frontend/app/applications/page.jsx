@@ -15,64 +15,9 @@ import EditJobs from "../components/editJobs";
 import Pagination from "../components/pagination";
 
 export default function Applications() {
-	// const jobs_array = [
-	// 	{
-	// 		id: "j1",
-	// 		title: "Software Engineer",
-	// 		company: "TechCo",
-	// 		location: "San Francisco, CA",
-	// 		salary: "$80,000 - $120,000",
-	// 		website: "https://example.com/",
-	// 		status: "Applied"
-	// 	},
-	// 	{
-	// 		id: "j2",
-	// 		title: "Product Manager",
-	// 		company: "StartupX",
-	// 		location: "New York, NY",
-	// 		salary: "$90,000 - $130,000",
-	// 		website: "https://example.com/",
-	// 		status: "Offered"
-	// 	},
-	// 	{
-	// 		id: "j3",
-	// 		title: "Data Scientist",
-	// 		company: "Data Corp",
-	// 		location: "Seattle, WA",
-	// 		salary: "$100,000 - $140,000",
-	// 		website: "https://example.com/",
-	// 		status: "Interview"
-	// 	},
-	// 	{
-	// 		id: "j4",
-	// 		title: "UX Designer",
-	// 		company: "Design Studio",
-	// 		location: "Austin, TX",
-	// 		salary: "$70,000 - $110,000",
-	// 		website: "https://example.com/",
-	// 		status: "Rejected"
-	// 	},
-	// 	{
-	// 		id: "j5",
-	// 		title: "Frontend Developer",
-	// 		company: "Meta",
-	// 		location: "San Francisco, CA",
-	// 		salary: "$90,000 - $120,000",
-	// 		website: "https://example.com/",
-	// 		status: "Not Applied"
-	// 	},
-	// 	{
-	// 		id: "j6",
-	// 		title: "Marketing Manager",
-	// 		company: "Marketing Agency",
-	// 		location: "Los Angeles, CA",
-	// 		salary: "$60,000 - $100,000",
-	// 		website: "https://example.com/",
-	// 		status: "Applied"
-	// 	}
-	// ];
 
-	const { isLoggedIn, userId } = useContext(AuthContext);
+	const { isLoggedIn } = useContext(AuthContext);
+	const userId = typeof window !== 'undefined' ? localStorage.getItem("userID") : null;
 
 	const [jobs, setJobs] = useState([]);
 	const [showModal, setShowModal] = useState(false);
@@ -89,14 +34,14 @@ export default function Applications() {
 	useEffect(() => {
 		console.log(userId);
 		axios
-			.get('https://application-ally.onrender.com/api/job-applications')
+			.get(`http://localhost:8000/api/job-applications/user/${userId}`)
 			.then(res => {
 				console.log(res.data);
 				const reversedJobs = res.data.reverse();
 				setJobs(reversedJobs);
 			})
 			.catch(err => {
-				console.error('Error fetching job applications data:', error);
+				console.error('Error fetching job applications data:', err);
 			});
 	}, []);
 
@@ -124,10 +69,14 @@ export default function Applications() {
 		setJobs(prevJobs => {
 			return prevJobs.map(job => {
 				if (job._id === editedJob.id) {
-					return editedJob;
-				} else {
-					return job;
+					job.title = editedJob.title;
+					job.company = editedJob.company;
+					job.location = editedJob.location;
+					job.salary = editedJob.salary;
+					job.website = editedJob.website;
+					job.status = editedJob.status;
 				}
+				return job;
 			});
 		});
 
@@ -160,7 +109,6 @@ export default function Applications() {
 	};
 
 	if (isLoggedIn) {
-		const currUserID = localStorage.getItem("userID")
 		return (
 			<div className="bg-neutral-900">
 				<Navbar />
