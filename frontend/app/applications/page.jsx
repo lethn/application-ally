@@ -31,6 +31,10 @@ export default function Applications() {
 	const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 	const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
 
+	const [searchQuery, setSearchQuery] = useState("");
+	const [filteredJobs, setFilteredJobs] = useState([]);
+	const [noJobsFound, setNoJobsFound] = useState(false);
+
 	useEffect(() => {
 		console.log(userId);
 		axios
@@ -108,6 +112,34 @@ export default function Applications() {
 		setShowModal(false);
 	};
 
+	const searchQueryHandler = (event) => {
+		setSearchQuery(event.target.value);
+	};
+
+	const onClickSearchQueryHandler = () => {
+		if (searchQuery.trim() === "") {
+			setFilteredJobs([]);
+		} else {
+			const filtered = jobs.filter(job => {
+				return job.title.toLowerCase().includes(searchQuery.toLowerCase());
+			});
+			if (filtered.length === 0) {
+				alert("No matching jobs found.");
+				setFilteredJobs([]);
+				setNoJobsFound(true);
+			} else {
+				setFilteredJobs(filtered);
+				setNoJobsFound(false);
+			}
+		}
+	};
+
+	const resetSearchQueryHandler = () => {
+		setSearchQuery("");
+		setFilteredJobs([]);
+		setNoJobsFound(false);
+	};
+
 	if (isLoggedIn) {
 		return (
 			<div className="bg-neutral-900">
@@ -117,7 +149,7 @@ export default function Applications() {
 					{/* Column 1 */}
 					<div className="mt-[7rem] ml-3 flex flex-col gap-[1rem] col-span-1 p-1">
 						<div className="border rounded-lg p-3 border-gray-600 text-white bg-slate-600">
-							<h2 className="text-lg font-bold text-white">Statistics</h2>
+							<h2 className="mb-2 text-lg font-bold text-white">Statistics</h2>
 							<p>Total Applications: {jobs.length}</p>
 						</div>
 						<div className="border rounded-md p-3 border-gray-600 bg-slate-600">
@@ -125,13 +157,25 @@ export default function Applications() {
 							<div className="flex flex-col gap-[1rem]">
 								<input
 									id="searchBar"
-									className="border border-gray-300 rounded-md mr-1 p-3"
+									className="border border-gray-300 rounded-md mr-1 p-2"
 									type="text"
 									placeholder="Enter here"
+									value={searchQuery}
+									onChange={searchQueryHandler}
 								/>
-								<button className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md max-w-[5rem] font-semibold">
-									Find
-								</button>
+								<div>
+									<button
+										className="p-2 mr-4 mb-1 bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md max-w-[5rem] font-semibold"
+										onClick={onClickSearchQueryHandler}>
+										Find
+									</button>
+									<button
+										className="p-2 bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md max-w-[5rem] font-semibold"
+										onClick={resetSearchQueryHandler}
+									>
+										Reset
+									</button>
+								</div>
 							</div>
 						</div>
 
@@ -177,18 +221,27 @@ export default function Applications() {
 							</div>
 						</div>
 
-						<JobsCardList
-							items={currentJobs}
-							onDeleteJobs={deleteJobsHandler}
-							onIsEditJobs={isEditJobs}
-							onStatusChange={updateJobStatus}
-						/>
+						{noJobsFound ? (
+							<div className="text-center text-red-500 font-semibold mt-2">
+								No jobs found.
+							</div>
+						) : (
+							<div>
+								<JobsCardList
+									items={filteredJobs.length > 0 ? filteredJobs : currentJobs}
+									onDeleteJobs={deleteJobsHandler}
+									onIsEditJobs={isEditJobs}
+									onStatusChange={updateJobStatus}
+								/>
 
-						<Pagination
-							currentPage={currentPage}
-							totalPages={Math.ceil(jobs.length / jobsPerPage)}
-							onChangePage={changePageHandler}
-						/>
+								<Pagination
+									currentPage={currentPage}
+									totalPages={Math.ceil((filteredJobs.length > 0 ? filteredJobs.length : jobs.length) / jobsPerPage)}
+									onChangePage={changePageHandler}
+								/>
+							</div>
+						)}
+						
 					</div>
 				</div>
 
