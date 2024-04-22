@@ -5,8 +5,11 @@ import Home from "./home";
 import Image from "next/image";
 import clogo from "@/app/assets/logo.png";
 import Link from "next/link";
+import { AuthContext } from "../contexts/user";
+import { useContext } from "react";
 
 function Header() {
+	const { isLoggedIn } = useContext(AuthContext);
 	return (
 		<div>
 			<div className="flex flex-col justify-center">
@@ -35,7 +38,11 @@ function Header() {
 			</p>
 			<div className="flex justify-center">
 				<button className=" mt-6 bg-blue-500 p-3 rounded-lg font-bold hover:bg-blue-950 hover:border-l-blue-100 border-2 animate-gradient text-white">
-					<Link href="/sign-in">GET STARTED</Link>
+					{isLoggedIn ? (
+						<Link href="/applications">DASHBOARD</Link>
+					) : (
+						<Link href="/sign-in">GET STARTED</Link>
+					)}
 				</button>
 			</div>
 

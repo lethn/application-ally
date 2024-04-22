@@ -6,7 +6,7 @@ import Image from "next/image";
 
 function Footer() {
 	return (
-		<div className="flex flex-col items-center w-full mt-[16rem] p-8 bg-white">
+		<div className="flex flex-col items-center w-full mt-auto p-8 bg-white">
 			<Image
 				src={clogo}
 				width={48}

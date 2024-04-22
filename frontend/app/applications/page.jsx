@@ -15,14 +15,16 @@ import EditJobs from "../components/editJobs";
 import Pagination from "../components/pagination";
 
 export default function Applications() {
-
 	const { isLoggedIn } = useContext(AuthContext);
-	const userId = typeof window !== 'undefined' ? localStorage.getItem("userID") : null;
+	const userId =
+		typeof window !== "undefined" ? localStorage.getItem("userID") : null;
 
 	const [jobs, setJobs] = useState([]);
 	const [showModal, setShowModal] = useState(false);
 	const [editJobs, setEditJobs] = useState(false);
 	const [editJobsData, setEditJobsData] = useState("");
+
+	const [selectedStatus, setSelectedStatus] = useState(null);
 
 	// Jobs Page Display
 	const [currentPage, setCurrentPage] = useState(1);
@@ -45,15 +47,15 @@ export default function Applications() {
 				setJobs(reversedJobs);
 			})
 			.catch(err => {
-				console.error('Error fetching job applications data:', err);
+				console.error("Error fetching job applications data:", err);
 			});
 	}, []);
 
-	const changePageHandler = (pageNumber) => {
+	const changePageHandler = pageNumber => {
 		setCurrentPage(pageNumber);
 	};
 
-	const addJobsHandler = (job) => {
+	const addJobsHandler = job => {
 		setJobs(prevJobs => {
 			return [job, ...prevJobs];
 		});
@@ -62,14 +64,14 @@ export default function Applications() {
 		console.log(job);
 	};
 
-	const isEditJobs = (job) => {
+	const isEditJobs = job => {
 		setEditJobs(true);
 		setEditJobsData(job);
 		console.log(job);
 		setShowModal(true);
 	};
 
-	const editJobsHandler = (editedJob) => {
+	const editJobsHandler = editedJob => {
 		setJobs(prevJobs => {
 			return prevJobs.map(job => {
 				if (job._id === editedJob.id) {
@@ -88,7 +90,7 @@ export default function Applications() {
 		console.log(editedJob);
 	};
 
-	const deleteJobsHandler = (id) => {
+	const deleteJobsHandler = id => {
 		setJobs(prevJobs => {
 			return prevJobs.filter(job => job._id !== id);
 		});
@@ -112,7 +114,7 @@ export default function Applications() {
 		setShowModal(false);
 	};
 
-	const searchQueryHandler = (event) => {
+	const searchQueryHandler = event => {
 		setSearchQuery(event.target.value);
 	};
 
@@ -140,9 +142,18 @@ export default function Applications() {
 		setNoJobsFound(false);
 	};
 
+	const filterJobsByStatus = (jobs, status) => {
+		return status ? jobs.filter(job => job.status === status) : jobs;
+	};
+
+	useEffect(() => {
+		const statusFilteredJobs = filterJobsByStatus(jobs, selectedStatus);
+		setFilteredJobs(statusFilteredJobs);
+	}, [jobs, selectedStatus]);
+
 	if (isLoggedIn) {
 		return (
-			<div className="bg-neutral-900">
+			<div className="bg-neutral-900 flex flex-col min-h-[100vh]">
 				<Navbar />
 
 				<div className="grid grid-cols-4 mx-[2rem]">
@@ -171,8 +182,7 @@ export default function Applications() {
 									</button>
 									<button
 										className="p-2 bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md max-w-[5rem] font-semibold"
-										onClick={resetSearchQueryHandler}
-									>
+										onClick={resetSearchQueryHandler}>
 										Reset
 									</button>
 								</div>
@@ -182,19 +192,49 @@ export default function Applications() {
 						<div className="border rounded-md p-4 border-gray-600 mb-4 bg-slate-600">
 							<h2 className="text-lg font-bold text-white">Status</h2>
 							<div className="text-white">
-								<button className="p-2 m-2 rounded-md bg-green-500 hover:bg-green-600 font-semibold">
+								<button
+									className={`p-2 m-2 rounded-md font-semibold ${
+										selectedStatus === "Applied"
+											? "bg-green-600 "
+											: "bg-green-500 hover:bg-green-600"
+									}`}
+									onClick={() => setSelectedStatus("Applied")}>
 									Applied
 								</button>
-								<button className=" p-2 m-2 rounded-md bg-yellow-500 hover:bg-yellow-600 font-semibold">
+								<button
+									className={`p-2 m-2 rounded-md font-semibold ${
+										selectedStatus === "Interview"
+											? "bg-yellow-600"
+											: "bg-yellow-500 hover:bg-yellow-600"
+									}`}
+									onClick={() => setSelectedStatus("Interview")}>
 									Interview
 								</button>
-								<button className=" p-2 m-2 rounded-md bg-red-500 hover:bg-red-600 font-semibold">
+								<button
+									className={`p-2 m-2 rounded-md font-semibold ${
+										selectedStatus === "Rejected"
+											? "bg-red-600"
+											: "bg-red-500 hover:bg-red-600"
+									}`}
+									onClick={() => setSelectedStatus("Rejected")}>
 									Rejected
 								</button>
-								<button className=" p-2 m-2 rounded-md bg-neutral-500 hover:bg-neutral-600 font-semibold">
+								<button
+									className={`p-2 m-2 rounded-md font-semibold ${
+										selectedStatus === "Not Applied"
+											? "bg-neutral-700"
+											: "bg-neutral-500 hover:bg-neutral-700"
+									}`}
+									onClick={() => setSelectedStatus("Not Applied")}>
 									Not Applied
 								</button>
-								<button className=" p-2 m-2 rounded-md bg-sky-500 hover:bg-sky-600 font-semibold">
+								<button
+									className={`p-2 m-2 rounded-md font-semibold ${
+										selectedStatus === "Offered"
+											? "bg-sky-600"
+											: "bg-sky-500 hover:bg-sky-600"
+									}`}
+									onClick={() => setSelectedStatus("Offered")}>
 									Offered
 								</button>
 							</div>
@@ -236,12 +276,15 @@ export default function Applications() {
 
 								<Pagination
 									currentPage={currentPage}
-									totalPages={Math.ceil((filteredJobs.length > 0 ? filteredJobs.length : jobs.length) / jobsPerPage)}
+									totalPages={Math.ceil(
+										(filteredJobs.length > 0
+											? filteredJobs.length
+											: jobs.length) / jobsPerPage
+									)}
 									onChangePage={changePageHandler}
 								/>
 							</div>
 						)}
-						
 					</div>
 				</div>
 
@@ -265,10 +308,10 @@ export default function Applications() {
 	}
 
 	return (
-		<div className="bg-neutral-900 flex flex-col items-center justify-between">
+		<div className="bg-neutral-900 min-h-screen flex flex-col items-center ">
 			<Navbar />
-			<div className="my-[16rem]">
-				<h1 className="text-center text-4xl font-semibold text-white mx-[2rem]">
+			<div className="my-auto">
+				<h1 className="text-center text-4xl font-semibold text-white">
 					You Must be logged in to view this page
 				</h1>
 			</div>

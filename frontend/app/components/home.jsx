@@ -5,7 +5,12 @@ import Footer from "./footer";
 import Brief from "./brief";
 import Goal from "./goal";
 
+
+
+
 function Home() {
+	
+
 	const DUMMY_BRIEFS = [
 		{
 			id: 1,
@@ -27,8 +32,9 @@ function Home() {
 		}
 	];
 
+
 	return (
-		<div className="flex flex-col items-center w-[100%]">
+		<div className="flex flex-col items-center w-[100%] min-h-[100vh]">
 			<h1 className="text-white mt-20 text-3xl font-semibold">About</h1>
 			{DUMMY_BRIEFS.map(brief => (
 				<Brief
@@ -56,7 +62,7 @@ function Home() {
 				<h1 className=" mb-10 text-white text-3xl font-semibold">Benefits</h1>
 			</div>
 
-			<div className="flex flex-wrap justify-center gap-5 w-[100%]">
+			<div className="flex flex-wrap justify-center gap-5 w-[100%] mb-[6rem]">
 				<Goal
 					goalTitle={"Time-Saving Efficiency"}
 					goalContent={
