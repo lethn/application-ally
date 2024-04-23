@@ -11,6 +11,16 @@ const SignUpForm = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+	const [isButtonDisabled, setButtonDisabled] = useState(false);
+
+	const LoadingComponent = () => {
+		return (
+			<div className="text-xl text-black font-semibold text-center ">
+				<p>Loading...</p>
+			</div>
+		);
+	};
 
 	const handleSubmit = async e => {
 		e.preventDefault();
@@ -18,8 +28,10 @@ const SignUpForm = () => {
 			alert("Passwords do not match");
 			return;
 		}
-
+		setButtonDisabled(true);
 		try {
+			setIsLoading(true);
+
 			const response = await axios.post(`http://localhost:8000/api/signup`, {
 				email,
 				password
@@ -31,8 +43,9 @@ const SignUpForm = () => {
 			}
 		} catch (error) {
 			console.error("Error signing up:", error);
-
-			// Handle error, e.g., display an error message to the user
+		} finally {
+			setButtonDisabled(false);
+			setIsLoading(false);
 		}
 	};
 
@@ -69,7 +82,8 @@ const SignUpForm = () => {
 				<button
 					className="bg-blue-500 p-2 text-white rounded-lg hover:bg-blue-800 font-semibold block mx-auto"
 					type="submit"
-					value="register">
+					value="register"
+					disabled={isButtonDisabled}>
 					Register
 				</button>
 			</form>
@@ -83,6 +97,7 @@ const SignUpForm = () => {
 					</Link>
 				</p>
 			</div>
+			{isLoading && <LoadingComponent />}
 		</div>
 	);
 };

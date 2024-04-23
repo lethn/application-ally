@@ -1,7 +1,5 @@
 /** @format */
 
-/** @format */
-
 "use client";
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
@@ -12,7 +10,6 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [token, setToken] = useState(null);
-	// const [userID, setUserID] = useState(null);
 	const router = useRouter();
 
 	// Function to handle sign in
@@ -26,8 +23,6 @@ const AuthProvider = ({ children }) => {
 			localStorage.setItem("token", authToken); // Store the token in localStorage
 			setToken(authToken);
 			setIsLoggedIn(true);
-			// console.log(response.data.userId)
-			// setUserID(response.data.userId);
 			localStorage.setItem("userID", response.data.userId);
 			router.push("/applications"); // Redirect after successful sign-in
 		} catch (error) {

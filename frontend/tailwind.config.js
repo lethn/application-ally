@@ -19,7 +19,7 @@ module.exports = {
 				}
 			},
 			animation: {
-				gradient: "gradient 6s linear infinite"
+				gradient: "gradient 4s linear infinite"
 			}
 		}
 	},

@@ -1,12 +1,10 @@
-/** @format */
-
 const express = require("express");
 const dotenv = require("dotenv");
 const User = require("../models/user");
 const JobApplication = require("../models/jobApplication");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken"); // For creating and verifying tokens
+const jwt = require("jsonwebtoken");
 
 dotenv.config();
 
@@ -14,7 +12,6 @@ const app = express();
 const router = express.Router();
 
 app.use(bodyParser.json());
-// app.use(express.json());
 app.use("/", router);
 
 const saltRounds = 10;

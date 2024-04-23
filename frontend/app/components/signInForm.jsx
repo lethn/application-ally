@@ -8,17 +8,28 @@ const SignInForm = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const { signIn, isLoggedIn } = useContext(AuthContext);
+	const [isLoading, setIsLoading] = useState(false);
+	const [isButtonDisabled, setButtonDisabled] = useState(false);
 
 	const handleLogin = async e => {
 		e.preventDefault();
-
+		setButtonDisabled(true);
 		try {
+			setIsLoading(true);
 			await signIn(email, password);
-			
 		} catch (error) {
 			console.error("Error signing in:", error);
-		
+		} finally {
+			setIsLoading(false);
+			setButtonDisabled(false);
 		}
+	};
+	const LoadingComponent = () => {
+		return (
+			<div className="text-xl text-black font-semibold text-center">
+				<p>Loading...</p>
+			</div>
+		);
 	};
 
 	return (
@@ -46,7 +57,8 @@ const SignInForm = () => {
 				<button
 					className="bg-blue-500 p-2 text-white rounded-lg hover:bg-blue-800 font-semibold block mx-auto"
 					type="submit"
-					value="Log In">
+					value="Log In"
+					disabled={isButtonDisabled}>
 					Log In
 				</button>
 			</form>
@@ -58,6 +70,7 @@ const SignInForm = () => {
 					Sign Up here
 				</Link>
 			</p>
+			{isLoading && <LoadingComponent />}
 		</div>
 	);
 };
