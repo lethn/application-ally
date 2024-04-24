@@ -37,13 +37,15 @@ function Header() {
 				centralized location.
 			</p>
 			<div className="flex justify-center">
-				<button className=" mt-6 bg-blue-500 p-3 rounded-lg font-bold hover:bg-blue-950 hover:border-l-blue-100 border-2 animate-gradient text-white">
+				\
+
+				
 					{isLoggedIn ? (
-						<Link href="/applications">DASHBOARD</Link>
+						
+						<Link href="/applications"><button className=" mt-6 bg-blue-500 p-3 rounded-lg font-bold hover:bg-blue-950 hover:border-l-blue-100 border-2 animate-gradient text-white">DASHBOARD</button></Link>
 					) : (
-						<Link href="/sign-in">GET STARTED</Link>
+						<Link href="/sign-in"><button className=" mt-6 bg-blue-500 p-3 rounded-lg font-bold hover:bg-blue-950 hover:border-l-blue-100 border-2 animate-gradient text-white">GET STARTED</button></Link>
 					)}
-				</button>
 			</div>
 
 			<Home />

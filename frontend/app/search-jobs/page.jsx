@@ -89,8 +89,7 @@ export default function Page() {
 				toast.success("Added job successfully! 😃");
 				console.log(res.data);
 			})
-			.catch(error =>
-			{
+			.catch(error => {
 				toast.error("Failed to add job!");
 				console.error("Error adding job application: 😞", error);
 			});
@@ -177,9 +176,15 @@ export default function Page() {
 													title: job.job_title,
 													company: job.publisher_name,
 													location: job.location,
-													salary: `$${job.min_salary.toLocaleString()} - $${job.max_salary.toLocaleString()}`,
+													salary: `${job.min_salary.toLocaleString("en-US", {
+														style: "currency",
+														currency: "USD"
+													})} - ${job.max_salary.toLocaleString("en-US", {
+														style: "currency",
+														currency: "USD"
+													})}`,
 													website: job.publisher_link,
-													status: "Applied"
+													status: "Not Applied"
 												})
 											}>
 											Add Job
@@ -190,8 +195,15 @@ export default function Page() {
 									</p>
 									<p className="text-white px-2 py-1 text-lg">{job.location}</p>
 									<p className="text-white px-2 py-1 text-lg pb-6">
-										${job.min_salary.toLocaleString()} - $
-										{job.max_salary.toLocaleString()}
+										{job.min_salary.toLocaleString("en-US", {
+											style: "currency",
+											currency: "USD"
+										})}
+										-
+										{job.max_salary.toLocaleString("en-US", {
+											style: "currency",
+											currency: "USD"
+										})}
 									</p>
 									<a
 										className="underline hover:text-blue-500 text-white text-sm"
@@ -201,24 +213,6 @@ export default function Page() {
 										{job.publisher_link}
 									</a>
 								</div>
-
-								{/* <div className="flex flex-col">
-									<button
-										className="p-2 rounded-lg mr-auto bg-slate-500 hover:bg-green-500 mt-5 text-white font-semibold"
-										onClick={() =>
-											addJobHandler({
-												userId: userId,
-												title: job.job_title,
-												company: job.publisher_name,
-												location: job.location,
-												salary: `$${job.min_salary.toLocaleString()} - $${job.max_salary.toLocaleString()}`,
-												website: job.publisher_link,
-												status: "Applied"
-											})
-										}>
-										Add Job
-									</button>
-								</div> */}
 							</div>
 						))}
 					</div>
