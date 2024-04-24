@@ -34,7 +34,8 @@ export default function Page() {
 				method: "GET",
 				headers: {
 					"X-RapidAPI-Key":
-						"3391535bd1msh8918fae9f7b88a3p1e3a7djsn4a1c7efe158c",
+						"180ab761fbmsh01d2f09891ad816p1bcf53jsna79ced5b1c7f",
+						// "3391535bd1msh8918fae9f7b88a3p1e3a7djsn4a1c7efe158c",
 					"X-RapidAPI-Host": "job-salary-data.p.rapidapi.com"
 				}
 			});

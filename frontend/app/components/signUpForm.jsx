@@ -57,17 +57,9 @@ const SignUpForm = () => {
 	};
 
 	return (
-		<div className="container w-[400px] h-[450px] p-[40px] bg-gray-300 rounded-md">
+		<div className="container max-w-[400px] md:w-[400px] max-h-[400px] md:h-[400px] p-[40px] bg-gray-300 rounded-md mb-10">
 			<form onSubmit={handleSubmit}>
-				{/* <input
-					type="email"
-					id="email"
-					name="email"
-					value={email}
-					onChange={e => setEmail(e.target.value)}
-					placeholder="Email Address"
-					className="w-[100%] p-[10px] mb-[20px] rounded-md text-black bg-white"
-				/> */}
+				
 				<Input
 					isRequired
 					type="email"
@@ -79,15 +71,7 @@ const SignUpForm = () => {
 					size="lg"
 					className="text-lg font-bold text-black mb-2"
 				/>
-				{/* <input
-					type="password"
-					id="password"
-					name="password"
-					placeholder="Password"
-					className="w-[100%] p-[10px] mb-[20px] rounded-md text-black bg-white"
-					value={password}
-					onChange={e => setPassword(e.target.value)}
-				/> */}
+				
 				<Input
 					isRequired
 					type="password"
@@ -99,15 +83,7 @@ const SignUpForm = () => {
 					size="lg"
 					className="text-lg font-bold text-black mb-2"
 				/>
-				{/* <input
-					type="password"
-					id="confirm_password"
-					name="confirm_password"
-					placeholder="Confirm Password"
-					className="w-[100%] p-[10px] mb-[20px] rounded-md text-black bg-white"
-					value={confirmPassword}
-					onChange={e => setConfirmPassword(e.target.value)}
-				/> */}
+				
 				<Input
 					isRequired
 					type="password"

@@ -36,17 +36,9 @@ const SignInForm = () => {
 	};
 
 	return (
-		<div className="container w-[400px] h-[400px] p-[40px] bg-gray-300 rounded-md flex flex-col justify-start gap-5">
+		<div className="container md:w-[400px] md:h-[400px] p-[40px] bg-gray-300 rounded-md flex flex-col justify-start gap-5 mb-10">
 			<form onSubmit={handleLogin}>
-				{/* <input
-					type="email"
-					id="email"
-					name="email"
-					value={email}
-					onChange={e => setEmail(e.target.value)}
-					placeholder="Email Address"
-					className="w-[100%] p-[10px] mb-[20px] rounded-md text-black bg-white"
-				/> */}
+				
 				<Input
 					isRequired
 					type="email"
@@ -59,15 +51,7 @@ const SignInForm = () => {
 					className="text-lg font-bold text-black"
 				/>
 				<br />
-				{/* <input
-					type="password"
-					id="password"
-					name="password"
-					placeholder="Password"
-					onChange={e => setPassword(e.target.value)}
-					className="w-[100%] p-3 mb-2 rounded-md bg-white text-black"
-					value={password}
-				/> */}
+				
 				<Input
 					isRequired
 					type="password"
