@@ -25,11 +25,11 @@ export default function Applications() {
 	const [editJobs, setEditJobs] = useState(false);
 	const [editJobsData, setEditJobsData] = useState("");
 
-	
+
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filteredJobs, setFilteredJobs] = useState([]);
 	const [noJobsFound, setNoJobsFound] = useState(false);
-	
+
 	const [selectedStatus, setSelectedStatus] = useState(null);
 
 	// Jobs Page Display
@@ -71,7 +71,7 @@ export default function Applications() {
 			setNoJobsFound(false);
 		}
 	}, [selectedStatus, jobs]);
-	
+
 
 	const changePageHandler = (pageNumber) => {
 		setCurrentPage(pageNumber);
@@ -178,7 +178,7 @@ export default function Applications() {
 		setNoJobsFound(false);
 	};
 
-	
+
 
 	if (isLoggedIn) {
 		return (
