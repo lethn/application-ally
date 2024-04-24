@@ -68,11 +68,11 @@ const AddJobs = (props) => {
 				props.onAddJobs(res.data);
 				console.log("Added New Application");
 				console.log(res.data);
-				toast.success("Added job successfully!");
+				toast.success("Added job successfully! 😃");
 			})
 			.catch((error) => {
 				console.error("Error adding job application:", error);
-				toast.error("Failed to add job. Please try again later!");
+				toast.error("Failed to add job! 😞");
 			});
 
 		setInputTitle("");

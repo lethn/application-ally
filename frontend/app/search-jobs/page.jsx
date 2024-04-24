@@ -8,6 +8,8 @@ import Footer from "@/app/components/footer";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/user";
 import Pagination from "../components/pagination";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 export default function Page() {
@@ -43,6 +45,7 @@ export default function Page() {
 				);
 			}
 			const data = await response.json();
+
 			console.log("Fetched data:", data);
 			setJobs(data.data);
 			setCurrentPage(1);
@@ -78,16 +81,18 @@ export default function Page() {
 	const changePageHandler = pageNumber => {
 		setCurrentPage(pageNumber);
 	};
-
+	// const notify = () => toast("Added Job to Applications!");
 	const addJobHandler = job => {
 		axios
 			.post("http://localhost:8000/api/add-job-application", job)
 			.then(res => {
-				console.log("Added New Application");
+				toast.success("Added job successfully! 😃");
 				console.log(res.data);
 			})
-			.catch(error => {
-				console.error("Error adding job application:", error);
+			.catch(error =>
+			{
+				toast.error("Failed to add job!");
+				console.error("Error adding job application: 😞", error);
 			});
 	};
 
@@ -95,6 +100,19 @@ export default function Page() {
 		return (
 			<div className="min-h-[100vh] bg-neutral-900 flex flex-col">
 				<Navbar />
+				<ToastContainer
+					position="top-center"
+					autoClose={3000}
+					hideProgressBar
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss={false}
+					draggable={false}
+					pauseOnHover={false}
+					theme="colored"
+				/>
+
 				<p className="gradient-text text-center text-transparent text-5xl font-bold animate-gradient mt-[4rem]">
 					Explore New Jobs
 				</p>
@@ -147,9 +165,26 @@ export default function Page() {
 								key={index}
 								className="flex flex-col p-4 mx-auto w-full rounded-lg mb-4 text-white bg-neutral-800 ">
 								<div className="flex flex-col flex-wrap">
-									<h3 className="font-bold text-blue-500 text-2xl px-2 py-1">
-										{job.job_title}
-									</h3>
+									<div className="flex justify-between items-center">
+										<h3 className="font-bold text-blue-500 text-2xl px-2 py-1">
+											{job.job_title}
+										</h3>
+										<button
+											className="p-2 rounded-lg ml-auto bg-slate-500 hover:bg-green-500 mt-5 text-white font-semibold"
+											onClick={() =>
+												addJobHandler({
+													userId: userId,
+													title: job.job_title,
+													company: job.publisher_name,
+													location: job.location,
+													salary: `$${job.min_salary.toLocaleString()} - $${job.max_salary.toLocaleString()}`,
+													website: job.publisher_link,
+													status: "Applied"
+												})
+											}>
+											Add Job
+										</button>
+									</div>
 									<p className="text-white px-2 py-1 text-xl font-semibold">
 										{job.publisher_name}
 									</p>
@@ -167,9 +202,9 @@ export default function Page() {
 									</a>
 								</div>
 
-								<div className="flex flex-col">
+								{/* <div className="flex flex-col">
 									<button
-										className="p-2 rounded-lg bg-slate-500 hover:bg-green-500 mt-2 text-white font-semibold"
+										className="p-2 rounded-lg mr-auto bg-slate-500 hover:bg-green-500 mt-5 text-white font-semibold"
 										onClick={() =>
 											addJobHandler({
 												userId: userId,
@@ -183,7 +218,7 @@ export default function Page() {
 										}>
 										Add Job
 									</button>
-								</div>
+								</div> */}
 							</div>
 						))}
 					</div>
