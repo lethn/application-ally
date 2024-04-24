@@ -1,7 +1,6 @@
 /** @format */
 import Link from "next/link";
 import Image from "next/image";
-import clogo from "@/app/assets/logo.png";
 import { AuthContext } from "../contexts/user";
 import { useContext } from "react";
 import { useRouter } from "next/navigation"; // Correct import
@@ -11,7 +10,6 @@ export default function Navbar() {
 	const router = useRouter();
 
 	const handleLogout = () => {
-		
 		// Perform logout actions
 		signOut(); // Call signOut function from context
 		// Redirect to the sign-in page after logout
@@ -25,7 +23,7 @@ export default function Navbar() {
 					<li className="mr-auto">
 						<Link href="/">
 							<Image
-								src={clogo}
+								src="/logo.png"
 								width={500}
 								height={500}
 								className="rounded-md w-[4rem]"
@@ -72,7 +70,7 @@ export default function Navbar() {
 				<li className="mr-auto">
 					<Link href="/">
 						<Image
-							src={clogo}
+							src="/logo.png"
 							width={500}
 							height={500}
 							className="rounded-md w-[4rem]"

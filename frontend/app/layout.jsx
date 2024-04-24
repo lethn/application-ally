@@ -1,7 +1,7 @@
 /** @format */
 
 import "@/app/globals.css";
-import { montserrat } from "@/app/components/fonts";
+import { montserrat } from "@/app/fonts";
 import { AuthProvider } from "./contexts/user";
 
 export const metadata = {

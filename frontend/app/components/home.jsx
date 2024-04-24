@@ -5,12 +5,7 @@ import Footer from "./footer";
 import Brief from "./brief";
 import Goal from "./goal";
 
-
-
-
 function Home() {
-	
-
 	const DUMMY_BRIEFS = [
 		{
 			id: 1,
@@ -31,7 +26,6 @@ function Home() {
 			info: "Search New Jobs: With our search jobs feature you can easily find the job title you are looking for in your area. Simply input the job type and location and you will be given a list of current job listings."
 		}
 	];
-
 
 	return (
 		<div className="flex flex-col items-center w-[100%] min-h-[100vh]">

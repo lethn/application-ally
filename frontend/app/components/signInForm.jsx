@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useContext } from "react";
 import { AuthContext } from "../contexts/user";
-import { Input,CircularProgress } from "@nextui-org/react";
+import { Input, CircularProgress } from "@nextui-org/react";
 
 const SignInForm = () => {
 	const [email, setEmail] = useState("");
@@ -96,9 +96,7 @@ const SignInForm = () => {
 				</Link>
 			</p>
 			<div className="">
-				{isLoading && (
-					<CircularProgress label="Loading..." />
-				)}
+				{isLoading && <CircularProgress label="Loading..." />}
 			</div>
 		</div>
 	);

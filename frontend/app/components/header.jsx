@@ -3,7 +3,7 @@
 import React from "react";
 import Home from "./home";
 import Image from "next/image";
-import clogo from "@/app/assets/logo.png";
+// import clogo from "@/app/assets/logo.png";
 import Link from "next/link";
 import { AuthContext } from "../contexts/user";
 import { useContext } from "react";
@@ -15,7 +15,7 @@ function Header() {
 			<div className="flex flex-col justify-center">
 				<div className="">
 					<Image
-						src={clogo}
+						src="/logo.png"
 						width={500}
 						height={500}
 						alt="Company Logo"
@@ -38,14 +38,19 @@ function Header() {
 			</p>
 			<div className="flex justify-center">
 				\
-
-				
-					{isLoggedIn ? (
-						
-						<Link href="/applications"><button className=" mt-6 bg-blue-500 p-3 rounded-lg font-bold hover:bg-blue-950 hover:border-l-blue-100 border-2 animate-gradient text-white">DASHBOARD</button></Link>
-					) : (
-						<Link href="/sign-in"><button className=" mt-6 bg-blue-500 p-3 rounded-lg font-bold hover:bg-blue-950 hover:border-l-blue-100 border-2 animate-gradient text-white">GET STARTED</button></Link>
-					)}
+				{isLoggedIn ? (
+					<Link href="/applications">
+						<button className=" mt-6 bg-blue-500 p-3 rounded-lg font-bold hover:bg-blue-950 hover:border-l-blue-100 border-2 animate-gradient text-white">
+							DASHBOARD
+						</button>
+					</Link>
+				) : (
+					<Link href="/sign-in">
+						<button className=" mt-6 bg-blue-500 p-3 rounded-lg font-bold hover:bg-blue-950 hover:border-l-blue-100 border-2 animate-gradient text-white">
+							GET STARTED
+						</button>
+					</Link>
+				)}
 			</div>
 
 			<Home />
