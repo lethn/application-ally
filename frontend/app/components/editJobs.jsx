@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 const EditJobs = (props) => {
     const [inputTitle, setInputTitle] = useState(props.job.title);
@@ -51,9 +52,11 @@ const EditJobs = (props) => {
                 jobData.id = props.job.job_id;
                 props.onEditJobs(jobData);
                 console.log("Edit job successfully:", props.title);
+                toast.success("Edited job successfully!");
             })
             .catch(err => {
                 console.error('Error editing job:', err);
+                toast.error("Failed to edit job. Please try again later!");
             });
 
         setInputTitle('');
@@ -69,22 +72,28 @@ const EditJobs = (props) => {
             className="p-4 text-xl flex flex-col gap-2 font-semibold items-start"
             onSubmit={onSubmitHandler}
         >
-            <label htmlFor="title">Job Title:</label>
+            <label htmlFor="title">
+                Job Title <span style={{ color: "red" }}>*</span>
+            </label>
             <input
                 id="title"
                 name="title"
                 type="text"
+                placeholder="Enter job title"
                 className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputTitle}
                 onChange={titleChangeHandler}
                 required
             />
 
-            <label htmlFor="company">Company:</label>
+            <label htmlFor="company">
+                Company <span style={{ color: "red" }}>*</span>
+            </label>
             <input
                 id="company"
                 name="company"
                 type="text"
+                placeholder="Enter company"
                 className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputCompany}
                 onChange={companyChangeHandler}
@@ -96,6 +105,7 @@ const EditJobs = (props) => {
                 id="location"
                 name="location"
                 type="text"
+                placeholder="Enter location"
                 className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputLocation}
                 onChange={locationChangeHandler}
@@ -105,16 +115,20 @@ const EditJobs = (props) => {
                 id="salary"
                 name="salary"
                 type="text"
+                placeholder="$80,000 - $100,000"
                 className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputSalary}
                 onChange={salaryChangeHandler}
             />
 
-            <label htmlFor="website">Website:</label>
+            <label htmlFor="website">
+                Website <span style={{ color: "red" }}>*</span>
+            </label>
             <input
                 id="website"
                 name="website"
                 type="text"
+                placeholder="https://www.example.com"
                 className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
                 value={inputWebsite}
                 onChange={websiteChangeHandler}

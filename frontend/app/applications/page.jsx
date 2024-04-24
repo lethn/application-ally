@@ -1,7 +1,7 @@
 /** @format */
 
 "use client";
-import { useState, useContext, useEffect } from "react"; // Updated import
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import "@/app/globals.css";
 import Navbar from "../components/navbar";
@@ -10,20 +10,26 @@ import Modal from "../components/modal";
 import JobsCardList from "../components/jobsCardList";
 import AddJobs from "../components/addJobs";
 import Footer from "@/app/components/footer";
-import { AuthContext } from "../contexts/user"; // Import AuthContext
+import { AuthContext } from "../contexts/user";
 import EditJobs from "../components/editJobs";
 import Pagination from "../components/pagination";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Applications() {
 	const { isLoggedIn } = useContext(AuthContext);
-	const userId =
-		typeof window !== "undefined" ? localStorage.getItem("userID") : null;
+	const userId = typeof window !== "undefined" ? localStorage.getItem("userID") : null;
 
 	const [jobs, setJobs] = useState([]);
 	const [showModal, setShowModal] = useState(false);
 	const [editJobs, setEditJobs] = useState(false);
 	const [editJobsData, setEditJobsData] = useState("");
 
+	
+	const [searchQuery, setSearchQuery] = useState("");
+	const [filteredJobs, setFilteredJobs] = useState([]);
+	const [noJobsFound, setNoJobsFound] = useState(false);
+	
 	const [selectedStatus, setSelectedStatus] = useState(null);
 
 	// Jobs Page Display
@@ -31,11 +37,8 @@ export default function Applications() {
 	const jobsPerPage = 4;
 	const indexOfLastJob = currentPage * jobsPerPage;
 	const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-	const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+	let currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
 
-	const [searchQuery, setSearchQuery] = useState("");
-	const [filteredJobs, setFilteredJobs] = useState([]);
-	const [noJobsFound, setNoJobsFound] = useState(false);
 
 	useEffect(() => {
 		console.log(userId);
@@ -51,20 +54,42 @@ export default function Applications() {
 			});
 	}, []);
 
-	const changePageHandler = pageNumber => {
+	const toggleStatus = (status) => {
+		setSelectedStatus(prevStatus => prevStatus === status ? null : status);
+	};
+
+	useEffect(() => {
+		if (selectedStatus) {
+			const filtered = jobs.filter(job => job.status === selectedStatus);
+			setFilteredJobs(filtered);
+			setNoJobsFound(filtered.length === 0);
+			// console.log("Filter  length: ", filtered.length);
+			// console.log("Filter job length: ", filteredJobs.length);
+			// console.log("Job length: ", jobs.length);
+		} else {
+			setFilteredJobs([]);
+			setNoJobsFound(false);
+		}
+	}, [selectedStatus, jobs]);
+	
+
+	const changePageHandler = (pageNumber) => {
 		setCurrentPage(pageNumber);
 	};
 
-	const addJobsHandler = job => {
+	const addJobsHandler = (job) => {
 		setJobs(prevJobs => {
 			return [job, ...prevJobs];
 		});
 
 		setShowModal(false);
+		resetSearchQueryHandler();
+		setSelectedStatus(null);
+
 		console.log(job);
 	};
 
-	const isEditJobs = job => {
+	const isEditJobs = (job) => {
 		setEditJobs(true);
 		setEditJobsData(job);
 		console.log(job);
@@ -90,7 +115,7 @@ export default function Applications() {
 		console.log(editedJob);
 	};
 
-	const deleteJobsHandler = id => {
+	const deleteJobsHandler = (id) => {
 		setJobs(prevJobs => {
 			return prevJobs.filter(job => job._id !== id);
 		});
@@ -98,6 +123,16 @@ export default function Applications() {
 
 	const updateJobStatus = (id, newStatus) => {
 		setJobs(prevJobs => {
+			return prevJobs.map(job => {
+				if (job._id === id) {
+					return { ...job, status: newStatus };
+				} else {
+					return job;
+				}
+			});
+		});
+
+		setFilteredJobs(prevJobs => {
 			return prevJobs.map(job => {
 				if (job._id === id) {
 					return { ...job, status: newStatus };
@@ -114,7 +149,7 @@ export default function Applications() {
 		setShowModal(false);
 	};
 
-	const searchQueryHandler = event => {
+	const searchQueryHandler = (event) => {
 		setSearchQuery(event.target.value);
 	};
 
@@ -126,12 +161,13 @@ export default function Applications() {
 				return job.title.toLowerCase().includes(searchQuery.toLowerCase());
 			});
 			if (filtered.length === 0) {
-				alert("No matching jobs found.");
 				setFilteredJobs([]);
 				setNoJobsFound(true);
 			} else {
 				setFilteredJobs(filtered);
 				setNoJobsFound(false);
+				// console.log("Filter length: ", filtered.length);
+				// console.log("Filter job length: ", filteredJobs.length);
 			}
 		}
 	};
@@ -142,29 +178,40 @@ export default function Applications() {
 		setNoJobsFound(false);
 	};
 
-	const filterJobsByStatus = (jobs, status) => {
-		return status ? jobs.filter(job => job.status === status) : jobs;
-	};
-
-	useEffect(() => {
-		const statusFilteredJobs = filterJobsByStatus(jobs, selectedStatus);
-		setFilteredJobs(statusFilteredJobs);
-	}, [jobs, selectedStatus]);
+	
 
 	if (isLoggedIn) {
 		return (
 			<div className="bg-neutral-900 flex flex-col min-h-[100vh]">
 				<Navbar />
 
+				<ToastContainer
+					position="top-center"
+					autoClose={3000}
+					hideProgressBar
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss={false}
+					draggable={false}
+					pauseOnHover={false}
+					theme="colored"
+				/>
+
 				<div className="grid grid-cols-4 mx-[2rem]">
 					{/* Column 1 */}
 					<div className="mt-[7rem] ml-3 flex flex-col gap-[1rem] col-span-1 p-1">
 						<div className="border rounded-lg p-3 border-gray-600 text-white bg-slate-600">
-							<h2 className="mb-2 text-lg font-bold text-white">Statistics</h2>
-							<p>Total Applications: {jobs.length}</p>
+							<h2 className="mb-2 text-xl font-bold text-white">Statistics</h2>
+							<p className="text-lg">Total Applications: {jobs.length}</p>
+							{filteredJobs.length === 0 && noJobsFound === false ? (
+								<p className="text-lg">Current Applications: {jobs.length}</p>
+							) : (
+								<p className="text-lg">Current Applications: {filteredJobs.length}</p>
+							)}
 						</div>
 						<div className="border rounded-md p-3 border-gray-600 bg-slate-600">
-							<h2 className="text-lg font-bold mb-2 text-white">Search Bar</h2>
+							<h2 className="text-xl font-bold mb-2 text-white">Search Bar</h2>
 							<div className="flex flex-col gap-[1rem]">
 								<input
 									id="searchBar"
@@ -190,51 +237,46 @@ export default function Applications() {
 						</div>
 
 						<div className="border rounded-md p-4 border-gray-600 mb-4 bg-slate-600">
-							<h2 className="text-lg font-bold text-white">Status</h2>
+							<h2 className="text-xl font-bold text-white">Status</h2>
 							<div className="text-white">
 								<button
-									className={`p-2 m-2 rounded-md font-semibold ${
-										selectedStatus === "Applied"
-											? "bg-green-600 "
-											: "bg-green-500 hover:bg-green-600"
-									}`}
-									onClick={() => setSelectedStatus("Applied")}>
+									className={`p-2 m-2 rounded-md font-semibold ${selectedStatus === "Applied"
+										? "bg-green-700 "
+										: "bg-green-500 hover:bg-green-700"
+										}`}
+									onClick={() => toggleStatus("Applied")}>
 									Applied
 								</button>
 								<button
-									className={`p-2 m-2 rounded-md font-semibold ${
-										selectedStatus === "Interview"
-											? "bg-yellow-600"
-											: "bg-yellow-500 hover:bg-yellow-600"
-									}`}
-									onClick={() => setSelectedStatus("Interview")}>
+									className={`p-2 m-2 rounded-md font-semibold ${selectedStatus === "Interview"
+										? "bg-yellow-700"
+										: "bg-yellow-500 hover:bg-yellow-700"
+										}`}
+									onClick={() => toggleStatus("Interview")}>
 									Interview
 								</button>
 								<button
-									className={`p-2 m-2 rounded-md font-semibold ${
-										selectedStatus === "Rejected"
-											? "bg-red-600"
-											: "bg-red-500 hover:bg-red-600"
-									}`}
-									onClick={() => setSelectedStatus("Rejected")}>
+									className={`p-2 m-2 rounded-md font-semibold ${selectedStatus === "Rejected"
+										? "bg-red-700"
+										: "bg-red-500 hover:bg-red-700"
+										}`}
+									onClick={() => toggleStatus("Rejected")}>
 									Rejected
 								</button>
 								<button
-									className={`p-2 m-2 rounded-md font-semibold ${
-										selectedStatus === "Not Applied"
-											? "bg-neutral-700"
-											: "bg-neutral-500 hover:bg-neutral-700"
-									}`}
-									onClick={() => setSelectedStatus("Not Applied")}>
+									className={`p-2 m-2 rounded-md font-semibold ${selectedStatus === "Not Applied"
+										? "bg-neutral-700"
+										: "bg-neutral-500 hover:bg-neutral-700"
+										}`}
+									onClick={() => toggleStatus("Not Applied")}>
 									Not Applied
 								</button>
 								<button
-									className={`p-2 m-2 rounded-md font-semibold ${
-										selectedStatus === "Offered"
-											? "bg-sky-600"
-											: "bg-sky-500 hover:bg-sky-600"
-									}`}
-									onClick={() => setSelectedStatus("Offered")}>
+									className={`p-2 m-2 rounded-md font-semibold ${selectedStatus === "Offered"
+										? "bg-sky-700"
+										: "bg-sky-500 hover:bg-sky-700"
+										}`}
+									onClick={() => toggleStatus("Offered")}>
 									Offered
 								</button>
 							</div>
@@ -262,27 +304,24 @@ export default function Applications() {
 						</div>
 
 						{noJobsFound ? (
-							<div className="text-center text-red-500 font-semibold mt-2">
-								No jobs found.
-							</div>
+							<p className="rounded-md p-6 bg-slate-600 mx-5 mt-1 text-center text-white text-xl">
+								No jobs found
+							</p>
 						) : (
 							<div>
 								<JobsCardList
-									items={filteredJobs.length > 0 ? filteredJobs : currentJobs}
+									// items={filteredJobs.length > 0 ? filteredJobs : currentJobs}
+									items={filteredJobs.length > 0 ? filteredJobs : jobs}
 									onDeleteJobs={deleteJobsHandler}
 									onIsEditJobs={isEditJobs}
 									onStatusChange={updateJobStatus}
 								/>
 
-								<Pagination
+								{/* <Pagination
 									currentPage={currentPage}
-									totalPages={Math.ceil(
-										(filteredJobs.length > 0
-											? filteredJobs.length
-											: jobs.length) / jobsPerPage
-									)}
+									totalPages={Math.ceil((filteredJobs.length > 0 ? filteredJobs.length : jobs.length) / jobsPerPage)}
 									onChangePage={changePageHandler}
-								/>
+								/> */}
 							</div>
 						)}
 					</div>

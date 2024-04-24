@@ -2,7 +2,7 @@
 
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { AuthContext } from "../contexts/user"; //
+import { toast } from 'react-toastify';
 
 const AddJobs = (props) => {
 	const userId = typeof window !== 'undefined' ? localStorage.getItem("userID") : null;
@@ -68,9 +68,11 @@ const AddJobs = (props) => {
 				props.onAddJobs(res.data);
 				console.log("Added New Application");
 				console.log(res.data);
+				toast.success("Added job successfully!");
 			})
 			.catch((error) => {
 				console.error("Error adding job application:", error);
+				toast.error("Failed to add job. Please try again later!");
 			});
 
 		setInputTitle("");
@@ -85,22 +87,28 @@ const AddJobs = (props) => {
 		<form
 			className="p-4 text-xl flex flex-col gap-2 font-semibold items-start"
 			onSubmit={onSubmitHandler}>
-			<label htmlFor="title">Job Title:</label>
+			<label htmlFor="title">
+				Job Title <span style={{ color: "red" }}>*</span>
+			</label>
 			<input
 				id="title"
 				name="title"
 				type="text"
+				placeholder="Enter job title"
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputTitle}
 				onChange={titleChangeHandler}
 				required
 			/>
 
-			<label htmlFor="company">Company:</label>
+			<label htmlFor="company">
+				Company <span style={{ color: "red" }}>*</span>
+			</label>
 			<input
 				id="company"
 				name="company"
 				type="text"
+				placeholder="Enter company"
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputCompany}
 				onChange={companyChangeHandler}
@@ -112,6 +120,7 @@ const AddJobs = (props) => {
 				id="location"
 				name="location"
 				type="text"
+				placeholder="Enter location"
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputLocation}
 				onChange={locationChangeHandler}
@@ -121,16 +130,20 @@ const AddJobs = (props) => {
 				id="salary"
 				name="salary"
 				type="text"
+				placeholder="$80,000 - $100,000"
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputSalary}
 				onChange={salaryChangeHandler}
 			/>
 
-			<label htmlFor="website">Website:</label>
+			<label htmlFor="website">
+				Website <span style={{ color: "red" }}>*</span>
+			</label>
 			<input
 				id="website"
 				name="website"
 				type="text"
+				placeholder="https://www.example.com"
 				className="rounded-lg border-2 p-2 w-full border-blue-500 font-medium"
 				value={inputWebsite}
 				onChange={websiteChangeHandler}

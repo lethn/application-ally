@@ -8,6 +8,8 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts/user";
 import Pagination from "../components/pagination";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Page() {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -15,8 +17,7 @@ export default function Page() {
 	const { isLoggedIn } = useContext(AuthContext);
 	const [jobs, setJobs] = useState([]);
 	const [searchParams, setSearchParams] = useState({ name: "", location: "" });
-	const userId =
-		typeof window !== "undefined" ? localStorage.getItem("userID") : null;
+	const userId = typeof window !== "undefined" ? localStorage.getItem("userID") : null;
 
 	const fetchJobs = async () => {
 		const { name, location } = searchParams;
@@ -26,8 +27,7 @@ export default function Page() {
 			const response = await fetch(url, {
 				method: "GET",
 				headers: {
-					"X-RapidAPI-Key":
-						"90ff9350d0msh633bbb48131857dp155a34jsnb483e260a2d6",
+					"X-RapidAPI-Key": "180ab761fbmsh01d2f09891ad816p1bcf53jsna79ced5b1c7f",
 					"X-RapidAPI-Host": "job-salary-data.p.rapidapi.com"
 				}
 			});
@@ -70,9 +70,11 @@ export default function Page() {
 			.then(res => {
 				console.log("Added New Application");
 				console.log(res.data);
+				toast.success("Added job successfully!");
 			})
 			.catch(error => {
 				console.error("Error adding job application:", error);
+				toast.error("Failed to add job. Please try again later!");
 			});
 	};
 
@@ -82,6 +84,20 @@ export default function Page() {
 		return (
 			<div className="min-h-[100vh] bg-neutral-900 flex flex-col">
 				<Navbar />
+				
+				<ToastContainer
+					position="top-center"
+					autoClose={3000}
+					hideProgressBar
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss={false}
+					draggable={false}
+					pauseOnHover={false}
+					theme="colored"
+				/>
+
 				<p className="gradient-text text-center text-transparent text-5xl font-bold animate-gradient mt-[4rem]">
 					Explore New Jobs
 				</p>
@@ -178,7 +194,7 @@ export default function Page() {
 							))}
 						</div>
 					) : (
-						<p className="text-center text-white mt-8 text-xl ">No results found</p>
+						<p className="text-center text-white mt-8 text-xl">No results found</p>
 					)}
 					<Pagination
 						currentPage={currentPage}

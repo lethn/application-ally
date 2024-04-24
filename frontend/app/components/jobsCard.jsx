@@ -2,6 +2,7 @@
 
 import React from "react";
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 const JobsCard = (props) => {
 	const statusChangeHandler = (event) => {
@@ -14,9 +15,11 @@ const JobsCard = (props) => {
 			.then(res => {
 				console.log("Status updated:", newStatus);
 				props.onStatusChange(props.job_id, newStatus);
+				toast.success("Status updated successfully!");
 			})
 			.catch(err => {
 				console.error("Error updating job status:", err);
+				toast.error("Failed to update job status. Please try again later!");
 			});
 	};
 
@@ -33,9 +36,11 @@ const JobsCard = (props) => {
 			.then(res => {
 				console.log("Delete job:", props.title);
 				props.onDeleteJobs(props.job_id);
+				toast.success("Deleted job successfully!");
 			})
 			.catch(err => {
 				console.error("Error deleting job:", err);
+				toast.error("Failed to delete job. Please try again later!");
 			});
 	};
 
