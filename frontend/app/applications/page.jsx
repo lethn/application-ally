@@ -25,20 +25,24 @@ export default function Applications() {
 	const [editJobs, setEditJobs] = useState(false);
 	const [editJobsData, setEditJobsData] = useState("");
 
-
 	const [searchQuery, setSearchQuery] = useState("");
 	const [filteredJobs, setFilteredJobs] = useState([]);
 	const [noJobsFound, setNoJobsFound] = useState(false);
 
 	const [selectedStatus, setSelectedStatus] = useState(null);
 
-	// Jobs Page Display
+	// Job Display
 	const [currentPage, setCurrentPage] = useState(1);
 	const jobsPerPage = 4;
 	const indexOfLastJob = currentPage * jobsPerPage;
 	const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-	let currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+	const currentJobs = filteredJobs.length > 0
+		? filteredJobs.slice(indexOfFirstJob, indexOfLastJob)
+		: jobs.slice(indexOfFirstJob, indexOfLastJob);
 
+	const totalPages = Math.ceil(filteredJobs.length > 0
+		? filteredJobs.length / jobsPerPage
+		: jobs.length / jobsPerPage);
 
 	useEffect(() => {
 		console.log(userId);
@@ -54,14 +58,11 @@ export default function Applications() {
 			});
 	}, []);
 
-	const toggleStatus = (status) => {
-		setSelectedStatus(prevStatus => prevStatus === status ? null : status);
-	};
-
 	useEffect(() => {
 		if (selectedStatus) {
 			const filtered = jobs.filter(job => job.status === selectedStatus);
 			setFilteredJobs(filtered);
+			setCurrentPage(1);
 			setNoJobsFound(filtered.length === 0);
 			// console.log("Filter  length: ", filtered.length);
 			// console.log("Filter job length: ", filteredJobs.length);
@@ -72,6 +73,9 @@ export default function Applications() {
 		}
 	}, [selectedStatus, jobs]);
 
+	const toggleStatus = (status) => {
+		setSelectedStatus(prevStatus => prevStatus === status ? null : status);
+	};
 
 	const changePageHandler = (pageNumber) => {
 		setCurrentPage(pageNumber);
@@ -82,9 +86,9 @@ export default function Applications() {
 			return [job, ...prevJobs];
 		});
 
+		setCurrentPage(1);
 		setShowModal(false);
 		resetSearchQueryHandler();
-		setSelectedStatus(null);
 
 		console.log(job);
 	};
@@ -176,6 +180,7 @@ export default function Applications() {
 		setSearchQuery("");
 		setFilteredJobs([]);
 		setNoJobsFound(false);
+		setSelectedStatus(null);
 	};
 
 
@@ -310,18 +315,17 @@ export default function Applications() {
 						) : (
 							<div>
 								<JobsCardList
-									// items={filteredJobs.length > 0 ? filteredJobs : currentJobs}
-									items={filteredJobs.length > 0 ? filteredJobs : jobs}
+									items={currentJobs}
 									onDeleteJobs={deleteJobsHandler}
 									onIsEditJobs={isEditJobs}
 									onStatusChange={updateJobStatus}
 								/>
-
-								{/* <Pagination
+								<Pagination
 									currentPage={currentPage}
-									totalPages={Math.ceil((filteredJobs.length > 0 ? filteredJobs.length : jobs.length) / jobsPerPage)}
+									totalPages={totalPages}
 									onChangePage={changePageHandler}
-								/> */}
+								/>
+
 							</div>
 						)}
 					</div>
