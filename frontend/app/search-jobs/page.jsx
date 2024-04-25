@@ -14,14 +14,18 @@ import axios from "axios";
 
 export default function Page() {
 	const [currentPage, setCurrentPage] = useState(1);
-	const [jobsPerPage] = useState(4);
 	const [isButtonDisabled, setButtonDisabled] = useState(false);
 	const { isLoggedIn } = useContext(AuthContext);
 	const [jobs, setJobs] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [searchParams, setSearchParams] = useState({ name: "", location: "" });
-	const userId =
-		typeof window !== "undefined" ? localStorage.getItem("userID") : null;
+	const userId = typeof window !== "undefined" ? localStorage.getItem("userID") : null;
+
+	const jobsPerPage = 4;
+	const indexOfLastJob = currentPage * jobsPerPage;
+	const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+	const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+	const totalPages = Math.ceil(jobs.length / jobsPerPage);
 
 	const fetchJobs = async () => {
 		const { name, location } = searchParams;
@@ -35,7 +39,7 @@ export default function Page() {
 				headers: {
 					"X-RapidAPI-Key":
 						"180ab761fbmsh01d2f09891ad816p1bcf53jsna79ced5b1c7f",
-						// "3391535bd1msh8918fae9f7b88a3p1e3a7djsn4a1c7efe158c",
+					// "3391535bd1msh8918fae9f7b88a3p1e3a7djsn4a1c7efe158c",
 					"X-RapidAPI-Host": "job-salary-data.p.rapidapi.com"
 				}
 			});
@@ -66,24 +70,21 @@ export default function Page() {
 		);
 	};
 
-	const handleInputChange = e => {
+	const handleInputChange = (e) => {
 		const { name, value } = e.target;
 		setSearchParams({ ...searchParams, [name]: value });
 	};
 
-	const handleSubmit = e => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		fetchJobs();
 	};
 
-	const indexOfLastJob = currentPage * jobsPerPage;
-	const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-	const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
-	const changePageHandler = pageNumber => {
+	const changePageHandler = (pageNumber) => {
 		setCurrentPage(pageNumber);
 	};
-	// const notify = () => toast("Added Job to Applications!");
-	const addJobHandler = job => {
+
+	const addJobHandler = (job) => {
 		axios
 			.post("http://localhost:8000/api/add-job-application", job)
 			.then(res => {
@@ -228,7 +229,7 @@ export default function Page() {
 				<div className="mb-4">
 					<Pagination
 						currentPage={currentPage}
-						totalPages={Math.ceil(currentJobs.length / jobsPerPage)}
+						totalPages={totalPages}
 						onChangePage={changePageHandler}
 					/>
 				</div>
