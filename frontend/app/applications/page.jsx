@@ -174,6 +174,8 @@ export default function Applications() {
 				// console.log("Filter job length: ", filteredJobs.length);
 			}
 		}
+
+		setCurrentPage(1);
 	};
 
 	const resetSearchQueryHandler = () => {
@@ -181,6 +183,7 @@ export default function Applications() {
 		setFilteredJobs([]);
 		setNoJobsFound(false);
 		setSelectedStatus(null);
+		setCurrentPage(1);
 	};
 
 
